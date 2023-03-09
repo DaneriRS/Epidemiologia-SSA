@@ -10,25 +10,88 @@
     <div class="content">
         {% include 'includes/logos.html' %}
         <div class="row">
-            <div class="card card-chart">
-
-                <div class="col-12 my-3">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{form}}
-                        <div class="row my-3">
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-fill btn-primary">Importar</button> 
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <h5 class="card-category">Excel</h5>
+                                <h2 class="card-title">Registrar Usuarios</h2>
                             </div>
                         </div>
-                        {% comment %} <label for="file">Archivo de Excel:</label>
-                        <input type="file" class="form-control" name="file">
-                        <div class="row my-3">
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-fill btn-primary">Importar</button> 
+                    </div>
+                    <div class="card-body px-3">
+                        <form method="post" enctype="multipart/form-data" autocomplete="off">
+                            {% csrf_token %}
+                            {{form}}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-fill btn-info" name="Excel">Importar</button> 
+                                </div>
                             </div>
-                        </div> {% endcomment %}
-                    </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <h5 class="card-category">Individual</h5>
+                                <h2 class="card-title">Registrar Usuarios</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-3">
+                        <form method="post" enctype="multipart/form-data" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        {{form2.Nombre}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-md-1">
+                                    <div class="form-group">
+                                        <label>Apellidos</label>
+                                        {{form2.Apellidos}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label>Usuario</label>
+                                        {{form2.Usuario}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pl-md-1">
+                                    <div class="form-group">
+                                        <label>Correo</label>
+                                        {{form2.Correo}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 px-md-3">
+                                    <div class="form-group">
+                                        <label>Contraseña</label>
+                                        {{form2.Contraseña}}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-fill btn-info" name="Individual">Guardar</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
