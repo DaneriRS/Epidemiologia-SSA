@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        <div class="row">
+            <div class="card card-chart">
+
+                <div class="col-12 my-3">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form}}
+                        <div class="row my-3">
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-fill btn-primary">Importar</button> 
+                            </div>
+                        </div>
+                        {% comment %} <label for="file">Archivo de Excel:</label>
+                        <input type="file" class="form-control" name="file">
+                        <div class="row my-3">
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-fill btn-primary">Importar</button> 
+                            </div>
+                        </div> {% endcomment %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% comment %} <script>
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+    });
+</script> {% endcomment %}
+
+{% endblock javascripts %}
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="excel_file">Archivo de Excel:</label>
+        <input type="file" name="excel_file">
+        <button type="submit">Importar</button>
+    </form>
+</body>
+</html> {% endcomment %}
