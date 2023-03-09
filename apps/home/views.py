@@ -51,26 +51,53 @@ def pages(request):
     
 @login_required
 def import_excel(request):
-    if request.method == 'POST':
-        excel_file = request.FILES['file']
+    form=ExcelForm()
+    form2=IndividualForm()
+    if request.method == 'POST' and "Excel" in request.POST:
+        excel_file = request.FILES['Subir_Excel']
         df = pd.read_excel(excel_file)
-        # Itera a través de cada fila del DataFrame
-        for index, row in df.iterrows():
-            # Crea una instancia del modelo con los datos de la fila
-            obj = User(
-                username=row['username'],
-                first_name=row['nombre'],
-                last_name=row['apellidos'],
-                email=row['correo'],
-                password=make_password(row['password']),
-                # Continúa agregando todos los campos del modelo que quieras importar
-            )
-            # Guarda la instancia del modelo en la base de datos
-            obj.save()
-        return render(request, 'home/registrar_excel.html')
-    else:
-        form=ExcelForm()
+
+        try:
+            # Itera a través de cada fila del DataFrame
+            for index, row in df.iterrows():
+                # Crea una instancia del modelo con los datos de la fila
+                obj = User(
+                    username=row['username'],
+                    first_name=row['nombre'],
+                    last_name=row['apellidos'],
+                    email=row['correo'],
+                    password=make_password(row['password']),
+                    # Continúa agregando todos los campos del modelo que quieras importar
+                )
+                # Guarda la instancia del modelo en la base de datos
+                obj.save()
+            print('todo bien')
+            return render(request, 'home/registrar_excel.html',{
+                'form': form,
+                'form2': form2
+            })
+        except:
+            print('error')
+            return render(request, 'home/registrar_excel.html',{
+                'form': form,
+                'form2': form2
+            })
+    if request.method == 'POST' and "Individual" in request.POST:
+        obj = User(
+            username=request.POST['Usuario'],
+            first_name=request.POST['Nombre'],
+            last_name=request.POST['Apellidos'],
+            email=request.POST['Correo'],
+            password=make_password(request.POST['Contraseña']),
+        )
+        obj.save()
         return render(request, 'home/registrar_excel.html',{
-            'form': form
+            'form': form,
+            'form2': form2
+        })
+    else:
+        return render(request, 'home/registrar_excel.html',{
+            'form': form,
+            'form2': form2
         })
 
