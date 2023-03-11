@@ -368,9 +368,30 @@ class ContactForm2(forms.Form):
         )
     )
 
-
 class ContactForm3(forms.Form):
-    Extra = forms.CharField(
-        widget=forms.Textarea,
-        required=False,
+    fechaIn3 = forms.CharField(
+        label = 'Fecha de inicio de signos: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepickerFechaIn3'
+            }
+        )
+    )
+
+    signoSint3 = forms.CharField(
+        label="Signos y sintomas: ",
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={'placeholder': 'Describe los signos y sintomas','class': 'form-control'}
+        )
+    )
+
+    tratamiento3 = forms.CharField(
+        label="Describa el tratamiento",
+        max_length=200,
+        widget=forms.Textarea(
+            attrs={'placeholder': 'Describa el tratamiento', 'class': 'form-control'}
+        )
     )

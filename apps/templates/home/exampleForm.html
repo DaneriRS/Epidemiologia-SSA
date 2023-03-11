@@ -8,7 +8,7 @@
 {% block content %}
 <div class="content">
     {% include 'includes/logos.html' %}
-    <div class="card">
+    <div class="card">  
         <div class="card-body">
             <div class="progress-container progress-primary" style="text-align: center;">
                 <span class="progress-badge">PROGRESO</span>
@@ -18,12 +18,18 @@
                         <!-- <span class="progress-value">{{ wizard.steps.step1 }}0%</span> -->
                     </div>
                 </div>
+                <p class="text-center">{{ wizard.steps.step1 }}/{{ wizard.steps.count }}</p>
             </div>
-            <p class="text-center">{{ wizard.steps.step1 }}/{{ wizard.steps.count }}</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
             <form action="" method="post">{% csrf_token %}
                 {{ wizard.management_form }}
                 {% if wizard.steps.step1 == 1 %}
-                <h2>I. IDENTIFICACION DE LA UNIDAD</h2>
+                    <div class="text-left">
+                        <h2 class="card-title">I - IDENTIFICACION DE LA UNIDAD</h2>
+                    </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{wizard.form.folio.label}}
@@ -101,6 +107,9 @@
                     </div>
                 </div>
                 {% elif wizard.steps.step1 == 2 %}
+                <div class="text-left">
+                    <h2 class="card-title">II - IDENTIFICACION DEL CASO</h2>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{wizard.form.noAfili.label}}
@@ -183,6 +192,30 @@
                     <div class="form-group col-md-4">
                         {{wizard.form.tel2.label}}
                         {{wizard.form.tel2}}
+                    </div>
+                </div>
+                {% elif wizard.steps.step1 == 3 %}
+                <div class="text-left">
+                    <h2 class="card-title">III.a - DATOS CLINICOS</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        {{wizard.form.fechaIn3.label}}{{wizard.form.fechaIn3}}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        {{wizard.form.signoSint3.label}}
+                        {{wizard.form.signoSint3}}
+                    </div>
+                </div>
+                <div class="text-left mt-5">
+                    <h2 class="card-title">III.b - TRATAMIENTO</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        {{wizard.form.tratamiento3.label}}
+                        {{wizard.form.tratamiento3}}
                     </div>
                 </div>
                 {% endif %}
