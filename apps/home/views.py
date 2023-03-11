@@ -14,6 +14,8 @@ from .models import *
 from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from formtools.wizard.views import *
+from django.forms import formset_factory
 
 
 @login_required(login_url="/login/")
@@ -101,3 +103,20 @@ def import_excel(request):
             'form2': form2
         })
 
+
+def multiForm(request):
+    return render(request, "home/exampleForm.html")
+
+class BookingWizzadView(CookieWizardView):
+    form_list = [ContactForm1, ContactForm2, ContactForm3]
+    template_name = 'home/exampleForm.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return self.render(self.get_form())
+        except KeyError:
+            return super().get(request, *args, **kwargs)
+
+    def done(self, form_list, **kwargs):
+        return HttpResponse("Enviado")
+    

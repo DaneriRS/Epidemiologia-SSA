@@ -25,6 +25,12 @@
                         <p>Registrar Usuarios</p>
                     </a>
                 </li>
+                <li class="{% if 'user' in segment %} active {% endif %}">
+                    <a href="{% url 'multiForm' %}">
+                        <i class="tim-icons icon-paper"></i>
+                        <p>Registro de reporte</p>
+                    </a>
+                </li>
                 {% comment %} <li class="{% if 'map' in segment %} active {% endif %}">
                     <a href="/map.html">
                         <i class="tim-icons icon-pin"></i>
@@ -32,7 +38,7 @@
                     </a>
                 </li>
                 <li class="{% if 'notifications' in segment %} active {% endif %}">
-                    <a href="/notifications.html">
+                    <a href="/multiForm">
                         <i class="tim-icons icon-bell-55"></i>
                         <p>Notifications</p>
                     </a>
