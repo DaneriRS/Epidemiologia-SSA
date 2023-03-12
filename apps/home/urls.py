@@ -12,6 +12,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('import_excel/', views.import_excel, name='import_excel_view'),
     path('multiForm', views.BookingWizzadView.as_view() , name="multiForm"),
+    path('nuevoPaciente', views.nuevoPaciente, name="nuevoPaciente"),
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),

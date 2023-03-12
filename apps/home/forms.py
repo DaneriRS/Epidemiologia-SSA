@@ -1,5 +1,6 @@
 from django import forms 
-
+from django.forms import ModelForm
+from .models import *
 
 class ExcelForm(forms.Form):
     Subir_Excel=forms.FileField(
@@ -71,6 +72,22 @@ GENERO = (
     ("1", "MASCULINO"),
     ("2", "FEMENINO")
 )
+
+class registroPaciente(ModelForm):
+    class Meta:
+        model = Paciente
+        fields = '__all__'
+        widgets = {
+            'nacimiento' : forms.DateInput(attrs={'type' : 'date'})
+         }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })
 class ContactForm1(forms.Form):
     folio = forms.CharField(
         max_length=20,

@@ -120,3 +120,24 @@ class BookingWizzadView(CookieWizardView):
     def done(self, form_list, **kwargs):
         return HttpResponse("Enviado")
     
+@login_required    
+def nuevoPaciente(request):
+    if request.method == 'POST':
+        formA = registroPaciente(request.POST)
+        form = registroPaciente()
+        if formA.is_valid():
+            try:
+                formA.save()
+                return render(request, 'home/nuevoPaciente.html', {
+                'form': form,
+                'msg' : "1"
+                })
+            except:
+                return render(request, 'home/nuevoPaciente.html', {
+                'form': form,
+                'msg' : "0"
+                })
+    else:
+        form = registroPaciente()
+    
+    return render(request, 'home/nuevoPaciente.html', {'form': form})
