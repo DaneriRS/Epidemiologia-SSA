@@ -17,11 +17,12 @@
         Algo salio mal, revise los datos e intente nuevamente.
       </div>
     {% endif %}
-    <div class="card" style="max-width: 1000px; margin: auto;">
+    {% comment %} <div class="card" style="max-width: 1000px; margin: auto;"> {% endcomment %}
+    <div class="card">
         <div class="card-body">
             <h2 class="card-title">Registro de nuevo paciente</h2>
             <h4 class="card-subtitle mb-2 text-muted">Ingrese los datos</h4>
-            <form method="post" autocomplete="nope">
+            <form method="post" autocomplete="off">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -90,8 +91,8 @@
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <button class="btn btn-info animation-on-hover" type="reset">Limpiar</button>
-                    <input class="btn btn-primary animation-on-hover" type="submit" value="Registrar">
+                    <button class="btn btn-primary animation-on-hover" type="reset">Limpiar</button>
+                    <input class="btn btn-info animation-on-hover" type="submit" value="Registrar">
                 </div>
             </form>
         </div>

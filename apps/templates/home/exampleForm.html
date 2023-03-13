@@ -14,9 +14,15 @@
                 <span class="progress-badge">PROGRESO</span>
                 <div class="progress mt-1 mb-1">
                     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
-                        aria-valuemin="0" aria-valuemax="100" style="width: {{ wizard.steps.step1 }}0%;">
+                        aria-valuemin="0" aria-valuemax="100" style="width: {{ wizard.steps.step1 }}0%;" id="progressBarWidth">
                         <!-- <span class="progress-value">{{ wizard.steps.step1 }}0%</span> -->
                     </div>
+                    <script language="Javascript">
+                        var customWidth = {{ wizard.steps.step1 }} / {{ wizard.steps.count }} * 100;
+                        var div = document.getElementById('progressBarWidth');
+                        div.style.width = customWidth + '%';
+                        console.log(customWidth)
+                     </script>
                 </div>
                 <p class="text-center">{{ wizard.steps.step1 }}/{{ wizard.steps.count }}</p>
             </div>
