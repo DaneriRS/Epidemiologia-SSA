@@ -141,3 +141,14 @@ def nuevoPaciente(request):
         form = registroPaciente()
     
     return render(request, 'home/nuevoPaciente.html', {'form': form})
+
+@login_required
+def assign_groups(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = GroupAssignForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GroupAssignForm(instance=user)
+    return render(request, 'home/assign_groups.html', {'form': form})
