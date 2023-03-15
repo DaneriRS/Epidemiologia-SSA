@@ -56,6 +56,7 @@ ENTIDADES = (
 )
 
 class Paciente(models.Model):
+    id = models.AutoField(primary_key=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     apellidoPa = models.CharField(verbose_name = "Apellido paterno", max_length = 50)
     apellidoMa = models.CharField(verbose_name = "Apellido materno", max_length = 50)

@@ -1,53 +1,7 @@
 from django import forms 
 from django.forms import ModelForm
-from .models import *
+from apps.home.models import *
 from django.contrib.auth.models import User, Group
-
-class ExcelForm(forms.Form):
-    Subir_Excel=forms.FileField(
-        widget=forms.FileInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-
-class IndividualForm(forms.Form):
-    Usuario=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Nombre=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Apellidos=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Correo=forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Contraseña=forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
 
 MUNICIPIOS =(
     ("1", "MORELIA"),
@@ -413,28 +367,3 @@ class ContactForm3(forms.Form):
             attrs={'placeholder': 'Describa el tratamiento', 'class': 'form-control'}
         )
     )
-
-
-# class GroupAssignForm(forms.ModelForm):
-#     groups = forms.ModelMultipleChoiceField(
-#         queryset=Group.objects.all(),
-#         widget=forms.CheckboxSelectMultiple,
-#         required=False
-#     )
-    
-#     class Meta:
-#         model = User
-#         fields = ['groups']
-        
-class GroupAssignForm(forms.ModelForm):
-    groups = forms.MultipleChoiceField(
-        choices=[(group.id, group.name) for group in Group.objects.all()],
-        widget=forms.SelectMultiple(attrs={
-                'class': 'form-control'
-            }),
-        required=True
-    )
-    
-    class Meta:
-        model = User
-        fields = ['groups']
