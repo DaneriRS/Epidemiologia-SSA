@@ -19,7 +19,7 @@
                         <p>Estadísticas</p>
                     </a>
                 </li>
-                {% comment %} {% if user.groups.filter(name='Director').exists %}
+                {% comment %} {% if request.user.groups.filter(name='Director').exists %}
                     Aqui va el enlace del menu, Prueba
                 {% endif %} {% endcomment %}
                 <li class="{% if 'icons' in segment %} active {% endif %}">
