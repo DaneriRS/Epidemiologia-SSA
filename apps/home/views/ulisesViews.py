@@ -5,6 +5,15 @@ from apps.home.models import *
 from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import user_passes_test
+
+def roles_required(roles):
+    def decorator(view_func):
+        @user_passes_test(lambda user: user.groups.filter(name__in=roles).exists())
+        def wrapper(request, *args, **kwargs):
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator
 
 @login_required
 def import_excel(request):
