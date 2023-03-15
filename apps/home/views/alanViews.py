@@ -4,7 +4,10 @@ from apps.home.models import *
 from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
 
+from apps.home.views.allViews import roles_required
+
 @login_required
+@roles_required(['Director'])
 def assign_groups(request, user_id):
     user = User.objects.get(id=user_id)
     if request.method == 'POST':
