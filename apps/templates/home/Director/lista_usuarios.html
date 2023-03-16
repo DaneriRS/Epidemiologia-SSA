@@ -1,0 +1,211 @@
+
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Usuarios {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <h2 class="card-title">Usuarios del sistema</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-3">
+                        <table class="table table-striped table-hover" id="tabla_usuarios">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th>Nombre</th>
+                                    <th>Puesto</th>
+                                    <th>Jurisdiccion</th>
+                                    <th>Unidad</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for us in usuarios %}
+                                    <tr>
+                                        <td class="text-center">{{ us.id }}</td>
+                                        <td>{{ us.first_name }} {{ us.last_name }}</td>
+                                        <td>
+                                            {% for group in us.groups.all %}
+                                                <li>{{ group.name }}</li>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for ex in extras %}
+                                                {% if us.id == ex.user.id %}
+                                                    {{ ex.jurisdiccion.nombre }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for ex in extras %}
+                                                {% if us.id == ex.user.id %}
+                                                    {{ ex.unidad.nombre }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-single-02"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-settings"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-simple-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% for us in usuarios %}
+                                    <tr>
+                                        <td class="text-center">{{ us.id }}</td>
+                                        <td>{{ us.first_name }} {{ us.last_name }}</td>
+                                        <td>
+                                            {% for group in us.groups.all %}
+                                                <li>{{ group.name }}</li>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for ex in extras %}
+                                                {% if us.id == ex.user.id %}
+                                                    {{ ex.jurisdiccion.nombre }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for ex in extras %}
+                                                {% if us.id == ex.user.id %}
+                                                    {{ ex.unidad.nombre }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-single-02"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-settings"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
+                                                <i class="tim-icons icon-simple-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                    {% comment %} <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-sm btn-icon">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon">
+                                            <i class="tim-icons icon-settings"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">2</td>
+                                    <td>John Doe</td>
+                                    <td>Design</td>
+                                    <td>2012</td>
+                                    <td class="text-right">&euro; 89,241</td>
+                                    <td class="td-actions text-right">
+                                      <button type="button" rel="tooltip" class="btn btn-info btn-sm btn-round btn-icon">
+                                          <i class="tim-icons icon-single-02"></i>
+                                      </button>
+                                      <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-round btn-icon">
+                                          <i class="tim-icons icon-settings"></i>
+                                      </button>
+                                      <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-round btn-icon">
+                                          <i class="tim-icons icon-simple-remove"></i>
+                                      </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">3</td>
+                                    <td>Alex Mike</td>
+                                    <td>Design</td>
+                                    <td>2010</td>
+                                    <td class="text-right">&euro; 92,144</td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-settings"></i>
+                                        </button>
+                                        <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
+                                            <i class="tim-icons icon-simple-remove"></i>
+                                        </button>
+                                    </td>
+                                </tr> {% endcomment %}
+                            </tbody>
+                        </table>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('#tabla_usuarios').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [{
+            "extend": "copy",
+            "className": "btn-success animation-on-hover"
+          },
+          {
+            "extend": "csv",
+            "className": "btn-success animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-success animation-on-hover"
+          },
+          {
+            "extend": "pdf",
+            "className": "btn-success animation-on-hover"
+          },
+          {
+            "extend": "print",
+            "className": "btn-success animation-on-hover"
+          },
+          {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-success animation-on-hover"
+          }],
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+       var printButton = table.button('print').node();
+      $(printButton).removeClass('btn-secondary').addClass('btn-info');
+     });
+</script>
+{% endblock javascripts %}
