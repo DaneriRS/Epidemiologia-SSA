@@ -13,10 +13,12 @@ urlpatterns = [
     path('import_excel/', allViews.import_excel, name='import_excel_view'),
     path('multiForm', allViews.BookingWizzadView.as_view() , name="multiForm"),
     path('nuevoPaciente', allViews.nuevoPaciente, name="nuevoPaciente"),
-    path('usuarios/asignar-grupos/<int:user_id>/', allViews.assign_groups, name='assign_groups'),
+    path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
+    path('usuarios/editar/<int:user_id>/', allViews.assign_groups, name='assign_groups'),
 
     # Matches any html file
-    re_path(r'^.*\.*', allViews.pages, name='pages'),
+    # No borrar esta URL
+    # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
     
 
