@@ -14,7 +14,7 @@ def roles_required(roles, redirect_url=None):
     return decorator
 
 @login_required(login_url="/login/")
-@roles_required(['Director'], redirect_url='')
+@roles_required(['Director'], redirect_url='home')
 def lista_usuarios(request):
     usuarios = User.objects.all()
     extras = InformacionUsuario.objects.all()
@@ -24,7 +24,6 @@ def lista_usuarios(request):
         'segment': 'Lista_Usuarios_Director',
         'usuarios': usuarios,
         'extras': extras,
-        # 'user': usuarioActual
     })
 
 @login_required(login_url="/login/")

@@ -19,9 +19,7 @@
                         <p>Estadísticas</p>
                     </a>
                 </li>
-                {% comment %} {% ifequal user.groups.first.name "Encargado de Jurisdiccion" %} {% endcomment %}
-                {% if request.user.is_director %}
-                {{ request.user.is_director }}
+                {% if request.user.is_director or request.user.is_encarJuris %}
                     <li class="{% if 'Lista_Usuarios_Director' in segment %} active {% endif %} ">
                         <a href="{% url 'lista_usuarios' %}">
                             <i class="tim-icons icon-bullet-list-67"></i>
@@ -29,7 +27,6 @@
                         </a>
                     </li>
                 {% endif %}
-                {% comment %} {% endifequal %} {% endcomment %}
                 <li class="{% if 'icons' in segment %} active {% endif %}">
                     <a href="{% url 'import_excel_view' %}">
                         <i class="tim-icons icon-atom"></i>
