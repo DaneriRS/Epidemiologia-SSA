@@ -5,15 +5,29 @@ from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 
-def roles_required(roles):
+def roles_required(roles, redirect_url=None):
     def decorator(view_func):
-        @user_passes_test(lambda user: user.groups.filter(name__in=roles).exists())
+        @user_passes_test(lambda user: user.groups.filter(name__in=roles).exists(), login_url=redirect_url)
         def wrapper(request, *args, **kwargs):
             return view_func(request, *args, **kwargs)
         return wrapper
     return decorator
 
-@login_required
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='')
+def lista_usuarios(request):
+    usuarios = User.objects.all()
+    extras = InformacionUsuario.objects.all()
+    usuarioActual = User.objects.get(id = request.user.id)
+    print('Hola: ' + str(usuarioActual.is_encarJuris()))
+    return render(request, 'home/Director/lista_usuarios.html', {
+        'segment': 'Lista_Usuarios_Director',
+        'usuarios': usuarios,
+        'extras': extras,
+        # 'user': usuarioActual
+    })
+
+@login_required(login_url="/login/")
 @roles_required(['Director'])
 def assign_groups(request, user_id):
     user = User.objects.get(id=user_id)
@@ -23,4 +37,4 @@ def assign_groups(request, user_id):
             form.save()
     else:
         form = GroupAssignForm(instance=user)
-    return render(request, 'home/assign_groups.html', {'form': form})
+    return render(request, 'home/Director/assign_groups.html', {'form': form})

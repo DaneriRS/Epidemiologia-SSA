@@ -19,9 +19,17 @@
                         <p>Estadísticas</p>
                     </a>
                 </li>
-                {% comment %} {% if request.user.groups.filter(name='Director').exists %}
-                    Aqui va el enlace del menu, Prueba
-                {% endif %} {% endcomment %}
+                {% comment %} {% ifequal user.groups.first.name "Encargado de Jurisdiccion" %} {% endcomment %}
+                {% if request.user.is_director %}
+                {{ request.user.is_director }}
+                    <li class="{% if 'Lista_Usuarios_Director' in segment %} active {% endif %} ">
+                        <a href="{% url 'lista_usuarios' %}">
+                            <i class="tim-icons icon-bullet-list-67"></i>
+                            <p>Lista de Usuarios</p>
+                        </a>
+                    </li>
+                {% endif %}
+                {% comment %} {% endifequal %} {% endcomment %}
                 <li class="{% if 'icons' in segment %} active {% endif %}">
                     <a href="{% url 'import_excel_view' %}">
                         <i class="tim-icons icon-atom"></i>
