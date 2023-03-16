@@ -17,7 +17,8 @@ urlpatterns = [
     path('usuarios/editar/<int:user_id>/', allViews.assign_groups, name='assign_groups'),
 
     # Matches any html file
-    re_path(r'^.*\.*', allViews.pages, name='pages'),
+    # No borrar esta URL
+    # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
     
 

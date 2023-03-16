@@ -18,7 +18,6 @@ def roles_required(roles, redirect_url=None):
 def lista_usuarios(request):
     usuarios = User.objects.all()
     extras = InformacionUsuario.objects.all()
-    print(request.user.is_encarUni())
     return render(request, 'home/Director/lista_usuarios.html', {
         'segment': 'Lista_Usuarios_Director',
         'usuarios': usuarios,
