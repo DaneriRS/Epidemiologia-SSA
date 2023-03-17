@@ -58,51 +58,15 @@
                                             {% endfor %}
                                         </td>
                                         <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                            <a href="{% url 'editarUsuarios' us.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
                                                 <i class="tim-icons icon-single-02"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
+                                            </a>
+                                            <a href="{% url 'editarUsuarios' us.id %}" type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
                                                 <i class="tim-icons icon-settings"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
+                                            </a>
+                                            {% comment %} <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
                                                 <i class="tim-icons icon-simple-remove"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                {% for us in usuarios %}
-                                    <tr>
-                                        <td class="text-center">{{ us.id }}</td>
-                                        <td>{{ us.first_name }} {{ us.last_name }}</td>
-                                        <td>
-                                            {% for group in us.groups.all %}
-                                                <li>{{ group.name }}</li>
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            {% for ex in extras %}
-                                                {% if us.id == ex.user.id %}
-                                                    {{ ex.jurisdiccion.nombre }}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            {% for ex in extras %}
-                                                {% if us.id == ex.user.id %}
-                                                    {{ ex.unidad.nombre }}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-single-02"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" class="btn btn-success btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-settings"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" class="btn btn-danger btn-link btn-icon btn-sm">
-                                                <i class="tim-icons icon-simple-remove"></i>
-                                            </button>
+                                            </button> {% endcomment %}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -176,36 +140,34 @@
            {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
            "buttons": [{
             "extend": "copy",
-            "className": "btn-success animation-on-hover"
+            "className": "btn-info animation-on-hover"
           },
           {
             "extend": "csv",
-            "className": "btn-success animation-on-hover"
+            "className": "btn-info animation-on-hover"
           },
           {
             "extend": "excel",
-            "className": "btn-success animation-on-hover"
+            "className": "btn-info animation-on-hover"
           },
           {
             "extend": "pdf",
-            "className": "btn-success animation-on-hover"
+            "className": "btn-info animation-on-hover"
           },
           {
             "extend": "print",
-            "className": "btn-success animation-on-hover"
-          },
-          {
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
             "extend": 'pageLength',
             "text": 'Filas por página',
-            "className": "btn-success animation-on-hover"
-          }],
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
            "language": {
                url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
            },
            "ordering": true
        });
-       var printButton = table.button('print').node();
-      $(printButton).removeClass('btn-secondary').addClass('btn-info');
      });
 </script>
 {% endblock javascripts %}

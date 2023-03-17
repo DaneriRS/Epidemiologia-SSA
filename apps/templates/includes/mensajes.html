@@ -1,0 +1,12 @@
+{% if msg %}
+    {% if msgType %}
+        <div class="alert alert-{{msgType}} fade show" role="alert">
+    {% else %}
+        <div class="alert alert-warning fade show" role="alert">
+    {% endif %}
+    <strong>Aviso.</strong> {{ msg }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    </div>
+{% endif %}

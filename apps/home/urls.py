@@ -14,7 +14,7 @@ urlpatterns = [
     path('multiForm', allViews.BookingWizzadView.as_view() , name="multiForm"),
     path('nuevoPaciente', allViews.nuevoPaciente, name="nuevoPaciente"),
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
-    path('usuarios/editar/<int:user_id>/', allViews.assign_groups, name='assign_groups'),
+    path('usuarios/editar/<int:user_id>/', allViews.assign_groups, name='editarUsuarios'),
 
     # Matches any html file
     # No borrar esta URL

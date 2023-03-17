@@ -9,7 +9,7 @@
                     SNS
                 </a>
                 <a href="javascript:void(0)" class="simple-text logo-normal">
-                    {{request.user.first_name}} {{request.user.last_name}}
+                    {{ request.user.get_full_name }}
                 </a>
             </div>
             <ul class="nav">

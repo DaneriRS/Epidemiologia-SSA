@@ -16,11 +16,11 @@ from django.contrib.auth.models import User, Group
         
 class GroupAssignForm(forms.ModelForm):
     groups = forms.MultipleChoiceField(
-        choices=[(group.id, group.name) for group in Group.objects.all().exclude(name = 'Director')],
+        choices=[(group.id, group.name) for group in Group.objects.all()],
         widget=forms.SelectMultiple(attrs={
                 'class': 'form-control'
             }),
-        required=True
+        required=False
     )
     
     class Meta:
