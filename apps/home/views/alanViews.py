@@ -29,9 +29,43 @@ def lista_usuarios(request):
 def assign_groups(request, user_id):
     user = User.objects.get(id=user_id)
     if request.method == 'POST':
-        form = GroupAssignForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
+        if user == request.user:
+            post_values = request.POST.copy()
+            group_ids = post_values.getlist('groups') # Obtener la lista de grupos seleccionados por el usuario
+            rolDirector = Group.objects.get(name = 'Director')
+            if rolDirector.id not in group_ids: # Verificar si el grupo "Director" no está ya en la lista
+                group_ids.append(rolDirector.id) # Agregar el grupo "Director" a la lista
+            post_values.setlist('groups', group_ids) # Actualizar el valor de "groups" en el diccionario POST
+            form = GroupAssignForm(post_values, instance=user)
+            if form.is_valid():
+                form.save()
+                return render(request, 'home/Director/assign_groups.html', {
+                    'segment': 'Lista_Usuarios_Director',
+                    'form': form,
+                    'msg': 'Se ha guardado con exito',
+                    'msgType': 'success'
+                })
+        else:
+            form = GroupAssignForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+            group_ids = list(user.groups.all().values_list('id', flat=True))
+            initial = {'groups': group_ids}
+            # form = GroupAssignForm(initial=initial, instance=user)
+            form.fields['groups'].choices=[(group.id, group.name) for group in Group.objects.all().exclude(name = 'Director')]
+            return render(request, 'home/Director/assign_groups.html', {
+                'segment': 'Lista_Usuarios_Director',
+                'form': form,
+                'msg': 'Se ha guardado con exito',
+                'msgType': 'success'
+            })
     else:
-        form = GroupAssignForm(instance=user)
-    return render(request, 'home/Director/assign_groups.html', {'form': form})
+        group_ids = list(user.groups.all().values_list('id', flat=True))
+        initial = {'groups': group_ids}
+        form = GroupAssignForm(initial=initial, instance=user)
+        if user != request.user:
+            form.fields['groups'].choices=[(group.id, group.name) for group in Group.objects.all().exclude(name = 'Director')]
+        return render(request, 'home/Director/assign_groups.html', {
+            'segment': 'Lista_Usuarios_Director',
+            'form': form,
+            })

@@ -56,6 +56,41 @@ ENTIDADES = (
     ('32', 'Zacatecas'),
 )
 
+class CustomUserManager(models.Manager):
+    def imprimir(self):
+        return self.email
+    
+    def is_director(self):
+        return self.groups.filter(name='Director').exists()
+
+    def is_encarJuris(self):
+        return self.groups.filter(name='Encargado de Jurisdiccion').exists()
+    
+    def is_encarUni(self):
+        return self.groups.filter(name='Encargado de unidad').exists()
+
+    User.add_to_class('imprimir', imprimir)
+    User.add_to_class('is_director', is_director)
+    User.add_to_class('is_encarJuris', is_encarJuris)
+    User.add_to_class('is_encarUni', is_encarUni)
+
+class CustomUser(User):
+    class Meta:
+        proxy = True
+
+    objects = CustomUserManager()
+
+    def imprimir(cls):
+        return cls.objects.imprimir()
+    
+    def is_director(cls):
+        return cls.objects.is_director()
+    
+    def is_encarJuris(cls):
+        return cls.objects.is_encarJuris()
+    
+    def is_encarUni(cls):
+        return cls.objects.is_encarUni()
 
 class Tipologia(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
