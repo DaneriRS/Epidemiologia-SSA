@@ -18,3 +18,12 @@ class User(forms.Form):
                 'class': 'form-control',
                 'required': 'required'
             })
+
+class unidadPerfil(forms.Form):
+    class Meta:
+        model = models.Model
+        fields = 'unidad', 'claveclues','jurisdiccion','municipio','entidad'
+        widgets = {
+            '' : forms.TextInput(attrs={'class' : 'form-control'})
+         }
+    

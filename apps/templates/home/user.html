@@ -31,32 +31,38 @@
               <div class="col-md-5 pr-md-1">
                 <div class="form-group">
                   <label>Unidad Médica (No editable)</label>
-                  <input type="text" class="form-control" disabled="" placeholder="Unidad" value="{{ex.unidad.nombre}}"><!-- value="{{request.unidad.nombre}}"-->
+                  <input type="text" class="form-control"  name="userUnidad" placeholder="Unidad" value="{{request.user.unidad}}"><!-- value="{{request.unidad.nombre}}"-->
                 </div>
               </div>
               <div class="col-md-4 px-md-1">
                 <div class="form-group">
                   <label>CLUES</label>
-                  <input type="text" class="form-control" disabled="" placeholder="MNSSA001886" value="{{ex.cvClue}}"><!-- value="{{request.unidad.clue}}"-->
+                  <input type="text" class="form-control" name="userUnidad" placeholder="MNSSA001886" value="{{request.user.claveclues}}"><!-- value="{{request.unidad.clue}}"-->
                 </div>
               </div>
               <div class="col-md-2 pl-md-1">
                 <div class="form-group">
                   <label>Jurisdicción</label>
-                  <input type="number" class="form-control" disabled="" placeholder="00"value="{{ex.jurisdiccion.nombre}}"><!-- value="{{request.unidad.juris}}"-->
+                  <input type="number" class="form-control"  placeholder="00" name="userUnidad" value="{{request.user.jurisdiccion}}"><!-- value="{{request.unidad.juris}}"-->
                 </div>
               </div>
             </div><div class="row">
               <div class="col-md-4 pr-md-1">
                 <div class="form-group">
                   <label>Municipio</label>
-                  <input type="text" class="form-control" disabled="" placeholder="Municipio" value="{{form.idMunicipio}}"><!-- value="{{form.idMunicipio}}"-->
+                  <input type="text" class="form-control"  placeholder="Municipio" name="userUnidad" value="{{request.user.municipio}}"><!-- value="{{form.idMunicipio}}"-->
                 </div>
               </div>
               <div class="col-md-4 px-md-1">
                 <div class="form-group">
                   <label>Entidad</label>
-                  <input type="text" class="form-control" disabled="" placeholder="Entidad" ><!-- value="{{request.unidad.estado}}"-->
+                  <input type="text" class="form-control"  placeholder="Entidad" name="userUnidad" value="{{request.userUnidad.entidad}}"><!-- value="{{request.unidad.estado}}"-->
+                </div>
+              </div>
+              <div class="col-md-3 pr-md-1">
+                <div class="form-group">
+                  <label>Cargo</label>
+                  <input type="text" class="form-control"   placeholder="Medico" name="user" value="{{request.user.puesto}}" ><!-- value="{{request.user.cargo}}"-->
                 </div>
               </div>
             </div>
@@ -70,36 +76,27 @@
               <div class="col-md-4 pl-md-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Correo </label>
-                  <input type="email" class="form-control"  value="{{request.user.email}}">
+                  <input type="email" class="form-control"   value="{{request.user.email}}">
                 </div>
               </div>
               <div class="col-md-5 pl-md-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Contraseña </label>
-                  <input type="email" class="form-control"  value="{{ request.user.password }}">
+                  <input type="email" class="form-control"  name="userInfo"  value="{{ request.user.password }}">
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 pr-md-1">
-                <div class="form-group">
-                  <label>Cargo</label>
-                  <input type="text" class="form-control" placeholder="Medico" value="{{request.user.puesto}}" ><!-- value="{{request.user.cargo}}"-->
-                  
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 pr-md-1">
+              <div class="col-md-5 pr-md-1">
                 <div class="form-group">
                   <label>Nombre(s)</label>
-                  <input type="text" class="form-control" placeholder="Nombres" value="{{us.first_name}}">
+                  <input type="text" class="form-control"  placeholder="Nombres" name="userInfo" value="{{request.user.first_name}}">
                 </div>
               </div>
-              <div class="col-md-6 pl-md-1">
+              <div class="col-md-7 pl-md-1">
                 <div class="form-group">
                   <label>Apellidos</label>
-                  <input type="text" class="form-control"  placeholder="Apellidos" value=" {{us.last_name}}">
+                  <input type="text" class="form-control"  placeholder="Apellidos" name="userInfo"  value=" {{request.user.last_name}}">
                 </div>
               </div>
             </div>
@@ -115,7 +112,7 @@
           </form>
         </div>
         <div class="card-footer">
-          <button type="submit" class="btn btn-fill btn-info" >Guardar</button>
+          <button type="submit" class="btn btn-fill btn-info" name='actualizar' >Guardar</button>
         </div>
       </div>
     </div>
@@ -130,7 +127,7 @@
               <div class="block block-four"></div>
               <a href="javascript:void(0)">
                 <img class="avatar" src="{{ ASSETS_ROOT }}/img/emilyz.jpg" alt="...">
-                <h5 class="title">{{request.first_name}} {{request.last_name}}</h5>
+                <h5 class="title" name="userInfo">{{request.user.first_name}} {{request.user.last_name}}</h5>
               </a>
               <p class="description">
                 <!-- value="{{request.user.cargo}}"-->

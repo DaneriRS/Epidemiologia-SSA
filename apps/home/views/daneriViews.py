@@ -14,11 +14,12 @@ def roles_required(roles, redirect_url=None):
     return decorator
 
 
-#@login_required
+@login_required(login_url="/login/")
 def user(request):
-    form = User(request.POST)
+    #user = get_object_or_404(User)
+    form = GroupAssignForm(request.POST)
     if request.method == "POST":
-        form = lista_usuarios(request.post)
+        form = GroupAssignForm(request.post)
         obj = User(
             username=request.POST['Usuario'],
             first_name=request.POST['Nombre'],
@@ -27,12 +28,37 @@ def user(request):
             password=make_password(request.POST['Contraseña']),
         )
         obj.save()
-    return render(request, "home/user.html", {'form': form,'segment': 'Lista_Usuarios_Director', 'msg': 'Se ha guardado con exito',
+        form.save()
+    return render(request, "home/user.html", {'form': form, 'msg': 'Se ha guardado con exito',
                     'msgType': 'success'})
 
 
-def user(request):
-    form = User(request.POST or None)
+@login_required(login_url="/login/")
+def actualizar(request, user_id):
+    user = get_object_or_404(User, id= user_id)
+    form=User()
+    #form2=unidadPerfil()
+    #form = User(initial={'usuario'= username,'Nombre' =first_name, 'Apellidos'=last_name , 'Correo'= email 'Contraseña'= password,'ap'})
+    form= unidadPerfil(initial={
+        'unidad': Unidad.__name__,
+        'claveclues': Unidad.claveclues,
+        'jurisdiccion': Jurisdiccion.clave,
+        'municipio': Municipio.__name__,
+        'entidad': Entidad.nombre})
     if request.method == "POST":
-        form = assign_groups (request.post)
+        form = unidadPerfil(request.POST)
+        if form.is_valid():
+            unidadPerfil.save()
+            return render(request, 'home/user.html', {
+                'form': form,
+                'msg': 'Se ha guardado con exito',
+                'msgType': 'EXITO'})
+        else: 
+            return render(request, 'home/user.html', {
+                'form': form,
+                'msg': 'No se ha guardado',
+                'msgType': 'FALLO'})
+
     return render(request, "home/user.html", {'form': form})
+    
+
