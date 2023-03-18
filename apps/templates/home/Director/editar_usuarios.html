@@ -1,0 +1,125 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Editar usuarios {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        {% include 'includes/mensajes.html' %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <h2 class="card-title">Administrador de usuarios</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body px-3">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form }}
+                            </div>
+                            <div class="form-group">
+                                {{ form.jurisdiccion.errors }}
+                                {{ form2.jurisdiccion.label_tag }}
+                                {{ form2.jurisdiccion }}
+                            </div>  
+                            <div class="form-group">
+                                {{ form.unidad.errors }}
+                                {{ form2.unidad.label_tag }}
+                                {{ form2.unidad }}
+                            </div>                          
+                            <div class="row">
+                                <div class="col-md-4"> 
+                                    <input class="btn btn-info animation-on-hover" type="submit" value="Guardar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function() {
+        $('#id_groups').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+        });
+        $('#id_unidad').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+        });
+        var opciones_seleccionadas = $('#id_groups').select2('data');
+        var textos_seleccionados = opciones_seleccionadas.map(function (opcion) {
+            return opcion.text;
+        });
+        var valores_seleccionados = $('#id_groups').val();
+        console.log(textos_seleccionados)
+        if (textos_seleccionados.indexOf('Encargado de unidad') !== -1) {
+            $('#id_unidad').prop('disabled', false).val('');
+        } else {
+            $('#id_unidad').prop('disabled', true).val('');
+        }
+
+        $('#id_groups').on('change', function() {
+            var valores_seleccionados = $(this).val();
+            var opciones_seleccionadas = $(this).select2('data');
+            var textos_seleccionados = opciones_seleccionadas.map(function (opcion) {
+                return opcion.text;
+            });
+            console.log(textos_seleccionados)
+            if (textos_seleccionados.indexOf('Encargado de unidad') !== -1) {
+                $('#id_unidad').prop('disabled', false).val('');
+            } else {
+                $('#id_unidad').prop('disabled', true).val('');
+            }
+        });
+
+        $('#id_jurisdiccion').change(function() {
+            // Obtener el valor seleccionado
+            var jurisdiccion_id = $(this).val();
+            // Hacer la llamada AJAX
+            $.ajax({
+              url: "{% url 'get_unidades' %}",
+              data: {'jurisdiccion_id': jurisdiccion_id},
+              method: 'GET',
+              dataType: 'json',
+              success: function(data) {
+                // Actualizar opciones del input de unidades
+                var unidadesSelect = $('#id_unidad');
+                unidadesSelect.empty();
+                num = 0
+                $.each(data, function(index, unidad) {
+                    num++;
+                  var option = $('<option></option>').attr('value', unidad.pk).text(unidad.claveclues);
+                  unidadesSelect.append(option);
+                });
+                if(num == 0){
+                    var option = $('<option></option>').attr('value', '').text('---------');
+                    unidadesSelect.append(option);
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error(error);
+              }
+            });
+          });
+    });
+</script>
+{% endblock javascripts %}

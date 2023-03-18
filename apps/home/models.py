@@ -95,23 +95,38 @@ class CustomUser(User):
 class Tipologia(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
+    
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
 
 class Establecimiento(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
+    
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
 
 class Institucion(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
+    
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
 
 class Entidad(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
 
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
+    
 class Jurisdiccion(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
 
 class Municipio(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
@@ -119,11 +134,16 @@ class Municipio(models.Model):
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
     jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre   
 
 class Localidad(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.clave + ' - ' + self.nombre
 
 class Unidad(models.Model):
     claveclues = models.CharField(verbose_name = "Clave Clues", max_length = 50)
@@ -132,11 +152,14 @@ class Unidad(models.Model):
     establecimiento = models.ForeignKey(Establecimiento, on_delete=models.CASCADE)
     institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.claveclues
 
 class InformacionUsuario(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE)
-    jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,verbose_name = "Usuario")
+    unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE,verbose_name = "Unidad", null=True, blank=True)
+    jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE,verbose_name = "Jurisdiccion")
 
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
