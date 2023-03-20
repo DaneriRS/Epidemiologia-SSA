@@ -16,8 +16,9 @@ urlpatterns = [
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.assign_groups, name='editarUsuarios'),
     path('perfil', allViews.user, name='user'),
-    path('actualizar//<int:user_id>', allViews.user, name='user'),
-
+    path('editarPerfil/<int:user_id>', allViews.editU, name='editarPerfil'),
+    path('actualizarPerfil/<int:user_id>', allViews.actualizarU, name='actualizarPerfil'),
+    
     # Matches any html file
     # No borrar esta URL
     # re_path(r'^.*\.*', allViews.pages, name='pages'),

@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponse
+from django.contrib.auth.decorators import method_decorator
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from apps.home.models import *
 from apps.home.forms.allForms import *
+
 
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
@@ -13,52 +15,73 @@ def roles_required(roles, redirect_url=None):
         return wrapper
     return decorator
 
-
 @login_required(login_url="/login/")
 def user(request):
-    #user = get_object_or_404(User)
-    form = GroupAssignForm(request.POST)
     if request.method == "POST":
-        form = GroupAssignForm(request.post)
         obj = User(
             username=request.POST['Usuario'],
             first_name=request.POST['Nombre'],
             last_name=request.POST['Apellidos'],
             email=request.POST['Correo'],
-            password=make_password(request.POST['Contraseña']),
+            password=request.POST['Contraseña'],
+        )
+        obj2 = Unidad(
+            claveclues = request.POST['Clave'],
+            establecimiento = request.POST['Establecimiento'],
+            institucion = request.POST['Institucion'],
+            localidad = request.POST['Municipio'],
+
         )
         obj.save()
-        form.save()
-    return render(request, "home/user.html", {'form': form, 'msg': 'Se ha guardado con exito',
-                    'msgType': 'success'})
+        obj2.save()
+    return render(request, "home/user.html")
+
+class UserView(TemplateView):
+    template_name = 'user/list.html'
+@method_decorator(csrf_exept)
+@method_decorator(login_required)
+def dispatch(self, request, *args, **kwargs):
+            return super().__init__.dispatch(request, *args, **kwargs)
+
+def post(self, request, *args, **kwargs):
+    data = {}
+    try:
+        data = super().objects.get(pk=request.POST['id']).toJson()
+        
+    except Exception as e:
+        data['error']= str(e)
+    return JSONResponse(data)
 
 
 @login_required(login_url="/login/")
-def actualizar(request, user_id):
-    user = get_object_or_404(User, id= user_id)
-    form=User()
-    #form2=unidadPerfil()
-    #form = User(initial={'usuario'= username,'Nombre' =first_name, 'Apellidos'=last_name , 'Correo'= email 'Contraseña'= password,'ap'})
-    form= unidadPerfil(initial={
-        'unidad': Unidad.__name__,
-        'claveclues': Unidad.claveclues,
-        'jurisdiccion': Jurisdiccion.clave,
-        'municipio': Municipio.__name__,
-        'entidad': Entidad.nombre})
-    if request.method == "POST":
-        form = unidadPerfil(request.POST)
+def editU(request, user_id):
+    user = User.objects.filter(pk=user_id)
+    form = actualizarU(instance=user)
+    return render(request,"home/user.html", {'form':form, 'user':user})
+
+
+@login_required(login_url="/login/")
+@permission_required('User.can_edit')
+def actualizarU(request, pk):
+    #user = User.object.get(pk=user_id)
+
+    perf=get_object_or_404(BookInstance, pk = pk)
+    #user = get_object_or_404(BookInstance, pk)
+
+    form = actualizaPerfil(request.POST,isinstance=perf)
+
+    if request.method == 'POST':
+        form = actualizaPerfil(request.POST)
+
         if form.is_valid():
-            unidadPerfil.save()
-            return render(request, 'home/user.html', {
-                'form': form,
-                'msg': 'Se ha guardado con exito',
-                'msgType': 'EXITO'})
-        else: 
-            return render(request, 'home/user.html', {
-                'form': form,
-                'msg': 'No se ha guardado',
-                'msgType': 'FALLO'})
+            perf.due_back = form.cleaned_data['']
+            perf.save()
+                #user = User.objects.all()
+            return HttpResponseRedirect(reversed('Datos-eliminados'))
 
-    return render(request, "home/user.html", {'form': form})
-    
-
+    else:
+        form = actualizaPerfil(initial={'username': '','email': '', 'password': '', 'first_name': '', 'last_name'
+'unidad': '', 'claveClues': '', 'jurisdiccion': '', 'municipio': '',
+'entidad': '', 'groups': ''})
+        user = User.objects.all()
+    return render(request, "home/user.html", {'form':form, 'bookinst':perf})

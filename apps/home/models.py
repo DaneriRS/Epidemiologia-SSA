@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import model_to_dict
 
 # Create your models here.
 
@@ -74,6 +75,10 @@ class CustomUserManager(models.Manager):
     User.add_to_class('is_encarJuris', is_encarJuris)
     User.add_to_class('is_encarUni', is_encarUni)
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
 class CustomUser(User):
     class Meta:
         proxy = True
@@ -133,6 +138,9 @@ class Unidad(models.Model):
     institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 class InformacionUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE)
