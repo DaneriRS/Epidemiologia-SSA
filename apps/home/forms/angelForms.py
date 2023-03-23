@@ -367,8 +367,6 @@ class ContactForm3(forms.Form):
             attrs={'placeholder': 'Describa el tratamiento', 'class': 'form-control'}
         )
     )
-<<<<<<< Updated upstream
-=======
 
 class addJurisdiccion(ModelForm):
     
@@ -397,4 +395,3 @@ class addInstitucion(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
->>>>>>> Stashed changes

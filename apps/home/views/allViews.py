@@ -17,7 +17,15 @@ from .daneriViews import *
 
 @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index'}
+    
+    mensaje = 'Bienvenido de nuevo!'
+    msgType = 'success'
+    context = {
+        'segment': 'index',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+    }
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))

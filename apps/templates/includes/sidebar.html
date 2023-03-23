@@ -13,12 +13,12 @@
                 </a>
             </div>
             <ul class="nav">
-                <li class="{% if 'index' in segment %} active {% endif %} ">
-                    <a href="/">
+                {% comment %} <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="{% url 'home' %}">
                         <i class="tim-icons icon-chart-pie-36"></i>
                         <p>Estadísticas</p>
                     </a>
-                </li>
+                </li> {% endcomment %}
                 {% if request.user.is_director %}
                     <li class="{% if 'CRUD_tablas' in segment %} active {% endif %} ">
                         <a href="{% url 'vista_tablas' 'false' %}">
@@ -47,7 +47,7 @@
                         <p>Registrar Paciente</p>
                     </a>
                 </li>
-                <li class="{% if 'index' in segment %} active {% endif %}">
+                <li class="{% if 'ReporteRegistro' in segment %} active {% endif %}">
                     <a href="{% url 'multiForm' %}">
                         <i class="tim-icons icon-paper"></i>
                         <p>Registro de reporte</p>
