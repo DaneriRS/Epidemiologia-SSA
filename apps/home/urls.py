@@ -22,6 +22,10 @@ urlpatterns = [
     # No borrar esta URL
     # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
+    #CRUD INSTITUCION
+    path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
+    path('tablas/jurisdiccion/del/<pk>', allViews.delInstitucion, name = 'delInstitucion'),
+
     
 
 ]

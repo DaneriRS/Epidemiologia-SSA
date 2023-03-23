@@ -51,21 +51,26 @@ def pages(request):
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
 def vista_tablas(request, msg):
-    
+    formAddJurisdiccion = addJurisdiccion()
+    formAddInstitucion = addInstitucion()
+    Instituciones = Institucion.objects.all()
     mensaje = None
     msgType = None
-    if msg == 'prueba1':
-        mensaje = 'Mensaje 1 de prueba'
+    if msg == 'Exito create insti':
+        mensaje = 'Institucion creada con exito!'
         msgType = 'success'
     elif msg == 'prueba2':
         mensaje = 'Mensaje 2 de prueba'
-        msgType = 'info'
+        msgType = 'danger'
         
     context = {
         'segment': 'CRUD_tablas',
         'mensaje':mensaje,
         'msg': mensaje,
         'msgType': msgType,
+        'formAddJurisdiccion' : formAddJurisdiccion,
+        'formAddInstitucion' : formAddInstitucion,
+        'Instituciones' : Instituciones
     }
     
     return render(request, 'home/Director/CRUDTablas.html', context)

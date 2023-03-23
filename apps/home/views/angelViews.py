@@ -51,3 +51,60 @@ def nuevoPaciente(request):
         form = registroPaciente()
     
     return render(request, 'home/nuevoPaciente.html', {'form': form})
+<<<<<<< Updated upstream
+=======
+
+    #CRUD JURISDICCION
+
+    #CRUD INSTITUCION
+def addInstitucionCrud(request):
+    formAddJurisdiccion = addJurisdiccion()
+    formAddInstitucion = addInstitucion()
+    if request.method == 'POST':
+        form = addInstitucion(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                # mensaje = None
+                # msgType = None
+                # mensaje = 'Mensaje 1 de prueba'
+                # msgType = 'success'
+                # context = {
+                #     'segment': 'CRUD_tablas',
+                #     'mensaje':mensaje,
+                #     'msg': mensaje,
+                #     'msgType': msgType,
+                #     'formAddJurisdiccion' : formAddJurisdiccion,
+                #     'formAddInstitucion' : formAddInstitucion
+                # }
+                # return render(request, 'home/Director/CRUDTablas.html', context)
+                return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
+            except:
+                print('error')
+                
+
+def delInstitucion(request, pk):
+    formAddJurisdiccion = addJurisdiccion()
+    formAddInstitucion = addInstitucion()
+
+    try:
+        insti = Institucion.objects.get(id=pk)
+        insti.delete()
+    except:
+        print("error")
+
+    mensaje = None
+    msgType = None
+    mensaje = 'Mensaje 1 de prueba'
+    msgType = 'success'
+    context = {
+        'segment': 'CRUD_tablas',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+        'formAddJurisdiccion' : formAddJurisdiccion,
+        'formAddInstitucion' : formAddInstitucion
+    }
+    return render(request, 'home/Director/CRUDTablas.html', context)
+
+>>>>>>> Stashed changes

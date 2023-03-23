@@ -1,0 +1,63 @@
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Entidad</th>
+                <th>Jurisdiccion</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jur in Jurisdicciones %}
+            <tr>
+                <td class="text-center">{{ jur.pk }}</td>
+                <td>{{ jur.clave }}</td>
+                <td>{{ jur.nombre }}</td>
+                <td>{{ jur.entidad }}</td>
+                <td>{{ jur.jurisdiccion }}</td>
+                <td class="td-actions text-right">
+                    <button type="button" rel="tooltip" class="btn btn-info btn-sm btn-icon">
+                        <i class="tim-icons icon-single-02"></i>
+                    </button>
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon">
+                        <i class="tim-icons icon-settings"></i>
+                    </button>
+                    <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right" style="width: 100%;">
+        <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Añadir nuevo" data-toggle="modal" data-target="#addJurisdiccionModal">
+            <i class="tim-icons icon-simple-add"></i>
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="addJurisdiccionModal" tabindex="-1" role="dialog" aria-labelledby="addJurisdiccionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="addJurisdiccionModalLabel">Agregar nueva jurisdiccion</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="tim-icons icon-simple-remove"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            {{ formAddJurisdiccion }}
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
