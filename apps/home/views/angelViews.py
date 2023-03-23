@@ -51,8 +51,6 @@ def nuevoPaciente(request):
         form = registroPaciente()
     
     return render(request, 'home/nuevoPaciente.html', {'form': form})
-<<<<<<< Updated upstream
-=======
 
     #CRUD JURISDICCION
 
@@ -107,4 +105,3 @@ def delInstitucion(request, pk):
     }
     return render(request, 'home/Director/CRUDTablas.html', context)
 
->>>>>>> Stashed changes

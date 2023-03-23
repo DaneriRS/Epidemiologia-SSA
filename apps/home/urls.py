@@ -26,6 +26,7 @@ urlpatterns = [
     path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
     path('tablas/jurisdiccion/del/<pk>', allViews.delInstitucion, name = 'delInstitucion'),
 
-    
+    #LocalidadExcel
+    path('tablas/Localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
 
 ]

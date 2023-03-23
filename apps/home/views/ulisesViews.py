@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 import pandas as pd
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from apps.home.models import *
 from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
@@ -66,3 +67,32 @@ def import_excel(request):
             'form': form,
             'form2': form2
         })
+
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def LocalidadExcel(request):
+    if request.method=="POST" and "ExcelLocalidad" in request.POST:
+        print("localidad")
+        excel_file = request.FILES['Subir_LocalidadExcel']
+        df = pd.read_excel(excel_file)
+
+        try:
+            # Itera a través de cada fila del DataFrame
+            for index, row in df.iterrows():
+                # Crea una instancia del modelo con los datos de la fila
+                obj = Localidad(
+                    clave=row['clave'],
+                    nombre=row['nombre'],
+                    municipio=row['municipio'],
+                    # Continúa agregando todos los campos del modelo que quieras importar
+                )
+                # Guarda la instancia del modelo en la base de datos
+                obj.save()
+            print('todo bien')
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
+        except:
+            print('error')
+            return redirect(reverse('vista_tablas', kwargs={'msg':'prueba2'}))
+    else:
+        print("algo")
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))

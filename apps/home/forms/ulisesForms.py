@@ -13,6 +13,15 @@ class ExcelForm(forms.Form):
         )  
     )
 
+class ExcelLocalidadForm(forms.Form):
+    Subir_LocalidadExcel=forms.FileField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )  
+    )
+
 class IndividualForm(forms.Form):
     Usuario=forms.CharField(
         widget=forms.TextInput(

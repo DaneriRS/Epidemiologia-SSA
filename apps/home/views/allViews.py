@@ -53,7 +53,9 @@ def pages(request):
 def vista_tablas(request, msg):
     formAddJurisdiccion = addJurisdiccion()
     formAddInstitucion = addInstitucion()
+    formExeclLocalidad = ExcelLocalidadForm()
     Instituciones = Institucion.objects.all()
+    Localidades = Localidad.objects.all()
     mensaje = None
     msgType = None
     if msg == 'Exito create insti':
@@ -70,7 +72,9 @@ def vista_tablas(request, msg):
         'msgType': msgType,
         'formAddJurisdiccion' : formAddJurisdiccion,
         'formAddInstitucion' : formAddInstitucion,
-        'Instituciones' : Instituciones
+        'formExcelLocalidad' : formExeclLocalidad,
+        'Instituciones' : Instituciones,
+        'Localidades': Localidades,
     }
     
     return render(request, 'home/Director/CRUDTablas.html', context)
