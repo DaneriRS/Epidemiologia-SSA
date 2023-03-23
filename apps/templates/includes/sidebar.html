@@ -20,6 +20,14 @@
                     </a>
                 </li>
                 {% if request.user.is_director %}
+                    <li class="{% if 'CRUD_tablas' in segment %} active {% endif %} ">
+                        <a href="{% url 'vista_tablas' 'false' %}">
+                            <i class="tim-icons icon-book-bookmark"></i>
+                            <p>Tablas de base de datos</p>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if request.user.is_director %}
                     <li class="{% if 'Lista_Usuarios_Director' in segment %} active {% endif %} ">
                         <a href="{% url 'lista_usuarios' %}">
                             <i class="tim-icons icon-bullet-list-67"></i>

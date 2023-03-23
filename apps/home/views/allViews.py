@@ -47,3 +47,25 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def vista_tablas(request, msg):
+    
+    mensaje = None
+    msgType = None
+    if msg == 'prueba1':
+        mensaje = 'Mensaje 1 de prueba'
+        msgType = 'success'
+    elif msg == 'prueba2':
+        mensaje = 'Mensaje 2 de prueba'
+        msgType = 'info'
+        
+    context = {
+        'segment': 'CRUD_tablas',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+    }
+    
+    return render(request, 'home/Director/CRUDTablas.html', context)

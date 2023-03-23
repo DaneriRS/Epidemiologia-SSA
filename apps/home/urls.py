@@ -16,6 +16,7 @@ urlpatterns = [
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
     path('ajax/consultar/unidades/', allViews.consultar_unidades, name='get_unidades'),
+    path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
 
     # Matches any html file
     # No borrar esta URL

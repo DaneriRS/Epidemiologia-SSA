@@ -1,0 +1,212 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Tablas de Base de Datos {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        {% include 'includes/mensajes.html' %}
+        <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col text-left">
+                                    <h2 class="card-title">Administrador de tablas de base de datos</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEntidad" aria-expanded="false" aria-controls="collapseEntidadHeading">
+                                Entidad
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseJurisdiccion" aria-expanded="false" aria-controls="collapseJurisdiccionHeading">
+                                Jurisdiccion
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMunicipio" aria-expanded="false" aria-controls="collapseMunicipioHeading">
+                                Municipio
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLocalidad" aria-expanded="false" aria-controls="collapseLocalidadHeading">
+                                Localidad
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseInstitucion" aria-expanded="false" aria-controls="collapseInstitucionHeading">
+                                Institucion
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstablecimiento" aria-expanded="false" aria-controls="collapseEstablecimientoHeading">
+                                Establecimiento
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseTipologia" aria-expanded="false" aria-controls="collapseTipologiaHeading">
+                                Tipologia
+                            </a>
+                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseUnidades" aria-expanded="false" aria-controls="collapseUnidadesHeading">
+                                Unidades
+                            </a>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        
+            <div id="collapseEntidad" class="collapse" role="tabpanel" aria-labelledby="collapseEntidadHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Entidades</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/entidades.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseJurisdiccion" class="collapse" role="tabpanel" aria-labelledby="collapseJurisdiccionHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Jurisdicciones</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/jurisdicciones.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseMunicipio" class="collapse" role="tabpanel" aria-labelledby="collapseMunicipioHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Municipios</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/municipios.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseLocalidad" class="collapse" role="tabpanel" aria-labelledby="collapseLocalidadHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Localidades</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/localidades.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseInstitucion" class="collapse" role="tabpanel" aria-labelledby="collapseInstitucionHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Instituciones</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/instituciones.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseEstablecimiento" class="collapse" role="tabpanel" aria-labelledby="collapseEstablecimientoHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Establecimientos</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/establecimientos.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseTipologia" class="collapse" role="tabpanel" aria-labelledby="collapseTipologiaHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Tipologias</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/tipologias.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseUnidades" class="collapse" role="tabpanel" aria-labelledby="collapseUnidadesHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Unidades</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/CRUDS/unidades.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
