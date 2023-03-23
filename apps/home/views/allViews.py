@@ -72,6 +72,12 @@ def vista_tablas(request, msg):
     elif msg == 'prueba2':
         mensaje = 'Mensaje 2 de prueba'
         msgType = 'danger'
+    elif msg == 'Exito Localidad Excel':
+        mensaje = 'Registros Realizados con Exito'
+        msgType = 'success'
+    elif msg == 'Error Localidad Excel':
+        mensaje = '¡ERROR! Registros no Realizados'
+        msgType = 'danger'
         
     context = {
         'segment': 'CRUD_tablas',

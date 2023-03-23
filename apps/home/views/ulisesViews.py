@@ -80,19 +80,19 @@ def LocalidadExcel(request):
             # Itera a través de cada fila del DataFrame
             for index, row in df.iterrows():
                 # Crea una instancia del modelo con los datos de la fila
-                obj = Localidad(
-                    clave=row['clave'],
-                    nombre=row['nombre'],
-                    municipio=row['municipio'],
-                    # Continúa agregando todos los campos del modelo que quieras importar
-                )
-                # Guarda la instancia del modelo en la base de datos
-                obj.save()
-            print('todo bien')
-            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
+                print(row['clave'] + " - " +row['nombre']+ " - " +row['municipio'])
+                # obj = Localidad(
+                #     clave=row['clave'],
+                #     nombre=row['nombre'],
+                #     municipio=row['municipio'],
+                #     # Continúa agregando todos los campos del modelo que quieras importar
+                # )
+                # # Guarda la instancia del modelo en la base de datos
+                # obj.save()
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Localidad Excel'}))
         except:
             print('error')
-            return redirect(reverse('vista_tablas', kwargs={'msg':'prueba2'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Localidad Excel'}))
     else:
         print("algo")
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
