@@ -58,7 +58,7 @@
                     </a>
                 </li> {% endcomment %}
                 <li class="{% if 'user' in segment %} active {% endif %}">
-                    <a href="{% url 'user' %}">
+                    <a href="{% url 'user' user.id %}">
                         <i class="tim-icons icon-single-02"></i>
                         <p>Perfil</p>
                     </a>

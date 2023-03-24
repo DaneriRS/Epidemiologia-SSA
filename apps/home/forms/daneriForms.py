@@ -4,27 +4,6 @@ from apps.home.models import *
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import permission_required
 
-class User(forms.Form):
-    class Meta:
-        model = User
-        fields = '__all__'
-        widgets = {
-            '' : forms.TextInput(attrs=(['class']=: 'form-control'))
-        }
-        permissions_required='User.can_edit'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'required': 'required'
-            })
-        for form in self.visible_fields():
-                form.field.widget.attrs['class']= 'form-control',
-                form.field.widget.attrs['autocomplete']= 'off',
-
-
 class actualizaPerfil(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -33,10 +12,22 @@ class actualizaPerfil(forms.ModelForm):
         self.fields['password'].widget.attrs.update({'User': 'password'})
         self.fields['first_name'].widget.attrs.update({'User': 'firstname'})
         self.fields['last_name'].widget.attrs.update({'User': 'last_name'})
-        self.fields['unidad'].widget.attrs.update({'Institucion': 'nombre'})
-        self.fields['claveClues'].widget.attrs.update({'unidad': 'claveclues'})
-        self.fields['jurisdiccion'].widget.attrs.update({'jurisdiccion': 'clave'})
-        self.fields['municipio'].widget.attrs.update({'Municipio': 'nombre'})
-        self.fields['entidad'].widget.attrs.update({'Entidad': 'nombre'})
         self.fields['groups'].widget.attrs.update({'CustomUser': 'User'})
+
+
+class userProfileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        _model = User
+        fields = 'username', 'password', 'email', 'first_name', 'last_name',
+        widgets = {
+            'username': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
+            'password': forms.PasswordInput(attrs={'class': 'form-control',}                                ),
+            'email': forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control',})),
+            'first_name': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
+            'last_name': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
+        }
 

@@ -24,46 +24,45 @@
           <h5 {% if bookinst.is_overdue %} class="text-danger"{% endif %} class="title">Editar Perfil{{bookinst.due_back}}</h5>
         </div>
         <div class="card-body" >
-          <form role="form" method="post" action="#">
+          <form >
             {% csrf_token %}
 
-            {{ form }}
             <div class="row">
               <div class="col-md-5 pr-md-1">
                 <div class="form-group">
                   <label>Unidad Médica (No editable)</label>
-                  <input type="text" class="form-control"  placeholder="Unidad" name="user" value="{{request.user.unidad}}"><!-- value="{{request.unidad.nombre}}"-->
+                  <input type="text" class="form-control" disable=" " placeholder="Unidad"  value="{{request.user.unidad}}"><!-- value="{{request.unidad.nombre}}"-->
                 </div>
               </div>
               <div class="col-md-4 px-md-1">
                 <div class="form-group">
                   <label>CLUES</label>
-                  <input type="text" class="form-control" placeholder="MNSSA001886" name="user" value="{{request.user.claveclues}}"><!-- value="{{request.unidad.clue}}"-->
+                  <input type="text" class="form-control" disable=" " placeholder="MNSSA001886"  value="{{request.user.claveclues}}"><!-- value="{{request.unidad.clue}}"-->
                 </div>
               </div>
               <div class="col-md-2 pl-md-1">
                 <div class="form-group">
                   <label>Jurisdicción</label>
-                  <input type="number" class="form-control"  placeholder="00" name="user" value="{{request.user.jurisdiccion}}"><!-- value="{{request.unidad.juris}}"-->
+                  <input type="number" class="form-control" disable=" " placeholder="00"  value="{{request.user.jurisdiccion}}"><!-- value="{{request.unidad.juris}}"-->
                 </div>
               </div>
             </div><div class="row">
               <div class="col-md-4 pr-md-1">
                 <div class="form-group">
                   <label>Municipio</label>
-                  <input type="text" class="form-control"  placeholder="Municipio" name="user" value="{{request.user.municipio}}"><!-- value="{{form.idMunicipio}}"-->
+                  <input type="text" class="form-control" disable=" " placeholder="Municipio"  value="{{request.user.municipio}}"><!-- value="{{form.idMunicipio}}"-->
                 </div>
               </div>
               <div class="col-md-4 px-md-1">
                 <div class="form-group">
                   <label>Entidad</label>
-                  <input type="text" class="form-control"  placeholder="Entidad" name="user" value="{{request.userUnidad.entidad}}"><!-- value="{{request.unidad.estado}}"-->
+                  <input type="text" class="form-control" disable=" " placeholder="Entidad"  value="{{request.userUnidad.entidad}}"><!-- value="{{request.unidad.estado}}"-->
                 </div>
               </div>
               <div class="col-md-3 pr-md-1">
                 <div class="form-group">
                   <label>Cargo</label>
-                  <input type="text" class="form-control"   placeholder="Medico" name="user" value="{{request.user.puesto}}" ><!-- value="{{request.user.cargo}}"-->
+                  <input type="text" class="form-control" disable=" "  placeholder="Medico"  value="{{request.user.puesto}}" ><!-- value="{{request.user.cargo}}"-->
                 </div>
               </div>
             </div>
@@ -71,19 +70,19 @@
               <div class="col-md-3 pR-md-1">
                 <div class="form-group">
                   <label>Usuario</label>
-                  <input type="text" class="form-control"  placeholder="User" name="user" value="{{ request.user.username }}">
+                  <input type="text" class="form-control"  value="{{ request.user.username }}">
                 </div>
               </div>
               <div class="col-md-4 pl-md-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Correo </label>
-                  <input type="email" class="form-control"  name="user"  value="{{request.user.email}}">
+                  <input type="email" class="form-control"    value="{{request.user.email}}">
                 </div>
               </div>
               <div class="col-md-5 pl-md-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Contraseña </label>
-                  <input type="email" class="form-control"   name="user" value="{{ request.user.password }}">
+                  <input type="email" class="form-control"  value="{{ request.user.password }}">
                 </div>
               </div>
             </div>
@@ -91,25 +90,24 @@
               <div class="col-md-5 pr-md-1">
                 <div class="form-group">
                   <label>Nombre(s)</label>
-                  <input type="text" class="form-control" name="user" value="{{request.user.first_name}}">
+                  <input type="text" class="form-control"   placeholder="Selena" value="{{request.user.first_name}}">
                 </div>
               </div>
               <div class="col-md-7 pl-md-1">
                 <div class="form-group">
                   <label>Apellidos</label>
-                  <input type="text" class="form-control" name="user" value=" {{request.user.last_name}}">
+                  <input type="text" class="form-control" placeholder="Quintanilla" value="{{request.user.last_name}}">
                 </div>
               </div>
             </div>
-            <div class="modal-body">
+            <!--<div class="modal-body">
               <input name="id" id="id" type="hidden" value="0">
               {% for field in form.visible_fields %}
               <div class="form-group">
                 <label for="email">{{field.label}}:</label>
-                {{field|edit:'form-control'|attr:'autocomplete:off'}}
               </div>
               {%endfor%}
-            </div>
+            </div>-->
             <!--<div class="row">
               <div class="col-md-8">
                 <div class="form-group">
@@ -120,12 +118,8 @@
             </div>-->
           </form>
         </div>
-        {{form}}
-        <div class="card-footer" role="form" method="post" action="#">
-        <a type="submit" class="edit btn btn-fill btn-info" href="{% url 'editarPerfil' user.id}" >Editar</a>
-          {% if perms.User.can_edit %}
-            <button type="submit" class="btn btn-fill btn-info" href="{% url 'actualizarPerfil' user.id}>Guardar</button>
-          {% endif %}
+        <div class="card-footer" method="post" action="#">
+          <button type="submit" class="btn btn-fill btn-info" href="{% url 'user' user.id %}" >Guardar</button>
         </div>
       </div>
     </div>
@@ -140,19 +134,19 @@
               <div class="block block-four"></div>
               <a href="javascript:void(0)">
                 <img class="avatar" src="{{ ASSETS_ROOT }}/img/emilyz.jpg" alt="...">
-                <h5 class="title" name="user">{{request.user.first_name}} {{request.user.last_name}}</h5>
+                <h5 class="title" >{{request.get_full_name}}</h5>
               </a>
-              <p class="description">
-                <!-- value="{{request.user.cargo}}"-->
+              <p class="description"
+                value="{{assing_groups}}">
               </p>
             </div>
           </p>
-          <div class="card-description">
+          <!--<div class="card-description">
             Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-          </div>
+          </div>-->
         </div>
-        <div class="card-footer">
-          <!--<div class="button-container">
+        <!--<div class="card-footer">
+          <div class="button-container">
             <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
               <i class="fab fa-facebook"></i>
             </button>
@@ -173,12 +167,4 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-  <script type"application/javascript">
-    $(function (){
-      $('#data')
-      .DataTable({
-        responsive: true,
-        autowidth: false
-      });
-    })    })
  {% endblock javascripts %}

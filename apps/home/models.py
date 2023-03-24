@@ -2,7 +2,6 @@
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import model_to_dict
 
 # Create your models here.
 
@@ -75,13 +74,6 @@ class CustomUserManager(models.Manager):
     User.add_to_class('is_encarJuris', is_encarJuris)
     User.add_to_class('is_encarUni', is_encarUni)
 
-<<<<<<< HEAD
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
-
-=======
->>>>>>> 6d58bca8002f9b3818e0832d463fe1b5814fbd47
 class CustomUser(User):
     class Meta:
         proxy = True
@@ -164,9 +156,6 @@ class Unidad(models.Model):
     def __str__(self):
         return self.claveclues
 
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
 class InformacionUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,verbose_name = "Usuario")
     unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE,verbose_name = "Unidad", null=True, blank=True)
@@ -191,4 +180,3 @@ class Paciente(models.Model):
     # idEntidad = models.CharField(verbose_name = "Entidad", max_length=2, choices=ENTIDADES) 
     codigoPostal = models.CharField(verbose_name = "Codigo postal", max_length=5)
     telefonoPaciente = models.CharField(verbose_name = "Telefono", max_length = 10)
-
