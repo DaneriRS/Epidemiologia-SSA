@@ -25,8 +25,13 @@ urlpatterns = [
     #CRUD INSTITUCION
     path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
     path('tablas/jurisdiccion/del/<pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    
+    #CRUD INSTITUCION
+    path('tablas/municipio/add', allViews.addInstitucionCrud, name = 'addMunicipio'),
+    path('tablas/municipio/del/<pk>', allViews.delInstitucion, name = 'delMunicipio'),
+    path('tablas/municipio/edit/<pk>', allViews.delInstitucion, name = 'editMunicipio'),
 
     #LocalidadExcel
-    path('tablas/Localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
+    path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
 
 ]
