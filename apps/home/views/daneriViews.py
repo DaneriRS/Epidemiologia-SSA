@@ -58,7 +58,7 @@ def addEntidadCRUD(request):
             except:
                 print('error')
 
-def delEntidadCRUD(request, pk):
+def delEntidad(request, pk):
     formAddEntidad = addEntidad()
     formAddEstablecimiento = addEstablecimiento()
 
