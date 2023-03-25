@@ -19,11 +19,31 @@ urlpatterns = [
     path('perfil/<int:user_id>', allViews.user, name='user'),
     
 
+    path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
 
     # Matches any html file
     # No borrar esta URL
     # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
+    #CRUD INSTITUCION
+    path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
+    path('tablas/jurisdiccion/del/<pk>', allViews.delInstitucion, name = 'delInstitucion'),
     
+    #CRUD INSTITUCION
+    path('tablas/municipio/add', allViews.addInstitucionCrud, name = 'addMunicipio'),
+    path('tablas/municipio/del/<pk>', allViews.delInstitucion, name = 'delMunicipio'),
+    path('tablas/municipio/edit/<pk>', allViews.delInstitucion, name = 'editMunicipio'),
+
+    #LocalidadExcel
+    path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
+
+    #MunicpioExcel
+    path('tablas/municipio/Excel/', allViews.MunicipioExcel, name = 'MunicipioExcel'),
+
+    #UnidadMedicaExcel
+    path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
+
+    path('tablas/establecimiento/Excel/', allViews.EstablecimientoExcel, name = 'EstablecimientoExcel'),
+    path('tablas/entidad/Excel/', allViews.EntidadExcel, name = 'EntidadExcel'),
 
 ]

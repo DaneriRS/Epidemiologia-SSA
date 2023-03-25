@@ -1,0 +1,91 @@
+<div class="card">
+    <table class="table table-striped table-hover" id="tabla_localidades">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Nombre</th>
+                <th>Clave</th>
+                <th>Municipio</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Localidad in Localidades %}
+            <tr>
+                <td class="text-center">{{ Localidad.pk }}</td>
+                <td>{{ Localidad.nombre }}</td>
+                <td>{{ Localidad.clave }}</td>
+                <td>{{ Localidad.municipio }}</td>
+                <td class="td-actions text-center">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editInstitucionModal" title="Editar">
+                        <i class="tim-icons icon-settings"></i>
+                    </button>
+                    <a href="/" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right" style="width: 100%;">
+        <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Añadir nuevo"
+            data-toggle="modal" data-target="#addLocalidadModal">
+            <i class="tim-icons icon-simple-add"></i>
+        </button>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR LOCALIDAD -->
+<div class="modal fade" id="addLocalidadModal" tabindex="-1" aria-labelledby="addLocalidadModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addLocalidadModalLabel">Agregar nueva Localidad</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'LocalidadExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formExcelLocalidad }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" name="ExcelLocalidad">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR INSTITUCION 
+<div class="modal fade" id="editInstitucionModal" tabindex="-1" role="dialog" aria-labelledby="editInstitucionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editInstitucionModalLabel">Editar institucion</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'addInstitucionCrud' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formAddInstitucion }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->

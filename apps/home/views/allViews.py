@@ -17,7 +17,15 @@ from .daneriViews import *
 
 @login_required(login_url="/login/")
 def index(request):
-    context = {'segment': 'index'}
+    
+    mensaje = 'Bienvenido de nuevo!'
+    msgType = 'success'
+    context = {
+        'segment': 'index',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+    }
 
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
@@ -47,3 +55,48 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def vista_tablas(request, msg):
+    formAddJurisdiccion = addJurisdiccion()
+    formAddInstitucion = addInstitucion()
+    formExeclLocalidad = ExcelLocalidadForm()
+    formExcelMunicipio= ExcelMunicipioForm()
+    formExcelUMedicas = ExcelUMedicasForm()
+    Instituciones = Institucion.objects.all()
+    Localidades = Localidad.objects.all()
+    Municipios = Municipio.objects.all()
+    Umedicas = Unidad.objects.all()
+    mensaje = None
+    msgType = None
+    if msg == 'Exito create insti':
+        mensaje = 'Institucion creada con exito!'
+        msgType = 'success'
+    elif msg == 'prueba2':
+        mensaje = 'Mensaje 2 de prueba'
+        msgType = 'danger'
+    elif msg == 'Exito Registro Excel':
+        mensaje = 'Registros Realizados con Exito'
+        msgType = 'success'
+    elif msg == 'Error Registro Excel':
+        mensaje = '¡ERROR! Registros no Realizados'
+        msgType = 'danger'
+        
+    context = {
+        'segment': 'CRUD_tablas',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+        'formAddJurisdiccion' : formAddJurisdiccion,
+        'formAddInstitucion' : formAddInstitucion,
+        'formExcelLocalidad' : formExeclLocalidad,
+        'formExcelMunicipio' : formExcelMunicipio,
+        'formExcelUMedicas' : formExcelUMedicas,
+        'Instituciones' : Instituciones,
+        'Localidades': Localidades,
+        'Municipios' : Municipios,
+        'Umedicas' : Umedicas
+    }
+    
+    return render(request, 'home/Director/CRUDTablas.html', context)

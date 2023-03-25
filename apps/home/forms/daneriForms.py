@@ -31,3 +31,31 @@ class userProfileForm(forms.ModelForm):
             'last_name': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
         }
 
+class addEstablecimiento(ModelForm):
+    
+    class Meta:
+        model = Establecimiento
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })
+
+class addEntidad(ModelForm):
+
+    class Meta:
+        model = Entidad
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })
+

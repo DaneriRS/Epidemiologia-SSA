@@ -1,0 +1,95 @@
+<div class="card">
+    <table class="table table-striped table-hover" id="tabla_umedicas">
+        <thead>
+            <tr>
+                <th class="text-center">Clave Clues</th>
+                <th>Clave Suave</th>
+                <th>Tipologia</th>
+                <th>Establecimiento</th>
+                <th>Institucion</th>
+                <th>Localidad</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Umedica in Umedicas %}
+            <tr>
+                <td class="text-center">{{ Umedica.claveclues }}</td>
+                <td>{{ Umedica.claveSuave }}</td>
+                <td>{{ Umedica.tipologia }}</td>
+                <td>{{ Umedica.establecimiento }}</td>
+                <td>{{ Umedica.institucion }}</td>
+                <td>{{ Umedica.localidad }}</td>
+                <td class="td-actions text-center">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar">
+                        <i class="tim-icons icon-settings"></i>
+                    </button>
+                    <a href="{% url 'delMunicipio' muni.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right" style="width: 100%;">
+        <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Añadir nuevo"
+            data-toggle="modal" data-target="#addUMedicaModal">
+            <i class="tim-icons icon-simple-add"></i>
+        </button>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR MUNICIPIO -->
+<div class="modal fade" id="addUMedicaModal" tabindex="-1" aria-labelledby="addUMedicaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addUMedicaModalLabel">Agregar nueva Unidad Medica</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'UMedicaExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formExcelUMedicas }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" name="ExcelUMedicas">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR MUNICIPIO -->
+{% comment %} <div class="modal fade" id="editMunicipioModal" tabindex="-1" role="dialog" aria-labelledby="editMunicipioModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editMunicipioModalLabel">Editar municipio</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'editMunicipio' 1 %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formAddInstitucion }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> {% endcomment %}

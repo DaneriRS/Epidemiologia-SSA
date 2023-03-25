@@ -367,3 +367,31 @@ class ContactForm3(forms.Form):
             attrs={'placeholder': 'Describa el tratamiento', 'class': 'form-control'}
         )
     )
+
+class addJurisdiccion(ModelForm):
+    
+    class Meta:
+        model = Jurisdiccion
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })
+
+class addInstitucion(ModelForm):
+
+    class Meta:
+        model = Institucion
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })
