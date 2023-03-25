@@ -43,7 +43,10 @@ urlpatterns = [
     #UnidadMedicaExcel
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
 
-    path('tablas/establecimiento', allViews.addEstablecimiento, name = 'addEstablecimiento'),
-    path('tablas/entidad', allViews.addEntidad, name = 'addEntidad'),
+    path('tablas/add', allViews.addEntidadCRUD, name = 'addEntidad'),
+    path('tablas/entidad/del/<pk>', allViews.addEntidadCRUD, name = 'addEntidad'),
+    
+    path('tablas/add', allViews.addEntidadCRUD, name = 'addEstablecimiento'),
+    path('tablas/entidad/del/<pk>', allViews.addEntidadCRUD, name = 'addEstablecimiento'),
 
 ]

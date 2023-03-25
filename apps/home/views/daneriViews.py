@@ -33,7 +33,7 @@ def user(request, user_id):
 
 
 
-def addEstablecimientoCrud(request):
+def addEntidadCRUD(request):
     formAddEntidad = addEntidad()
     formAddEstablecimiento = addEstablecimiento()
     if request.method == 'POST':
@@ -41,11 +41,24 @@ def addEstablecimientoCrud(request):
         if form.is_valid():
             try:
                 form.save()
-                return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create estb'}))
+                mensaje = None
+                msgType = None
+                mensaje = 'Mensaje 1 de prueba'
+                msgType = 'success'
+                context = {
+                    'segment': 'CRUD_tablas',
+                    'mensaje':mensaje,
+                    'msg': mensaje,
+                    'msgType': msgType,
+                    'formAddJurisdiccion' : formAddJurisdiccion,
+                    'formAddInstitucion' : formAddInstitucion
+                }
+                return render(request, 'home/Director/CRUDTablas.html', context)
+                #return redirect(reverse('vista_tablas', kwargs={'msg':'Exito creado Entidad'}))
             except:
                 print('error')
 
-def delEstablecimiento(request, pk):
+def delEntidadCRUD(request, pk):
     formAddEntidad = addEntidad()
     formAddEstablecimiento = addEstablecimiento()
 

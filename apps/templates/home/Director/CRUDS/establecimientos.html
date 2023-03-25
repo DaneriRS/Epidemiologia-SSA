@@ -9,13 +9,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for inst in Establecimiento %}
+            {% for estb in Establecimiento %}
             <tr>
-                <td class="text-center">{{ inst.pk }}</td>
-                <td>{{ inst.clave }}</td>
-                <td>{{ inst.nombre }}</td>
+                <td class="text-center">{{ estb.pk }}</td>
+                <td>{{ estb.clave }}</td>
+                <td>{{ estb.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editInstitucionModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delestablecimiento' estab.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
