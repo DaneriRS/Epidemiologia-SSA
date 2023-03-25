@@ -47,16 +47,16 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addMunicipio' %}" method="post">
+            <form action="{% url 'MunicipioExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddInstitucion }}
+                    {{ formExcelMunicipio }}
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
                 </div>
             </form>
         </div>

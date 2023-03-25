@@ -89,10 +89,75 @@ def LocalidadExcel(request):
                 # )
                 # # Guarda la instancia del modelo en la base de datos
                 # obj.save()
-            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Localidad Excel'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
         except:
             print('error')
-            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Localidad Excel'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
     else:
-        print("algo")
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+    
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def MunicipioExcel(request):
+    if request.method=="POST" and "ExcelMunicipio" in request.POST:
+        print("municipio")
+        excel_file = request.FILES['Subir_MunicipioExcel']
+        df = pd.read_excel(excel_file)
+
+        try:
+            # Itera a través de cada fila del DataFrame
+            for index, row in df.iterrows():
+                # Crea una instancia del modelo con los datos de la fila
+                print(row['clave'] + " - " +row['nombre']+ " - " +row['entidad']+ " - " +row['jurisdiccion'])
+                # obj = Municipio(
+                #     clave=row['clave'],
+                #     nombre=row['nombre'],
+                #     municipio=row['municipio'],
+                #     jurisdiccion=row['jurisdiccion']
+                #     # Continúa agregando todos los campos del modelo que quieras importar
+                # )
+                # # Guarda la instancia del modelo en la base de datos
+                # obj.save()
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
+        except:
+            print('error')
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def UMedicaExcel(request):
+    if request.method=="POST" and "ExcelUMedicas" in request.POST:
+        print("Unidad Medica")
+        excel_file = request.FILES['Subir_UmedicasExcel']
+        df = pd.read_excel(excel_file)
+
+        try:
+            # Itera a través de cada fila del DataFrame
+            for index, row in df.iterrows():
+                # Crea una instancia del modelo con los datos de la fila
+                print(row['claveclues'] + " - " +row['claveSuave']+ " - " +row['tipologia']+ " - " +row['establecimiento']+ " - " +row['institucion']+ " - " +row['localidad'])
+                # obj = Unidad(
+                #     claveclues=row['claveclues'],
+                #     claveSuave=row['claveSuave'],
+                #     tipologia=row['tipologia'],
+                #     establecimiento=row['establecimiento'],
+                #     institucion=row['institucion'],
+                #     localidad=row['localidad'],
+                #     # Continúa agregando todos los campos del modelo que quieras importar
+                # )
+                # #Guarda la instancia del modelo en la base de datos
+                # obj.save()
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
+        except:
+            print('error')
+            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+   
+
+
+    

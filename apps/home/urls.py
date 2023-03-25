@@ -34,4 +34,10 @@ urlpatterns = [
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
 
+    #MunicpioExcel
+    path('tablas/municipio/Excel/', allViews.MunicipioExcel, name = 'MunicipioExcel'),
+
+    #UnidadMedicaExcel
+    path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
+
 ]
