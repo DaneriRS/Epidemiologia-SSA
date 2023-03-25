@@ -1,9 +1,3 @@
-class Establecimiento(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
-    nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
-    
-    def __str__(self):
-        return self.clave + ' - ' + self.nombre
 <div class="card">
     <table class="table table-striped table-hover" id="tabla_establecimiento">
         <thead>

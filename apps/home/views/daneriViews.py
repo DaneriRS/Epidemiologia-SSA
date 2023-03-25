@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, render
 from apps.home.models import *
 from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import user_passes_test
 
 def roles_required(roles, redirect_url=None):
@@ -29,3 +28,44 @@ def user(request, user_id):
             form.save()
     return render(request, "home/user.html", {'form': 'form', 'msg': 'Se ha guardado con exito',
                     'msgType': 'success'})
+
+
+
+
+
+def addEstablecimientoCrud(request):
+    formAddEntidad = addEntidad()
+    formAddEstablecimiento = addEstablecimiento()
+    if request.method == 'POST':
+        form = addEstablecimiento(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create estb'}))
+            except:
+                print('error')
+
+def delEstablecimiento(request, pk):
+    formAddEntidad = addEntidad()
+    formAddEstablecimiento = addEstablecimiento()
+
+    try:
+        estb = Establecimiento.objects.get(id=pk)
+        estb.delete()
+    except:
+        print("error")
+
+    mensaje = None
+    msgType = None
+    mensaje = 'Mensaje 1 de prueba'
+    msgType = 'success'
+    context = {
+        'segment': 'CRUD_tablas',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+        'formAddEntidad' : formAddEntidad,
+        'formAddEstablecimiento' : formAddEstablecimiento
+    }
+    return render(request, 'home/Director/CRUDTablas.html', context)
+

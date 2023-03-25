@@ -30,6 +30,14 @@ class userProfileForm(forms.ModelForm):
             'first_name': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
             'last_name': forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',})),
         }
+class ExcelForm(forms.Form):
+    Subir_Excel=forms.FileField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )  
+    )
 
 class addEstablecimiento(ModelForm):
     
@@ -58,4 +66,3 @@ class addEntidad(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
-
