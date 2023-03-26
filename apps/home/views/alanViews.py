@@ -137,7 +137,7 @@ def editar_usuarios(request, user_id):
             })
         
         
-@login_required
+@login_required(login_url="/login/")
 def consultar_unidades(request):
     if request.is_ajax():
         jurisdiccion = request.GET['jurisdiccion_id']
@@ -152,3 +152,51 @@ def consultar_unidades(request):
                 print(e)
                 
     return redirect('home')
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def addMunicipio(request):
+    if request.method == 'POST':
+        form = MunicipioForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedMunicipio'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedMunicipio'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editMunicipio(request, pk):
+    if request.method == 'POST':
+        try:
+            entity = Municipio.objects.get(id = pk)
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistMunicipio'}))
+        form = MunicipioForm(request.POST, instance=entity)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedMunicipio'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedMunicipio'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def delMunicipio(request, pk):
+    if request.method == 'POST':
+        try:
+            entity = Municipio.objects.get(id = pk)
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistMunicipio'}))
+        try:
+            entity.delete()
+            return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedMunicipio'}))
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedMunicipio'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))

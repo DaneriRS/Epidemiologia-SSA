@@ -64,6 +64,10 @@ def vista_tablas(request, msg):
     formExeclLocalidad = ExcelLocalidadForm()
     formExcelMunicipio= ExcelMunicipioForm()
     formExcelUMedicas = ExcelUMedicasForm()
+    
+    formAddMunicipio = MunicipioForm(auto_id="addMunicipio_%s")
+    formEditMunicipio = MunicipioForm(auto_id="editMunicipio_%s")
+    
     Instituciones = Institucion.objects.all()
     Localidades = Localidad.objects.all()
     Municipios = Municipio.objects.all()
@@ -73,9 +77,6 @@ def vista_tablas(request, msg):
     if msg == 'Exito create insti':
         mensaje = 'Institucion creada con exito!'
         msgType = 'success'
-    elif msg == 'prueba2':
-        mensaje = 'Mensaje 2 de prueba'
-        msgType = 'danger'
     elif msg == 'Exito Registro Excel':
         mensaje = 'Registros Realizados con Exito'
         msgType = 'success'
@@ -96,7 +97,9 @@ def vista_tablas(request, msg):
         'Instituciones' : Instituciones,
         'Localidades': Localidades,
         'Municipios' : Municipios,
-        'Umedicas' : Umedicas
+        'Umedicas' : Umedicas,
+        'formAddMunicipio' : formAddMunicipio,
+        'formEditMunicipio' : formEditMunicipio,
     }
     
     return render(request, 'home/Director/CRUDTablas.html', context)

@@ -37,3 +37,17 @@ class InformacionUsuarioForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+            
+class MunicipioForm(forms.ModelForm):
+    
+    class Meta:
+        model = Municipio
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
