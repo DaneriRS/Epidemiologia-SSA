@@ -188,15 +188,12 @@ def editMunicipio(request, pk):
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
 def delMunicipio(request, pk):
-    if request.method == 'POST':
-        try:
-            entity = Municipio.objects.get(id = pk)
-        except Exception as e:
-            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistMunicipio'}))
-        try:
-            entity.delete()
-            return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedMunicipio'}))
-        except Exception as e:
-            return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedMunicipio'}))
-    else:
-        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    try:
+        entity = Municipio.objects.get(id = pk)
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistMunicipio'}))
+    try:
+        entity.delete()
+        return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedMunicipio'}))
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedMunicipio'}))

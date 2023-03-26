@@ -76,6 +76,7 @@ def vista_tablas(request, msg):
     Localidades = Localidad.objects.all()
     Municipios = Municipio.objects.all()
     Umedicas = Unidad.objects.all()
+    Entidades = Entidad.objects.all()
     mensaje = None
     msgType = None
     if msg == 'Exito create insti':
@@ -92,6 +93,27 @@ def vista_tablas(request, msg):
         msgType = 'success'
     elif msg == 'Error Registro Excel':
         mensaje = '¡ERROR! Registros no Realizados'
+        msgType = 'danger'
+    elif msg == 'errorAddedMunicipio':
+        mensaje = '¡ERROR! Municipio no creado'
+        msgType = 'danger'
+    elif msg == 'exitoAddedMunicipio':
+        mensaje = '¡Exito! Municipio creado'
+        msgType = 'success'
+    elif msg == 'errorExistMunicipio':
+        mensaje = '¡ERROR! Municipio no existe'
+        msgType = 'danger'
+    elif msg == 'exitoAditedMunicipio':
+        mensaje = '¡Exito! Municipio editado'
+        msgType = 'success'
+    elif msg == 'errorAditedMunicipio':
+        mensaje = '¡ERROR! Municipio no editado'
+        msgType = 'danger'
+    elif msg == 'exitoDeletedMunicipio':
+        mensaje = '¡Exito! Municipio eliminado'
+        msgType = 'success'
+    elif msg == 'errorDeletedMunicipio':
+        mensaje = '¡ERROR! Municipio no eliminado'
         msgType = 'danger'
         
     context = {
@@ -110,6 +132,7 @@ def vista_tablas(request, msg):
         'Localidades': Localidades,
         'Municipios' : Municipios,
         'Umedicas' : Umedicas,
+        'Entidades' : Entidades,
         'formAddMunicipio' : formAddMunicipio,
         'formEditMunicipio' : formEditMunicipio,
     }
