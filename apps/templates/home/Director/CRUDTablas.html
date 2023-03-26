@@ -247,7 +247,22 @@
                url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
            },
            "ordering": true
-       });
-     });
+       });      
+    });
+    function editMunicipio(url, clave, nombre, entidad, jurisdiccion) {
+        // Obtener el formulario
+        const form = document.getElementById('editMunicipioForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editMunicipio_clave').value = clave;
+        form.querySelector('#editMunicipio_nombre').value = nombre;
+        form.querySelector('#editMunicipio_entidad').value = entidad;
+        form.querySelector('#editMunicipio_jurisdiccion').value = jurisdiccion;
+
+        console.log('ejecuto')
+      
+        // Modificar el action del formulario
+        form.action = url;
+      }
 </script>
 {% endblock javascripts %}
