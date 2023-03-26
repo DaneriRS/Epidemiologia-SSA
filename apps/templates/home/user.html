@@ -1,139 +1,170 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} User Profile {% endblock %} 
+{% block title %} Perfil {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-  <div class="content">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h5 class="title">Edit Profile</h5>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="row">
-                <div class="col-md-5 pr-md-1">
-                  <div class="form-group">
-                    <label>Company (disabled)</label>
-                    <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
-                  </div>
-                </div>
-                <div class="col-md-3 px-md-1">
-                  <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-control" disabled="" placeholder="Username" value="{{request.user.username}}">
-                  </div>
-                </div>
-                <div class="col-md-4 pl-md-1">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" disabled="" value="{{request.user.email}}">
-                  </div>
+<div class="content">
+  {% if msg == "1" %}
+    <div class="alert alert-success" role="alert">
+        Datos actualizados correctamente!
+      </div>
+    {% elif msg == "2" %}
+    <div class="alert alert-danger" role="alert">
+        Algo salio mal, revise los datos e intente nuevamente.
+      </div>
+    {% endif %}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 {% if bookinst.is_overdue %} class="text-danger"{% endif %} class="title">Editar Perfil{{bookinst.due_back}}</h5>
+        </div>
+        <div class="card-body" >
+          <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+              <div class="col-md-5 pr-md-1">
+                <div class="form-group">
+                  <label>Unidad Médica (No editable)</label>
+                  <input type="text" class="form-control" disable=" " placeholder="Unidad"  value="{{request.user.unidad}}"><!-- value="{{request.unidad.nombre}}"-->
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6 pr-md-1">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" placeholder="Company" value="{{request.user.first_name}}">
-                  </div>
-                </div>
-                <div class="col-md-6 pl-md-1">
-                  <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" placeholder="Last Name" value="{{request.user.last_name}}">
-                  </div>
+              <div class="col-md-4 px-md-1">
+                <div class="form-group">
+                  <label>CLUES</label>
+                  <input type="text" class="form-control" disable=" " placeholder="MNSSA001886"  value="{{request.user.claveclues}}"><!-- value="{{request.unidad.clue}}"-->
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
-                  </div>
+              <div class="col-md-2 pl-md-1">
+                <div class="form-group">
+                  <label>Jurisdicción</label>
+                  <input type="number" class="form-control" disable=" " placeholder="00"  value="{{request.user.jurisdiccion}}"><!-- value="{{request.unidad.juris}}"-->
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-4 pr-md-1">
-                  <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control" placeholder="City" value="Mike">
-                  </div>
-                </div>
-                <div class="col-md-4 px-md-1">
-                  <div class="form-group">
-                    <label>Country</label>
-                    <input type="text" class="form-control" placeholder="Country" value="Andrew">
-                  </div>
-                </div>
-                <div class="col-md-4 pl-md-1">
-                  <div class="form-group">
-                    <label>Postal Code</label>
-                    <input type="number" class="form-control" placeholder="ZIP Code">
-                  </div>
+            </div><div class="row">
+              <div class="col-md-4 pr-md-1">
+                <div class="form-group">
+                  <label>Municipio</label>
+                  <input type="text" class="form-control" disable=" " placeholder="Municipio"  value="{{request.user.municipio}}"><!-- value="{{form.idMunicipio}}"-->
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
-                  </div>
+              <div class="col-md-4 px-md-1">
+                <div class="form-group">
+                  <label>Entidad</label>
+                  <input type="text" class="form-control" disable=" " placeholder="Entidad"  value="{{request.userUnidad.entidad}}"><!-- value="{{request.unidad.estado}}"-->
                 </div>
               </div>
-            </form>
-          </div>
-          <div class="card-footer">
-            <button type="submit" class="btn btn-fill btn-info">Save</button>
-          </div>
+              <div class="col-md-3 pr-md-1">
+                <div class="form-group">
+                  <label>Cargo</label>
+                  <input type="text" class="form-control" disable=" "  placeholder="Medico"  value="{{request.user.puesto}}" ><!-- value="{{request.user.cargo}}"-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 pR-md-1">
+                <div class="form-group">
+                <label for="exampleInputEmail1">Username </label>
+                  {{form.username}}
+                </div>
+              </div>
+              <div class="col-md-4 pl-md-1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Correo </label>
+                  {{form.email}}
+                </div>
+              </div>
+              <div class="col-md-5 pl-md-1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Contraseña </label>
+                  <input type="email" class="form-control"  disable="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-md-1">
+                <div class="form-group">
+                  <label>Nombre(s)</label>
+                  {{form.first_name}}
+                </div>
+              </div>
+              <div class="col-md-7 pl-md-1">
+                <div class="form-group">
+                  <label>Apellidos</label>
+                  {{form.last_name}}
+                </div>
+              </div>
+            </div>
+            <!--<div class="modal-body">
+              <input name="id" id="id" type="hidden" value="0">
+              {% for field in form.visible_fields %}
+              <div class="form-group">
+                <label for="email">{{field.label}}:</label>
+              </div>
+              {%endfor%}
+            </div>-->
+            <!--<div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label>Sobre mi</label>
+                  <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                </div>
+              </div>
+            </div>-->
+            <div class="card-footer">
+          <button type="submit" class="btn btn-fill btn-info" >Guardar</button>
+        </div>
+          </form>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card card-user">
-          <div class="card-body">
-            <p class="card-text">
-              <div class="author">
-                <div class="block block-one"></div>
-                <div class="block block-two"></div>
-                <div class="block block-three"></div>
-                <div class="block block-four"></div>
-                <a href="javascript:void(0)">
-                  <img class="avatar" src="{{ ASSETS_ROOT }}/img/emilyz.jpg" alt="...">
-                  <h5 class="title">{{request.user.first_name}} {{request.user.last_name}}</h5>
-                </a>
-                <p class="description">
-                  Ceo/Co-Founder
-                </p>
-              </div>
-            </p>
-            <div class="card-description">
-              Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="card-body">
+          <p class="card-text">
+            <div class="author">
+              <div class="block block-one"></div>
+              <div class="block block-two"></div>
+              <div class="block block-three"></div>
+              <div class="block block-four"></div>
+              <a href="javascript:void(0)">
+                <img class="avatar" src="{{ ASSETS_ROOT }}/img/emilyz.jpg" alt="...">
+                <h5 class="title" >Lolita ayala</h5>
+              </a>
+              <p class="description"
+                value="{{assing_groups}}">
+              </p>
             </div>
-          </div>
-          <div class="card-footer">
-            <div class="button-container">
-              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
-                <i class="fab fa-facebook"></i>
-              </button>
-              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
-                <i class="fab fa-twitter"></i>
-              </button>
-              <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
-                <i class="fab fa-google-plus"></i>
-              </button>
-            </div>
-          </div>
+          </p>
+          <!--<div class="card-description">
+            Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+          </div>-->
+        </div>
+        <!--<div class="card-footer">
+          <div class="button-container">
+            <button href="javascript:void(0)" class="btn btn-icon btn-round btn-facebook">
+              <i class="fab fa-facebook"></i>
+            </button>
+            <button href="javascript:void(0)" class="btn btn-icon btn-round btn-twitter">
+              <i class="fab fa-twitter"></i>
+            </button>
+            <button href="javascript:void(0)" class="btn btn-icon btn-round btn-google">
+              <i class="fab fa-google-plus"></i>
+            </button>
+          </div>-->
         </div>
       </div>
     </div>
   </div>
+</div>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+ {% endblock javascripts %}

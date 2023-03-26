@@ -1,0 +1,89 @@
+<div class="card">
+    <table class="table table-striped table-hover" id="tabla_entidad">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estb in Entidad %}
+            <tr>
+                <td class="text-center">{{ estb.pk }}</td>
+                <td>{{ estb.clave }}</td>
+                <td>{{ estb.nombre }}</td>
+                <td class="td-actions text-center">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar">
+                        <i class="tim-icons icon-settings"></i>
+                    </button>
+                    <a href="{% url 'delEntidad' entd.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right" style="width: 100%;">
+        <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Añadir nuevo"
+            data-toggle="modal" data-target="#addEntidadModal">
+            <i class="tim-icons icon-simple-add"></i>
+        </button>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR Entidad -->
+<div class="modal fade" id="addEntidadModal" tabindex="-1" aria-labelledby="addEntidadModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addEntidadModalLabel">Agregar nueva Entidad</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'addEntidadCrud' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formAddEntidad }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR Entidad -->
+<div class="modal fade" id="editEntidadModal" tabindex="-1" role="dialog" aria-labelledby="editEntidadModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editEntidadModalLabel">Editar Entidad</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form action="{% url 'addEntidadCrud' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formAddEntidad }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

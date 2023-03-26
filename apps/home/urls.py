@@ -17,6 +17,7 @@ urlpatterns = [
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
     path('ajax/consultar/unidades/', allViews.consultar_unidades, name='get_unidades'),
     path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
+    path('perfil/', allViews.user, name='user'),
 
     # Matches any html file
     # No borrar esta URL
@@ -39,5 +40,11 @@ urlpatterns = [
 
     #UnidadMedicaExcel
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
+
+    path('tablas/add', allViews.addEntidadCrud, name = 'addEntidadCrud'),
+    path('tablas/entidad/del/<pk>', allViews.addEntidad, name = 'addEntidad'),
+
+    path('tablas/add', allViews.addEntidadCrud, name = 'addEstablecimientoCrud'),
+    path('tablas/entidad/del/<pk>', allViews.addEntidad, name = 'addEstablecimiento'),
 
 ]

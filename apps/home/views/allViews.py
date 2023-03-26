@@ -61,6 +61,10 @@ def pages(request):
 def vista_tablas(request, msg):
     formAddJurisdiccion = addJurisdiccion()
     formAddInstitucion = addInstitucion()
+    formAddEntidad = addEntidad()
+    formAddEstablecimiento = addEstablecimiento()
+    formdelEntidad = addEntidad()
+    formdelEstablecimiento = addEstablecimiento()
     formExeclLocalidad = ExcelLocalidadForm()
     formExcelMunicipio= ExcelMunicipioForm()
     formExcelUMedicas = ExcelUMedicasForm()
@@ -72,6 +76,12 @@ def vista_tablas(request, msg):
     msgType = None
     if msg == 'Exito create insti':
         mensaje = 'Institucion creada con exito!'
+        msgType = 'success'
+    elif msg == 'Exito Registro creado':
+        mensaje = 'Registro creado con exito!'
+        msgType = 'success'
+    elif msg == 'Error al crear':
+        mensaje = 'Error no creado!'
         msgType = 'success'
     elif msg == 'prueba2':
         mensaje = 'Mensaje 2 de prueba'
@@ -90,6 +100,8 @@ def vista_tablas(request, msg):
         'msgType': msgType,
         'formAddJurisdiccion' : formAddJurisdiccion,
         'formAddInstitucion' : formAddInstitucion,
+        'formAddEntidad': formAddEntidad,
+        'formAddEstablecimiento': formAddEstablecimiento,
         'formExcelLocalidad' : formExeclLocalidad,
         'formExcelMunicipio' : formExcelMunicipio,
         'formExcelUMedicas' : formExcelUMedicas,
