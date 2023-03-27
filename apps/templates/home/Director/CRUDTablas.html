@@ -258,11 +258,35 @@
         form.querySelector('#editMunicipio_nombre').value = nombre;
         form.querySelector('#editMunicipio_entidad').value = entidad;
         form.querySelector('#editMunicipio_jurisdiccion').value = jurisdiccion;
-
-        console.log('ejecuto')
       
         // Modificar el action del formulario
         form.action = url;
-      }
+    }
+
+    function editLocalidad(url, clave, nombre, municipio) {
+        // Obtener el formulario
+        const form = document.getElementById('editLocalidadForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editLocalidad_clave').value = clave;
+        form.querySelector('#editLocalidad_nombre').value = nombre;
+        form.querySelector('#editLocalidad_municipio').value = municipio;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editTipologia(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editTipologiaForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editTipologia_clave').value = clave;
+        form.querySelector('#editTipologia_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
 </script>
 {% endblock javascripts %}

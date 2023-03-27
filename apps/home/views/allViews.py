@@ -71,12 +71,18 @@ def vista_tablas(request, msg):
     
     formAddMunicipio = MunicipioForm(auto_id="addMunicipio_%s")
     formEditMunicipio = MunicipioForm(auto_id="editMunicipio_%s")
+    formAddLocalidad = LocalidadForm(auto_id="addLocalidad_%s")
+    formEditLocalidad = LocalidadForm(auto_id="editLocalidad_%s")
+    formAddTipologia = TipologiaForm(auto_id="addTipologia_%s")
+    formEditTipologia = TipologiaForm(auto_id="editTipologia_%s")
+    
     
     Instituciones = Institucion.objects.all()
     Localidades = Localidad.objects.all()
     Municipios = Municipio.objects.all()
     Umedicas = Unidad.objects.all()
     Entidades = Entidad.objects.all()
+    Tipologias = Tipologia.objects.all()
     mensaje = None
     msgType = None
     if msg == 'Exito create insti':
@@ -115,6 +121,48 @@ def vista_tablas(request, msg):
     elif msg == 'errorDeletedMunicipio':
         mensaje = '¡ERROR! Municipio no eliminado'
         msgType = 'danger'
+    elif msg == 'errorAddedLocalidad':
+        mensaje = '¡ERROR! Localidad no creada'
+        msgType = 'danger'
+    elif msg == 'exitoAddedLocalidad':
+        mensaje = '¡Exito! Localidad creada'
+        msgType = 'success'
+    elif msg == 'errorExistLocalidad':
+        mensaje = '¡ERROR! Localidad no existe'
+        msgType = 'danger'
+    elif msg == 'exitoAditedLocalidad':
+        mensaje = '¡Exito! Localidad editada'
+        msgType = 'success'
+    elif msg == 'errorAditedLocalidad':
+        mensaje = '¡ERROR! Localidad no editada'
+        msgType = 'danger'
+    elif msg == 'exitoDeletedLocalidad':
+        mensaje = '¡Exito! Localidad eliminada'
+        msgType = 'success'
+    elif msg == 'errorDeletedLocalidad':
+        mensaje = '¡ERROR! Localidad no eliminada'
+        msgType = 'danger'
+    elif msg == 'errorAddedTipologia':
+        mensaje = '¡ERROR! Tipologia no creada'
+        msgType = 'danger'
+    elif msg == 'exitoAddedTipologia':
+        mensaje = '¡Exito! Tipologia creada'
+        msgType = 'success'
+    elif msg == 'errorExistTipologia':
+        mensaje = '¡ERROR! Tipologia no existe'
+        msgType = 'danger'
+    elif msg == 'exitoAditedTipologia':
+        mensaje = '¡Exito! Tipologia editada'
+        msgType = 'success'
+    elif msg == 'errorAditedTipologia':
+        mensaje = '¡ERROR! Tipologia no editada'
+        msgType = 'danger'
+    elif msg == 'exitoDeletedTipologia':
+        mensaje = '¡Exito! Tipologia eliminada'
+        msgType = 'success'
+    elif msg == 'errorDeletedTipologia':
+        mensaje = '¡ERROR! Tipologia no eliminada'
+        msgType = 'danger'
         
     context = {
         'segment': 'CRUD_tablas',
@@ -133,8 +181,13 @@ def vista_tablas(request, msg):
         'Municipios' : Municipios,
         'Umedicas' : Umedicas,
         'Entidades' : Entidades,
+        'Tipologias' : Tipologias,
         'formAddMunicipio' : formAddMunicipio,
         'formEditMunicipio' : formEditMunicipio,
+        'formAddLocalidad' : formAddLocalidad,
+        'formEditLocalidad' : formEditLocalidad,
+        'formAddTipologia' : formAddTipologia,
+        'formEditTipologia' : formEditTipologia,
     }
     
     return render(request, 'home/Director/CRUDTablas.html', context)

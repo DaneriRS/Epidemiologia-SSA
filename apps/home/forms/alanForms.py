@@ -51,3 +51,31 @@ class MunicipioForm(forms.ModelForm):
                 'class': 'form-control'
             })
             self.fields[field].required = True
+            
+class LocalidadForm(forms.ModelForm): 
+    
+    class Meta:
+        model = Localidad
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
+            
+class TipologiaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Tipologia
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True

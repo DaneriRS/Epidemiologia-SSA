@@ -31,6 +31,16 @@ urlpatterns = [
     path('tablas/municipio/add', allViews.addMunicipio, name = 'addMunicipio'),
     path('tablas/municipio/del/<int:pk>', allViews.delMunicipio, name = 'delMunicipio'),
     path('tablas/municipio/edit/<int:pk>', allViews.editMunicipio, name = 'editMunicipio'),
+    
+    #CRUD LOCALIDAD
+    path('tablas/localidad/add', allViews.addLocalidad, name = 'addLocalidad'),
+    path('tablas/localidad/del/<int:pk>', allViews.delLocalidad, name = 'delLocalidad'),
+    path('tablas/localidad/edit/<int:pk>', allViews.editLocalidad, name = 'editLocalidad'),
+    
+    #CRUD TIPOLOGIA
+    path('tablas/tipologia/add', allViews.addTipologia, name = 'addTipologia'),
+    path('tablas/tipologia/del/<int:pk>', allViews.delTipologia, name = 'delTipologia'),
+    path('tablas/tipologia/edit/<int:pk>', allViews.editTipologia, name = 'editTipologia'),
 
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),

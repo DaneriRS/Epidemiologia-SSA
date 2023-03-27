@@ -18,9 +18,9 @@
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar">
                         <i class="tim-icons icon-settings"></i>
                     </button>
-                    <a href="{% url 'delEntidad' entd.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                    {% comment %} <a href="{% url 'delEntidad' entd.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
                         <i class="tim-icons icon-simple-remove"></i>
-                    </a>
+                    </a> {% endcomment %}
                 </td>
             </tr>
             {% endfor %}
