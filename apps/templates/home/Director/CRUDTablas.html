@@ -300,5 +300,17 @@
         form.action = url;
     }
 
+    function editEstablecimiento(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editEstablecimientoForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editEstablecimiento_clave').value = clave;
+        form.querySelector('#editEstablecimiento_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
 </script>
 {% endblock javascripts %}

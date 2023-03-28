@@ -75,7 +75,7 @@ def addEntidad(request):
 
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
-def editEntidad(request):
+def editEntidad(request, pk):
     #formAddEntidad = addEntidad()
     if request.method == 'POST':
         try:
@@ -131,7 +131,7 @@ def addEstablecimiento(request):
 
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
-def editEstablecimiento(request):
+def editEstablecimiento(request, pk):
     if request.method == 'POST':
         try:
             entity = Establecimiento.objects.get(id = pk)

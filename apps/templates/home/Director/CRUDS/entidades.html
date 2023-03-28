@@ -9,18 +9,18 @@
             </tr>
         </thead>
         <tbody>
-            {% for estb in Entidades %}
+            {% for entd in Entidades %}
             <tr>
-                <td class="text-center">{{ estb.pk }}</td>
-                <td>{{ estb.clave }}</td>
-                <td>{{ estb.nombre }}</td>
+                <td class="text-center">{{ entd.pk }}</td>
+                <td>{{ entd.clave }}</td>
+                <td>{{ entd.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editEntidadModal" title="Editar" onclick="editEntidad('{% url 'editEntidad' entd.id %}', '{{entd.clave}}', '{{entd.nombre}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
-                    {% comment %} <a href="{% url 'delEntidad' entd.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                    <a href="{% url 'delEntidad' entd.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
                         <i class="tim-icons icon-simple-remove"></i>
-                    </a> {% endcomment %}
+                    </a>
                 </td>
             </tr>
             {% endfor %}
