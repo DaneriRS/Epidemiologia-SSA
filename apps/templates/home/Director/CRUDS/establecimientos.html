@@ -45,7 +45,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addEstablecimientoCrud' %}" method="post">
+            <form action="{% url 'addEstablecimiento' %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 
@@ -72,11 +72,11 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addEstablecimientoCrud' %}" method="post">
+            <form id="editEstablecimientoForm" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddEstablecimiento }}
+                    {{ formEditEstablecimiento }}
 
                 </div>
                 <div class="modal-footer">

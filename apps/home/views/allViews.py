@@ -61,10 +61,6 @@ def pages(request):
 def vista_tablas(request, msg):
     formAddJurisdiccion = addJurisdiccion()
     formAddInstitucion = addInstitucion()
-    formAddEntidad = addEntidad()
-    formAddEstablecimiento = addEstablecimiento()
-    formdelEntidad = addEntidad()
-    formdelEstablecimiento = addEstablecimiento()
     formExeclLocalidad = ExcelLocalidadForm()
     formExcelMunicipio= ExcelMunicipioForm()
     formExcelUMedicas = ExcelUMedicasForm()
@@ -76,24 +72,65 @@ def vista_tablas(request, msg):
     formAddTipologia = TipologiaForm(auto_id="addTipologia_%s")
     formEditTipologia = TipologiaForm(auto_id="editTipologia_%s")
     
+    formAddEntidad = EntidadForm(auto_id="addEntidad_%s")
+    formEditEntidad = EntidadForm(auto_id="editEntidad_%s")
+    formAddEstablecimiento = EstablecimientoForm(auto_id="addEstablecimiento%s")
+    formEditEstablecimiento = EstablecimientoForm(auto_id="editEstablecimiento%s")
     
     Instituciones = Institucion.objects.all()
     Localidades = Localidad.objects.all()
     Municipios = Municipio.objects.all()
     Umedicas = Unidad.objects.all()
     Entidades = Entidad.objects.all()
+    Establecimientos = Establecimiento.objects.all()
     Tipologias = Tipologia.objects.all()
+
     mensaje = None
     msgType = None
     if msg == 'Exito create insti':
         mensaje = 'Institucion creada con exito!'
         msgType = 'success'
-    elif msg == 'Exito Registro creado':
-        mensaje = 'Registro creado con exito!'
+    elif msg == 'exitoAddEntidad':
+        mensaje = 'Entidad Registrada con exito!'
         msgType = 'success'
-    elif msg == 'Error al crear':
-        mensaje = 'Error no creado!'
+    elif msg == 'errorAddEntidad':
+        mensaje = '¡ERROR Entidad NO Registrada!'
+        msgType = 'danger'
+    elif msg == 'errorExistEntidad':
+        mensaje = '¡ERROR! Entidad no existe'
+        msgType = 'danger'
+    elif msg == 'exitoEditEntidad':
+        mensaje = 'Entidad Editada con exito!'
         msgType = 'success'
+    elif msg == 'exitoEditEntidad':
+        mensaje = '¡ERROR Entidad NO Editada!'
+        msgType = 'danger'
+    elif msg == 'exitoDelEntidad':
+        mensaje = 'Entidad Eliminada con exito!'
+        msgType = 'success'
+    elif msg == 'exitoDelEntidad':
+        mensaje = '¡ERROR Entidad NO Eliminada!'
+        msgType = 'danger'
+    elif msg == 'exitoAddEstablecimiento':
+        mensaje = 'Establecimiento Registrada con exito!'
+        msgType = 'success'
+    elif msg == 'errorAddEstablecimiento':
+        mensaje = '¡ERROR Establecimiento NO Registrado!'
+        msgType = 'danger'
+    elif msg == 'errorExistEstablecimiento':
+        mensaje = '¡ERROR! Establecimiento no existe'
+        msgType = 'danger'
+    elif msg == 'exitoEditEstablecimiento':
+        mensaje = 'Establecimiento Editado con exito!'
+        msgType = 'success'
+    elif msg == 'exitoEditEstablecimiento':
+        mensaje = '¡ERROR Establecimiento NO Editado!'
+        msgType = 'danger'
+    elif msg == 'exitoDelEstablecimiento':
+        mensaje = 'Establecimiento Eliminadao con exito!'
+    elif msg == 'exitoDelEstablecimiento':
+        mensaje = '¡ERROR Establecimiento NO Eliminado!'
+        msgType = 'danger'
     elif msg == 'Exito Registro Excel':
         mensaje = 'Registros Realizados con Exito'
         msgType = 'success'
@@ -172,7 +209,9 @@ def vista_tablas(request, msg):
         'formAddJurisdiccion' : formAddJurisdiccion,
         'formAddInstitucion' : formAddInstitucion,
         'formAddEntidad': formAddEntidad,
+        'formEditEntidad': formEditEntidad,
         'formAddEstablecimiento': formAddEstablecimiento,
+        'formEditEstablecimiento': formEditEstablecimiento,
         'formExcelLocalidad' : formExeclLocalidad,
         'formExcelMunicipio' : formExcelMunicipio,
         'formExcelUMedicas' : formExcelUMedicas,
@@ -181,6 +220,7 @@ def vista_tablas(request, msg):
         'Municipios' : Municipios,
         'Umedicas' : Umedicas,
         'Entidades' : Entidades,
+        'Establecimientos' : Establecimientos,
         'Tipologias' : Tipologias,
         'formAddMunicipio' : formAddMunicipio,
         'formEditMunicipio' : formEditMunicipio,

@@ -20,22 +20,7 @@ class userProfileform(forms.ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control',}),
         }
 
-class addEstablecimiento(ModelForm):
-
-    class Meta:
-        model = Establecimiento
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'required': 'required'
-            })
-
-class addEntidad(ModelForm):
-
+class EntidadForm(ModelForm):
     class Meta:
         model = Entidad
         fields = '__all__'
@@ -48,22 +33,7 @@ class addEntidad(ModelForm):
                 'required': 'required'
             })
 
-class delEntidad(ModelForm):
-
-    class Meta:
-        model = Entidad
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.delete({
-                'class': 'form-control',
-                'required': 'required'
-            })
-
-class delEstablecimiento(ModelForm):
-
+class EstablecimientoForm(ModelForm):
     class Meta:
         model = Establecimiento
         fields = '__all__'
@@ -71,7 +41,8 @@ class delEstablecimiento(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.delete({
+            self.fields[field].widget.attrs.update({
                 'class': 'form-control',
                 'required': 'required'
             })
+

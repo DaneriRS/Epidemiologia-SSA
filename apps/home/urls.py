@@ -42,6 +42,16 @@ urlpatterns = [
     path('tablas/tipologia/del/<int:pk>', allViews.delTipologia, name = 'delTipologia'),
     path('tablas/tipologia/edit/<int:pk>', allViews.editTipologia, name = 'editTipologia'),
 
+    #CRUD ENTIDAD
+    path('tablas/Entidad/add', allViews.addEntidad, name = 'addEntidad'),
+    path('tablas/Entidad/edit/<pk>', allViews.editEntidad, name = 'editEntidad'),
+    path('tablas/Entidad/del/<pk>', allViews.delEntidad, name = 'delEntidad'),
+
+    #CRUD ESTABLECIMIENTO
+    path('tablas/Establecimiento/add', allViews.addEstablecimiento, name = 'addEstablecimiento'),
+    path('tablas/Establecimiento/edit/<pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
+    path('tablas/Establecimiento/del/<pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
+
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
 
@@ -50,11 +60,5 @@ urlpatterns = [
 
     #UnidadMedicaExcel
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
-
-    path('tablas/add', allViews.addEntidadCrud, name = 'addEntidadCrud'),
-    path('tablas/entidad/del/<pk>', allViews.addEntidad, name = 'addEntidad'),
-
-    path('tablas/add', allViews.addEntidadCrud, name = 'addEstablecimientoCrud'),
-    path('tablas/entidad/del/<pk>', allViews.addEntidad, name = 'addEstablecimiento'),
 
 ]
