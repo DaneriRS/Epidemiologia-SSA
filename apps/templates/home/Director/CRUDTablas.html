@@ -288,5 +288,17 @@
         form.action = url;
     }
 
+    function editEntidad(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editEntidadForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editEntidad_clave').value = clave;
+        form.querySelector('#editEntidad_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
 </script>
 {% endblock javascripts %}
