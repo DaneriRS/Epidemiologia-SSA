@@ -20,6 +20,7 @@ urlpatterns = [
     
 
     path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
+    path('perfil/', allViews.user, name='user'),
 
     # Matches any html file
     # No borrar esta URL
@@ -27,12 +28,32 @@ urlpatterns = [
 
     #CRUD INSTITUCION
     path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
-    path('tablas/jurisdiccion/del/<pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    path('tablas/jurisdiccion/del/<int:pk>', allViews.delInstitucion, name = 'delInstitucion'),
     
-    #CRUD INSTITUCION
-    path('tablas/municipio/add', allViews.addInstitucionCrud, name = 'addMunicipio'),
-    path('tablas/municipio/del/<pk>', allViews.delInstitucion, name = 'delMunicipio'),
-    path('tablas/municipio/edit/<pk>', allViews.delInstitucion, name = 'editMunicipio'),
+    #CRUD MUNICIPIO
+    path('tablas/municipio/add', allViews.addMunicipio, name = 'addMunicipio'),
+    path('tablas/municipio/del/<int:pk>', allViews.delMunicipio, name = 'delMunicipio'),
+    path('tablas/municipio/edit/<int:pk>', allViews.editMunicipio, name = 'editMunicipio'),
+    
+    #CRUD LOCALIDAD
+    path('tablas/localidad/add', allViews.addLocalidad, name = 'addLocalidad'),
+    path('tablas/localidad/del/<int:pk>', allViews.delLocalidad, name = 'delLocalidad'),
+    path('tablas/localidad/edit/<int:pk>', allViews.editLocalidad, name = 'editLocalidad'),
+    
+    #CRUD TIPOLOGIA
+    path('tablas/tipologia/add', allViews.addTipologia, name = 'addTipologia'),
+    path('tablas/tipologia/del/<int:pk>', allViews.delTipologia, name = 'delTipologia'),
+    path('tablas/tipologia/edit/<int:pk>', allViews.editTipologia, name = 'editTipologia'),
+
+    #CRUD ENTIDAD
+    path('tablas/Entidad/add', allViews.addEntidad, name = 'addEntidad'),
+    path('tablas/Entidad/edit/<pk>', allViews.editEntidad, name = 'editEntidad'),
+    path('tablas/Entidad/del/<pk>', allViews.delEntidad, name = 'delEntidad'),
+
+    #CRUD ESTABLECIMIENTO
+    path('tablas/Establecimiento/add', allViews.addEstablecimiento, name = 'addEstablecimiento'),
+    path('tablas/Establecimiento/edit/<pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
+    path('tablas/Establecimiento/del/<pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
 
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),

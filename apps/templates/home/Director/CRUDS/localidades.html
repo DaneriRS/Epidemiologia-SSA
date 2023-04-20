@@ -2,9 +2,8 @@
     <table class="table table-striped table-hover" id="tabla_localidades">
         <thead>
             <tr>
-                <th class="text-center">#</th>
+                <th class="text-center">Clave</th>
                 <th>Nombre</th>
-                <th>Clave</th>
                 <th>Municipio</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -12,15 +11,14 @@
         <tbody>
             {% for Localidad in Localidades %}
             <tr>
-                <td class="text-center">{{ Localidad.pk }}</td>
+                <td class="text-center">{{ Localidad.clave }}</td>
                 <td>{{ Localidad.nombre }}</td>
-                <td>{{ Localidad.clave }}</td>
-                <td>{{ Localidad.municipio }}</td>
+                <td>{{ Localidad.municipio.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editInstitucionModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLocalidadModal" title="Editar" onclick="editLocalidad('{% url 'editLocalidad' Localidad.id %}', '{{Localidad.clave}}', '{{Localidad.nombre}}', '{{Localidad.municipio.id}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
-                    <a href="/" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                    <a href="{% url 'delLocalidad' Localidad.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
                         <i class="tim-icons icon-simple-remove"></i>
                     </a>
                 </td>
@@ -47,38 +45,49 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'LocalidadExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
-                {% csrf_token %}
-                <div class="modal-body">
-
-                    {{ formExcelLocalidad }}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" name="ExcelLocalidad">Guardar</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form action="{% url 'addLocalidad' %}" method="post">
+                    {% csrf_token %}
+                        <h4 class="modal-title">Individual</h4>
+    
+                        {{ formAddLocalidad }}
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                    </div>
+                </form>
+                <div class="dropdown-divider"></div>
+                <form action="{% url 'LocalidadExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                    {% csrf_token %}
+                        <h4 class="modal-title">Con Excel</h4>
+                        {{ formExcelLocalidad }}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL EDITAR INSTITUCION 
-<div class="modal fade" id="editInstitucionModal" tabindex="-1" role="dialog" aria-labelledby="editInstitucionModalLabel"
+<!-- MODAL EDITAR LOCALIDAD -->
+<div class="modal fade" id="editLocalidadModal" tabindex="-1" role="dialog" aria-labelledby="editLocalidadModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="editInstitucionModalLabel">Editar institucion</h3>
+                <h3 class="modal-title" id="editLocalidadModalLabel">Editar Localidad</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addInstitucionCrud' %}" method="post">
+            <form method="post" id="editLocalidadForm">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddInstitucion }}
+                    {{ formEditLocalidad }}
 
                 </div>
                 <div class="modal-footer">
@@ -88,4 +97,4 @@
             </form>
         </div>
     </div>
-</div> -->
+</div> 

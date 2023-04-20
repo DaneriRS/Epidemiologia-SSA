@@ -15,7 +15,7 @@
                 <td>{{ estb.clave }}</td>
                 <td>{{ estb.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editestbitucionModal" title="Editar" onclick="editEstablecimiento('{% url 'editEstablecimiento' estb.id %}', '{{estb.clave}}', '{{estb.nombre}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delestablecimiento' estab.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -45,7 +45,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addEstablecimientoCrud' %}" method="post">
+            <form action="{% url 'addEstablecimiento' %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 
@@ -72,11 +72,11 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addEstablecimientoCrud' %}" method="post">
+            <form id="editEstablecimientoForm" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddEstablecimiento }}
+                    {{ formEditEstablecimiento }}
 
                 </div>
                 <div class="modal-footer">

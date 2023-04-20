@@ -1,0 +1,87 @@
+<div class="card">
+    <table class="table table-striped table-hover" id="tabla_tipologias">
+        <thead>
+            <tr>
+                <th class="text-center">Clave</th>
+                <th>Nombre</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tip in Tipologias %}
+            <tr>
+                <td class="text-center">{{ tip.clave }}</td>
+                <td>{{ tip.nombre }}</td>
+                <td class="td-actions text-center">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editTipologiaModal" title="Editar" onclick="editTipologia('{% url 'editTipologia' tip.id %}', '{{tip.clave}}', '{{tip.nombre}}')">
+                        <i class="tim-icons icon-settings"></i>
+                    </button>
+                    <a href="{% url 'delTipologia' tip.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                        <i class="tim-icons icon-simple-remove"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right" style="width: 100%;">
+        <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Añadir nuevo"
+            data-toggle="modal" data-target="#addTipologiaModal">
+            <i class="tim-icons icon-simple-add"></i>
+        </button>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR TIPOLOGIA -->
+<div class="modal fade" id="addTipologiaModal" tabindex="-1" aria-labelledby="addTipologiaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addTipologiaModalLabel">Agregar nueva Tipologia</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'addTipologia' %}" method="post">
+                    {% csrf_token %}
+    
+                        {{ formAddTipologia }}
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR TIPOLOGIA -->
+<div class="modal fade" id="editTipologiaModal" tabindex="-1" role="dialog" aria-labelledby="editTipologiaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editTipologiaModalLabel">Editar Tipologia</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form method="post" id="editTipologiaForm">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formEditTipologia }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

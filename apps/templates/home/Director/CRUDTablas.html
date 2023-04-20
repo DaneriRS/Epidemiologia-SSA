@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Tablas de Base de Datos {% endblock %} 
+{% block title %} Tablas Catalogos {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -247,7 +247,70 @@
                url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
            },
            "ordering": true
-       });
-     });
+       });      
+    });
+    function editMunicipio(url, clave, nombre, entidad, jurisdiccion) {
+        // Obtener el formulario
+        const form = document.getElementById('editMunicipioForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editMunicipio_clave').value = clave;
+        form.querySelector('#editMunicipio_nombre').value = nombre;
+        form.querySelector('#editMunicipio_entidad').value = entidad;
+        form.querySelector('#editMunicipio_jurisdiccion').value = jurisdiccion;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editLocalidad(url, clave, nombre, municipio) {
+        // Obtener el formulario
+        const form = document.getElementById('editLocalidadForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editLocalidad_clave').value = clave;
+        form.querySelector('#editLocalidad_nombre').value = nombre;
+        form.querySelector('#editLocalidad_municipio').value = municipio;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editTipologia(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editTipologiaForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editTipologia_clave').value = clave;
+        form.querySelector('#editTipologia_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editEntidad(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editEntidadForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editEntidad_clave').value = clave;
+        form.querySelector('#editEntidad_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editEstablecimiento(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editEstablecimientoForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editEstablecimiento_clave').value = clave;
+        form.querySelector('#editEstablecimiento_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
 </script>
 {% endblock javascripts %}

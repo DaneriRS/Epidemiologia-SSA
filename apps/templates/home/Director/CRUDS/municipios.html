@@ -17,7 +17,7 @@
                 <td>{{ muni.entidad.nombre }}</td>
                 <td>{{ muni.jurisdiccion.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar" onclick="editMunicipio('{% url 'editMunicipio' muni.id %}', '{{muni.clave}}', '{{muni.nombre}}', '{{muni.entidad.id}}', '{{muni.jurisdiccion.id}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delMunicipio' muni.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -38,8 +38,8 @@
 
 <!-- MODAL AGREGAR MUNICIPIO -->
 <div class="modal fade" id="addMunicipioModal" tabindex="-1" aria-labelledby="addMunicipioModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
+    aria-hidden="true" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="addMunicipioModalLabel">Agregar nuevo municipio</h3>
@@ -47,18 +47,34 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'MunicipioExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
-                {% csrf_token %}
-                <div class="modal-body">
-
-                    {{ formExcelMunicipio }}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form action="{% url 'addMunicipio' %}" method="post">
+                    {% csrf_token %}
+                    {% comment %} <div class="modal-body"> {% endcomment %}
+                        <h4 class="modal-title">Individual</h4>
+    
+                        {{ formAddMunicipio }}
+    
+                    {% comment %} </div> {% endcomment %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                    </div>
+                </form>
+                <div class="dropdown-divider"></div>
+                <form action="{% url 'MunicipioExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                    {% csrf_token %}
+                    {% comment %} <div class="modal-body"> {% endcomment %}
+                        <h4 class="modal-title">Con Excel</h4>
+                        {{ formExcelMunicipio }}
+    
+                    {% comment %} </div> {% endcomment %}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -74,11 +90,11 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'editMunicipio' 1 %}" method="post">
+            <form method="post" id="editMunicipioForm">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddInstitucion }}
+                    {{ formEditMunicipio }}
 
                 </div>
                 <div class="modal-footer">

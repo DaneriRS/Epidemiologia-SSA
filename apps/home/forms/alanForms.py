@@ -3,18 +3,18 @@ from django.forms import ModelForm
 from apps.home.models import *
 from django.contrib.auth.models import User, Group
         
-class GroupAssignForm(forms.ModelForm):
-    groups = forms.MultipleChoiceField(
-        choices=[(group.id, group.name) for group in Group.objects.all()],
-        widget=forms.SelectMultiple(attrs={
-                'class': 'form-control'
-            }),
-        required=False
-    )
+# class GroupAssignForm(forms.ModelForm):
+#     groups = forms.MultipleChoiceField(
+#         choices=[(group.id, group.name) for group in Group.objects.all()],
+#         widget=forms.SelectMultiple(attrs={
+#                 'class': 'form-control'
+#             }),
+#         required=False
+#     )
     
-    class Meta:
-        model = User
-        fields = ['groups']
+#     class Meta:
+#         model = User
+#         fields = ['groups']
         
 class InformacionUsuarioForm(forms.ModelForm):
     
@@ -37,3 +37,45 @@ class InformacionUsuarioForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({
                 'class': 'form-control'
             })
+            
+class MunicipioForm(forms.ModelForm):
+    
+    class Meta:
+        model = Municipio
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
+            
+class LocalidadForm(forms.ModelForm): 
+    
+    class Meta:
+        model = Localidad
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
+            
+class TipologiaForm(forms.ModelForm):
+    
+    class Meta:
+        model = Tipologia
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
