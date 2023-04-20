@@ -5,6 +5,7 @@ from apps.home.models import *
 from apps.home.forms.allForms import *
 from formtools.wizard.views import *
 from django.contrib.auth.decorators import user_passes_test
+from django.forms.models import model_to_dict
 
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
@@ -13,9 +14,6 @@ def roles_required(roles, redirect_url=None):
             return view_func(request, *args, **kwargs)
         return wrapper
     return decorator
-
-def multiForm(request):
-    return render(request, "home/exampleForm.html")
 
 class BookingWizzadView(CookieWizardView):
     form_list = [ContactForm1, ContactForm2, ContactForm3]
@@ -28,9 +26,40 @@ class BookingWizzadView(CookieWizardView):
             return super().get(request, *args, **kwargs)
 
     def done(self, form_list, **kwargs):
-        return HttpResponse("Enviado")
+        registroData={}
+        for form in form_list:
+            registroData.update(form.cleaned_data)
+
+        rd = RegistroEstudio(**registroData)
+        rd.save()
+        return redirect('listaFormularios')
+
+class RegistroEstudioUpdateView(CookieWizardView):
+    form_list = [ContactForm1, ContactForm2, ContactForm3]
+    template_name = 'home/editForm1.html'
+
+    def get_form_initial(self, step):
+        if 'id' in self.kwargs:
+            project_id = self.kwargs['id']
+            project = RegistroEstudio.objects.get(id=project_id)
+            project_dict = model_to_dict(project)
+            return project_dict
+
+    def done(self, form_list, **kwargs):
+        registroData={}
+        id = self.kwargs['id']
+        for form in form_list:
+            registroData.update(form.cleaned_data)
+        RegistroEstudio.objects.filter(id=id).update(**registroData)
+        return redirect('listaFormularios')
     
 @login_required    
+def listaFormularios(request):
+    if request.method == 'GET':
+        formularios = RegistroEstudio.objects.all()
+        return render(request, 'home/tablaForms.html', {'formularios': formularios})
+    else:
+        return redirect ('home')
 def nuevoPaciente(request):
     if request.method == 'POST':
         formA = registroPaciente(request.POST)
@@ -79,8 +108,6 @@ def addInstitucionCrud(request):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
             except:
                 print('error')
-                
-
 def delInstitucion(request, pk):
     formAddJurisdiccion = addJurisdiccion()
     formAddInstitucion = addInstitucion()
