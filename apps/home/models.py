@@ -166,7 +166,7 @@ class Paciente(models.Model):
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     apellidoPa = models.CharField(verbose_name = "Apellido paterno", max_length = 50)
     apellidoMa = models.CharField(verbose_name = "Apellido materno", max_length = 50)
-    numAfiliacion = models.CharField(verbose_name = "Numero de afiliacion", max_length = 50)
+    numAfiliacion = models.CharField(verbose_name = "Numero de afiliacion", max_length = 50, unique = True)
     sexo = models.CharField(verbose_name = "Genero", max_length=2, choices=GENEROS)
     nacimiento = models.DateField(verbose_name = "Fecha de nacimiento")
     calle = models.CharField(verbose_name = "Calle", max_length = 50)
@@ -223,3 +223,4 @@ class RegistroEstudio(models.Model):
     
     def __str__(self):
         return self.folio + ' - ' + self.unidadNot
+
