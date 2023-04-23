@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
-{% block title %} Notifications {% endblock %}
+{% load static %}
+
+{% block title %} Casos de Hepatitis {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -15,11 +16,11 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-6 text-left">
-                                <h2 class="card-title">Usuarios del sistema</h2>
+                                <h2 class="card-title">Casos de Hepatitis</h2>
                             </div>
                         </div>
                         </div>
-                            <table class="table table-striped table-hover" id="tabla_umedicas">
+                            <table class="table table-striped table-hover" id="tabla_casos">
                                 <thead>
                                     <tr>
                                         <th>Formulario Id</th>
@@ -59,4 +60,45 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('#tabla_casos').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [{
+            "extend": "copy",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "csv",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "pdf",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "print",
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+     });
+</script>
+{% endblock javascripts %}

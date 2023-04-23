@@ -16,7 +16,7 @@ def roles_required(roles, redirect_url=None):
     return decorator
 
 class BookingWizzadView(CookieWizardView):
-    form_list = [ContactForm1, ContactForm2, ContactForm3]
+    form_list = [ContactForm1, ContactForm2, ContactForm3, ContactoForm4SetForm]
     template_name = 'home/exampleForm.html'
 
     def get(self, request, *args, **kwargs):
@@ -27,8 +27,9 @@ class BookingWizzadView(CookieWizardView):
 
     def done(self, form_list, **kwargs):
         registroData={}
-        for form in form_list:
-            registroData.update(form.cleaned_data)
+        for i,form in enumerate(form_list):
+            if i != 3:
+                registroData.update(form.cleaned_data)
 
         rd = RegistroEstudio(**registroData)
         rd.save()

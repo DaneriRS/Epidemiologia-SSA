@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from apps.home.models import *
 from django.contrib.auth.models import User, Group
+from django.forms import formset_factory
 
 MUNICIPIOS =(
     ("1", "MORELIA"),
@@ -43,6 +44,7 @@ class registroPaciente(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
+
 class ContactForm1(forms.Form):
     folio = forms.CharField(
         max_length=20,
@@ -178,7 +180,6 @@ class ContactForm1(forms.Form):
             }
         )
     )
-
 
 class ContactForm2(forms.Form):
     noAfili = forms.CharField(
@@ -368,6 +369,45 @@ class ContactForm3(forms.Form):
         )
     )
 
+class ContactoForm4(forms.Form):
+    estudio = forms.CharField(
+        max_length=30,
+        label="Estudio",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+            }
+        )
+    )
+    tipo = forms.CharField(
+        max_length=30,
+        label="Tipo",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    fechaEstudio = forms.CharField(
+        label = 'Fecha: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepickerfechaEstudio'
+            }
+        )
+    )
+    resultado = forms.CharField(
+        max_length=30,
+        label="Resultado: ",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
 class addJurisdiccion(ModelForm):
     
     class Meta:
@@ -395,3 +435,6 @@ class addInstitucion(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
+
+class ContactoForm4SetForm(forms.Form):
+    contactoForm4Set = formset_factory(ContactoForm4, extra=3)
