@@ -2,8 +2,7 @@
     <table class="table table-striped table-hover" id="tabla_entidad">
         <thead>
             <tr>
-                <th class="text-center">#</th>
-                <th>Clave</th>
+                <th class="text-center">Clave</th>
                 <th>Nombre</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -11,8 +10,7 @@
         <tbody>
             {% for entd in Entidades %}
             <tr>
-                <td class="text-center">{{ entd.pk }}</td>
-                <td>{{ entd.clave }}</td>
+                <td class="text-center">{{ entd.clave }}</td>
                 <td>{{ entd.nombre }}</td>
                 <td class="td-actions text-center">
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editEntidadModal" title="Editar" onclick="editEntidad('{% url 'editEntidad' entd.id %}', '{{entd.clave}}', '{{entd.nombre}}')">
@@ -45,7 +43,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addEntidad' %}" method="post">
+            <form autocomplete="off" action="{% url 'addEntidad' %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 
@@ -72,7 +70,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form id="editEntidadForm" method="post">
+            <form autocomplete="off" id="editEntidadForm" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 

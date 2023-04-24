@@ -164,6 +164,11 @@ def addMunicipio(request):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedMunicipio'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedMunicipio'}))
+        else:
+            claveAct = request.POST['clave']
+            if Municipio.objects.filter(clave=claveAct).exists():
+                return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedMunicipio'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedMunicipio'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -182,6 +187,8 @@ def editMunicipio(request, pk):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedMunicipio'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedMunicipio'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedMunicipio'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -210,6 +217,11 @@ def addLocalidad(request):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedLocalidad'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedLocalidad'}))
+        else:
+            # claveAct = request.POST['clave']
+            # if Localidad.objects.filter(clave=claveAct).exists():
+            #     return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedLocalidad'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedLocalidad'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -228,6 +240,8 @@ def editLocalidad(request, pk):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedLocalidad'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedLocalidad'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedLocalidad'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -256,6 +270,11 @@ def addTipologia(request):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedTipologia'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedTipologia'}))
+        else:
+            claveAct = request.POST['clave']
+            if Tipologia.objects.filter(clave=claveAct).exists():
+                return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedTipologia'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedTipologia'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -274,6 +293,8 @@ def editTipologia(request, pk):
                 return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedTipologia'}))
             except Exception as e:
                 return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedTipologia'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedTipologia'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
@@ -289,3 +310,108 @@ def delTipologia(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedTipologia'}))
     except Exception as e:
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedTipologia'}))
+
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def addjurisdiccion(request):
+    if request.method == 'POST':
+        form = JurisdiccionForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedJurisdiccion'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedJurisdiccion'}))
+        else:
+            claveAct = request.POST['clave']
+            if Jurisdiccion.objects.filter(clave=claveAct).exists():
+                return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedJurisdiccion'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedJurisdiccion'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editjurisdiccion(request, pk):
+    if request.method == 'POST':
+        try:
+            entity = Jurisdiccion.objects.get(id = pk)
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistJurisdiccion'}))
+        form = JurisdiccionForm(request.POST, instance=entity)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedJurisdiccion'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedJurisdiccion'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedJurisdiccion'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def deljurisdiccion(request, pk):
+    try:
+        entity = Jurisdiccion.objects.get(id = pk)
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistJurisdiccion'}))
+    try:
+        entity.delete()
+        return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedJurisdiccion'}))
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedJurisdiccion'}))
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def addInstitucion(request):
+    if request.method == 'POST':
+        form = InstitucionForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedInstitucion'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedInstitucion'}))
+        else:
+            claveAct = request.POST['clave']
+            if Institucion.objects.filter(clave=claveAct).exists():
+                return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedInstitucion'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedInstitucion'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editInstitucion(request, pk):
+    if request.method == 'POST':
+        try:
+            entity = Institucion.objects.get(id = pk)
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistInstitucion'}))
+        form = InstitucionForm(request.POST, instance=entity)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedInstitucion'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedInstitucion'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedInstitucion'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def delInstitucion(request, pk):
+    try:
+        entity = Institucion.objects.get(id = pk)
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistInstitucion'}))
+    try:
+        entity.delete()
+        return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedInstitucion'}))
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedInstitucion'}))

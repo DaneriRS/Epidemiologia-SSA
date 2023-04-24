@@ -5,7 +5,6 @@
                 <th class="text-center">Clave</th>
                 <th>Nombre</th>
                 <th>Entidad</th>
-                <th>Jurisdiccion</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -15,9 +14,8 @@
                 <td class="text-center">{{ muni.clave }}</td>
                 <td>{{ muni.nombre }}</td>
                 <td>{{ muni.entidad.nombre }}</td>
-                <td>{{ muni.jurisdiccion.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar" onclick="editMunicipio('{% url 'editMunicipio' muni.id %}', '{{muni.clave}}', '{{muni.nombre}}', '{{muni.entidad.id}}', '{{muni.jurisdiccion.id}}')">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar" onclick="editMunicipio('{% url 'editMunicipio' muni.id %}', '{{muni.clave}}', '{{muni.nombre}}', '{{muni.entidad.id}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delMunicipio' muni.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -48,7 +46,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'addMunicipio' %}" method="post">
+                <form autocomplete="off" action="{% url 'addMunicipio' %}" method="post">
                     {% csrf_token %}
                     {% comment %} <div class="modal-body"> {% endcomment %}
                         <h4 class="modal-title">Individual</h4>
@@ -62,7 +60,7 @@
                     </div>
                 </form>
                 <div class="dropdown-divider"></div>
-                <form action="{% url 'MunicipioExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form autocomplete="off" action="{% url 'MunicipioExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
                     {% csrf_token %}
                     {% comment %} <div class="modal-body"> {% endcomment %}
                         <h4 class="modal-title">Con Excel</h4>
@@ -90,7 +88,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form method="post" id="editMunicipioForm">
+            <form autocomplete="off" method="post" id="editMunicipioForm">
                 {% csrf_token %}
                 <div class="modal-body">
 

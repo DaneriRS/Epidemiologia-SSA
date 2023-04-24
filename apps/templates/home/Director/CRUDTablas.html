@@ -23,28 +23,28 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEntidad" aria-expanded="false" aria-controls="collapseEntidadHeading">
+                            <a id="btnEntidad" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEntidad" aria-expanded="false" aria-controls="collapseEntidadHeading">
                                 Entidad
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseJurisdiccion" aria-expanded="false" aria-controls="collapseJurisdiccionHeading">
+                            <a id="btnJurisdiccion" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseJurisdiccion" aria-expanded="false" aria-controls="collapseJurisdiccionHeading">
                                 Jurisdiccion
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMunicipio" aria-expanded="false" aria-controls="collapseMunicipioHeading">
+                            <a id="btnMunicipio" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMunicipio" aria-expanded="false" aria-controls="collapseMunicipioHeading">
                                 Municipio
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLocalidad" aria-expanded="false" aria-controls="collapseLocalidadHeading">
+                            <a id="btnLocalidad" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLocalidad" aria-expanded="false" aria-controls="collapseLocalidadHeading">
                                 Localidad
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseInstitucion" aria-expanded="false" aria-controls="collapseInstitucionHeading">
+                            <a id="btnInstitucion" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseInstitucion" aria-expanded="false" aria-controls="collapseInstitucionHeading">
                                 Institucion
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstablecimiento" aria-expanded="false" aria-controls="collapseEstablecimientoHeading">
+                            <a id="btnEstablecimiento" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstablecimiento" aria-expanded="false" aria-controls="collapseEstablecimientoHeading">
                                 Establecimiento
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseTipologia" aria-expanded="false" aria-controls="collapseTipologiaHeading">
+                            <a id="btnTipologia" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseTipologia" aria-expanded="false" aria-controls="collapseTipologiaHeading">
                                 Tipologia
                             </a>
-                            <a class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseUnidades" aria-expanded="false" aria-controls="collapseUnidadesHeading">
+                            <a id="btnUnidades" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseUnidades" aria-expanded="false" aria-controls="collapseUnidadesHeading">
                                 Unidades
                             </a>
                         </div>                    
@@ -249,7 +249,7 @@
            "ordering": true
        });      
     });
-    function editMunicipio(url, clave, nombre, entidad, jurisdiccion) {
+    function editMunicipio(url, clave, nombre, entidad) {
         // Obtener el formulario
         const form = document.getElementById('editMunicipioForm');
       
@@ -257,20 +257,18 @@
         form.querySelector('#editMunicipio_clave').value = clave;
         form.querySelector('#editMunicipio_nombre').value = nombre;
         form.querySelector('#editMunicipio_entidad').value = entidad;
-        form.querySelector('#editMunicipio_jurisdiccion').value = jurisdiccion;
       
         // Modificar el action del formulario
         form.action = url;
     }
 
-    function editLocalidad(url, clave, nombre, municipio) {
+    function editLocalidad(url, clave, nombre) {
         // Obtener el formulario
         const form = document.getElementById('editLocalidadForm');
       
         // Asignar los valores a los inputs del formulario
         form.querySelector('#editLocalidad_clave').value = clave;
         form.querySelector('#editLocalidad_nombre').value = nombre;
-        form.querySelector('#editLocalidad_municipio').value = municipio;
       
         // Modificar el action del formulario
         form.action = url;
@@ -311,6 +309,37 @@
         // Modificar el action del formulario
         form.action = url;
     }
+
+    function editJurisdiccion(url, clave, nombre, entidad) {
+        // Obtener el formulario
+        const form = document.getElementById('editJurisdiccionForm');
+      
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editJurisdiccion_clave').value = clave;
+        form.querySelector('#editJurisdiccion_nombre').value = nombre;
+        form.querySelector('#editJurisdiccion_entidad').value = entidad;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editInstitucion(url, clave, nombre) {
+        // Obtener el formulario
+        const form = document.getElementById('editInstitucionForm');
+      
+        // Asignar los valores a los inputs del formulario
+        console.log(clave);
+        console.log(nombre);
+        form.querySelector('#editInstitucion_clave').value = clave;
+        form.querySelector('#editInstitucion_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    {% if presionar %}
+        document.getElementById("btn{{ btnPresionar }}").click()
+    {% endif %}
 
 </script>
 {% endblock javascripts %}

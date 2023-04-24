@@ -422,19 +422,19 @@ class addJurisdiccion(ModelForm):
                 'required': 'required'
             })
 
-class addInstitucion(ModelForm):
+# class addInstitucion(ModelForm):
 
-    class Meta:
-        model = Institucion
-        fields = '__all__'
+#     class Meta:
+#         model = Institucion
+#         fields = '__all__'
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'required': 'required'
-            })
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         for field in self.fields:
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control',
+#                 'required': 'required'
+#             })
 
 class ContactoForm4SetForm(forms.Form):
     contactoForm4Set = formset_factory(ContactoForm4, extra=3)

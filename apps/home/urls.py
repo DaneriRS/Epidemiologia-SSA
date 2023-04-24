@@ -26,13 +26,19 @@ urlpatterns = [
     # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
     #CRUD INSTITUCION
-    path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
-    path('tablas/jurisdiccion/del/<int:pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    path('tablas/institucion/add', allViews.addInstitucion, name = 'addInstitucion'),
+    path('tablas/institucion/del/<int:pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    path('tablas/institucion/edit/<int:pk>', allViews.editInstitucion, name = 'editInstitucion'),
     
     #CRUD MUNICIPIO
     path('tablas/municipio/add', allViews.addMunicipio, name = 'addMunicipio'),
     path('tablas/municipio/del/<int:pk>', allViews.delMunicipio, name = 'delMunicipio'),
     path('tablas/municipio/edit/<int:pk>', allViews.editMunicipio, name = 'editMunicipio'),
+    
+    #CRUD JURISDICCION
+    path('tablas/jurisdiccion/add', allViews.addjurisdiccion, name = 'addjurisdiccion'),
+    path('tablas/jurisdiccion/del/<int:pk>', allViews.deljurisdiccion, name = 'deljurisdiccion'),
+    path('tablas/jurisdiccion/edit/<int:pk>', allViews.editjurisdiccion, name = 'editjurisdiccion'),
     
     #CRUD LOCALIDAD
     path('tablas/localidad/add', allViews.addLocalidad, name = 'addLocalidad'),
@@ -46,13 +52,13 @@ urlpatterns = [
 
     #CRUD ENTIDAD
     path('tablas/Entidad/add', allViews.addEntidad, name = 'addEntidad'),
-    path('tablas/Entidad/edit/<pk>', allViews.editEntidad, name = 'editEntidad'),
-    path('tablas/Entidad/del/<pk>', allViews.delEntidad, name = 'delEntidad'),
+    path('tablas/Entidad/edit/<int:pk>', allViews.editEntidad, name = 'editEntidad'),
+    path('tablas/Entidad/del/<int:pk>', allViews.delEntidad, name = 'delEntidad'),
 
     #CRUD ESTABLECIMIENTO
     path('tablas/Establecimiento/add', allViews.addEstablecimiento, name = 'addEstablecimiento'),
-    path('tablas/Establecimiento/edit/<pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
-    path('tablas/Establecimiento/del/<pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
+    path('tablas/Establecimiento/edit/<int:pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
+    path('tablas/Establecimiento/del/<int:pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
 
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),

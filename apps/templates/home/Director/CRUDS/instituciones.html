@@ -2,20 +2,18 @@
     <table class="table table-striped table-hover" id="tabla_instituciones">
         <thead>
             <tr>
-                <th class="text-center">#</th>
+                <th class="text-center">Clave</th>
                 <th>Nombre</th>
-                <th>Clave</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for inst in Instituciones %}
             <tr>
-                <td class="text-center">{{ inst.pk }}</td>
+                <td class="text-center">{{ inst.clave }}</td>
                 <td>{{ inst.nombre }}</td>
-                <td>{{ inst.clave }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editInstitucionModal" title="Editar">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editInstitucionModal" title="Editar" onclick="editInstitucion('{% url 'editInstitucion' inst.id %}', '{{inst.clave}}', '{{inst.nombre}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delInstitucion' inst.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -40,23 +38,23 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="addInstitucionModalLabel">Agregar nueva institucion</h3>
+                <h3 class="modal-title" id="addInstitucionModalLabel">Agregar nueva Institucion</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addInstitucionCrud' %}" method="post">
-                {% csrf_token %}
-                <div class="modal-body">
-
-                    {{ formAddInstitucion }}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form autocomplete="off" action="{% url 'addInstitucion' %}" method="post">
+                    {% csrf_token %}
+    
+                        {{ formAddInstitucion }}
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -67,16 +65,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="editInstitucionModalLabel">Editar institucion</h3>
+                <h3 class="modal-title" id="editInstitucionModalLabel">Editar Institucion</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'addInstitucionCrud' %}" method="post">
+            <form autocomplete="off" method="post" id="editInstitucionForm">
                 {% csrf_token %}
                 <div class="modal-body">
 
-                    {{ formAddInstitucion }}
+                    {{ formEditInstitucion }}
 
                 </div>
                 <div class="modal-footer">
@@ -86,4 +84,4 @@
             </form>
         </div>
     </div>
-</div>
+</div> 
