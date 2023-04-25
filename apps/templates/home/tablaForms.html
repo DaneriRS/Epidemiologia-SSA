@@ -23,20 +23,20 @@
                             <table class="table table-striped table-hover" id="tabla_casos">
                                 <thead>
                                     <tr>
-                                        <th>Formulario Id</th>
+                                        <th>Folio del Caso</th>
                                         <th>Nombre</th>
-                                        <th>Apellido Paterno</th>
-                                        <th>Apellido Materno</th>
+                                        <th>Apellidos</th>
+                                        <th>Numero de Afiliado</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for formulario in formularios %}
                                     <tr>
-                                        <td>{{ formulario.id }}</td>
+                                        <td>{{ formulario.folio }}</td>
                                         <td>{{ formulario.nombre }}</td>
-                                        <td>{{ formulario.ap }}</td>
-                                        <td>{{ formulario.am }}</td>
+                                        <td>{{ formulario.ap }} {{ formulario.am }}</td>
+                                        <td>{{ formulario.noAfili }}</td>
                                         <td class="td-actions text-center">
                                             <a href="{% url 'editForm' formulario.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
                                                 <i class="tim-icons icon-settings"></i>

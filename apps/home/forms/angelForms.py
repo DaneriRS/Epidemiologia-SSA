@@ -370,7 +370,7 @@ class ContactForm3(forms.Form):
     )
 
 class ContactoForm4(forms.Form):
-    estudio = forms.CharField(
+    nombre = forms.CharField(
         max_length=30,
         label="Estudio",
         widget=forms.TextInput(
@@ -388,7 +388,7 @@ class ContactoForm4(forms.Form):
             }
         )
     )
-    fechaEstudio = forms.CharField(
+    fecha = forms.CharField(
         label = 'Fecha: ',
         widget=forms.DateInput(
             format='%YYYY-%MM-%DD',
@@ -405,8 +405,61 @@ class ContactoForm4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
+        ),
+        required=False
+    )
+
+class ContactoForm5(forms.Form):
+    id = forms.CharField(
+        max_length=30,
+        label="Id",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+                'hidden': 'true'
+            }
+        ),
+        required=False,
+    )
+    nombre = forms.CharField(
+        max_length=30,
+        label="Estudio",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+            }
         )
     )
+    tipo = forms.CharField(
+        max_length=30,
+        label="Tipo",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    fecha = forms.CharField(
+        label = 'Fecha: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepickerfechaEstudio'
+            }
+        )
+    )
+    resultado = forms.CharField(
+        max_length=30,
+        label="Resultado: ",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False
+    )
+
 
 class addJurisdiccion(ModelForm):
     
@@ -435,6 +488,3 @@ class addJurisdiccion(ModelForm):
 #                 'class': 'form-control',
 #                 'required': 'required'
 #             })
-
-class ContactoForm4SetForm(forms.Form):
-    contactoForm4Set = formset_factory(ContactoForm4, extra=3)
