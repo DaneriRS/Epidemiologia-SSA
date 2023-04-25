@@ -83,6 +83,14 @@
                         <p>Typography</p>
                     </a>
                 </li> {% endcomment %}
+                {% if request.user.is_director %}
+                    <li class="{% if 'logos' in segment %} active {% endif %} ">
+                        <a href="{% url 'actualizarLogos' 'false' %}">
+                            <i class="tim-icons icon-book-bookmark"></i>
+                            <p>Actualizar Logos</p>
+                        </a>
+                    </li>
+                {% endif %}
                 <li>
                     <a href="{% url 'logout' %}">
                         <i class="tim-icons icon-button-power"></i>

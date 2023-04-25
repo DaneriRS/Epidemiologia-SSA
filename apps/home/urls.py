@@ -3,6 +3,8 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, re_path
 from apps.home.views import allViews
 
@@ -47,13 +49,13 @@ urlpatterns = [
 
     #CRUD ENTIDAD
     path('tablas/Entidad/add', allViews.addEntidad, name = 'addEntidad'),
-    path('tablas/Entidad/edit/<pk>', allViews.editEntidad, name = 'editEntidad'),
-    path('tablas/Entidad/del/<pk>', allViews.delEntidad, name = 'delEntidad'),
+    path('tablas/Entidad/edit/<int:pk>', allViews.editEntidad, name = 'editEntidad'),
+    path('tablas/Entidad/del/<int:pk>', allViews.delEntidad, name = 'delEntidad'),
 
     #CRUD ESTABLECIMIENTO
     path('tablas/Establecimiento/add', allViews.addEstablecimiento, name = 'addEstablecimiento'),
-    path('tablas/Establecimiento/edit/<pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
-    path('tablas/Establecimiento/del/<pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
+    path('tablas/Establecimiento/edit/<int:pk>', allViews.editEstablecimiento, name = 'editEstablecimiento'),
+    path('tablas/Establecimiento/del/<int:pk>', allViews.delEstablecimiento, name = 'delEstablecimiento'),
 
     #LocalidadExcel
     path('tablas/localidad/Excel/', allViews.LocalidadExcel, name = 'LocalidadExcel'),
@@ -64,10 +66,8 @@ urlpatterns = [
     #UnidadMedicaExcel
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
 
-    path('tablas/add', allViews.addEntidadCRUD, name = 'addEntidad'),
-    path('tablas/entidad/del/<pk>', allViews.addEntidadCRUD, name = 'addEntidad'),
-    
-    path('tablas/add', allViews.addEntidadCRUD, name = 'addEstablecimiento'),
-    path('tablas/entidad/del/<pk>', allViews.addEntidadCRUD, name = 'addEstablecimiento'),
+    #Logos
+    path('logos', allViews.ActualizarLogos,name = 'ActualizarLogos'),
+    path('verLogos', allViews.verLogo,name = 'verLogo'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

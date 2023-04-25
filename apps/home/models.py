@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+import os
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -180,3 +181,14 @@ class Paciente(models.Model):
     # idEntidad = models.CharField(verbose_name = "Entidad", max_length=2, choices=ENTIDADES) 
     codigoPostal = models.CharField(verbose_name = "Codigo postal", max_length=5)
     telefonoPaciente = models.CharField(verbose_name = "Telefono", max_length = 10)
+
+
+
+class Logos(models.Model):
+    titulo = models.CharField(max_length=250)
+    logo = models.ImageField(upload_to='media/logos', null=True)
+    actualizado = models.DateTimeField(auto_now_add=True)
+
+class LogosImagen(models.Model):
+    logo = models.ImageField(upload_to='media/logos')
+    logoIma = models.ForeignKey(Logos, on_delete=models.CASCADE)

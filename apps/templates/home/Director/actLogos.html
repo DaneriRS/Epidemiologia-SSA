@@ -1,0 +1,44 @@
+
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Usuarios {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block jumbotron %}
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1>Image uploader</h1>
+      <p class="lead">This is just a simple view to upload images to an album.</p>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        {% include 'includes/logos.html' %}
+    </div>
+    {% if message %}
+      <div class='alert alert-info'>
+        {{ message }}
+      </div>
+    {% endif %}
+
+    <h3>Actualizar Logos</h3> 
+    <form  role="form"  enctype="multipart/form-data" action="" method="POST" id="ActualizarLogos"> 
+        {% csrf_token %}
+        {{ form.as_p }}
+    <button type="submit">Actualizar</button>
+    </form>
+
+
+  <p><a href="{% url 'index' %}">Regresar</a></p>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

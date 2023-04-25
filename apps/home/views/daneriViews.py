@@ -7,6 +7,13 @@ from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test
 
+from PIL import Image, ImageTk
+from PIL import ImageOps
+
+
+DIR_REC = "./media/" # donde guardamos las imagenes
+
+
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
         @user_passes_test(lambda user: user.groups.filter(name__in=roles).exists(), login_url=redirect_url)
@@ -163,3 +170,33 @@ def delEstablecimiento(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDelEstablecimiento'}))
     except Exception as e:
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDelEstablecimiento'}))
+
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def ActualizarLogos(request):
+    if request.method == 'POST':
+        form = LogosForm(request.POST, request.logo)
+        if form.is_valid():
+            handle_actualizarLogo(request.logo['logo'])
+            return redirect('home')#redirigue a donde deseas
+    else:
+        form = LogosForm()
+    return redirect(reverse('logos', kwargs={'msg':'exitoDelEstablecimiento'}))
+
+def handle_actualizarLogo(f):
+    with open('media/logos/', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+@login_required(login_url="/login/")
+def verLogo():
+    logos = Logos.objects.all()
+    data = {
+        'logos':logos
+    }
+    return render(request, 'home/index.html', data)
+    #logosAll = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    #imagen = Image.open(DIR_REC + logosAll)
+    #logo.save(imagen)
+    #return 0
+
