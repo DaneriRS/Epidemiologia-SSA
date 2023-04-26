@@ -71,7 +71,17 @@
                         <p>Notifications</p>
                     </a>
                 </li> {% endcomment %}
-                <li class="{% if 'user' in segment %} active {% endif %}">
+                {% comment "" %}{% if request.user.is_director %}{% endcomment %}
+                    <li class="{% if 'Logos' in segment %} active {% endif %} ">
+                        <a href="{% url 'actualizarLogos2' %}">
+                            <i class="tim-icons icon-book-bookmark"></i>
+                            <p>Actualizar Logos</p>
+                        </a>
+                    </li>
+                {% comment "" %}
+                {% endif %} ADENTRO DE CLASS{% if 'user' in segment %} active {% endif %}
+                {% endcomment %}
+                <li class="">
                     <a href="{% url 'user' %}">
                         <i class="tim-icons icon-single-02"></i>
                         <p>Perfil</p>

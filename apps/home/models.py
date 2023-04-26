@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+import os
 from django.db import models
 from django.contrib.auth.models import User
-
+from PIL import Image
 # Create your models here.
 
 
@@ -233,3 +234,17 @@ class Estudio(models.Model):
     resultado = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
     registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
     
+class Logos(models.Model):
+    id = models.AutoField(primary_key=True)
+    titulo = models.CharField('Titulo', max_length=250, blank=True, null=True)
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True, verbose_name="ImagenLogo")
+    actualizado = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.logo.path)
+
+        if img.height > 85:
+            output_size = (None,85)
+            img.thumbanail(output_size, Image.LANCZOS)
+            img.save(self.logo.path)

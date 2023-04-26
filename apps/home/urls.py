@@ -3,6 +3,8 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, re_path
 from apps.home.views import allViews
 
@@ -18,6 +20,9 @@ urlpatterns = [
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
     path('ajax/consultar/unidades/', allViews.consultar_unidades, name='get_unidades'),
+    path('perfil/<int:user_id>', allViews.user, name='user'),
+    
+
     path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
     path('perfil/', allViews.user, name='user'),
 
@@ -68,5 +73,11 @@ urlpatterns = [
 
     #UnidadMedicaExcel
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
+
+    #Logos
+    path('verLogos', allViews.verLogo, name = 'verLogo'),
+    path('logos', allViews.actualizarLogos, name = 'actualizarLogos'),
+    path('logos', allViews.actualizarLogos2, name = 'actualizarLogos2'),
+    path('listaLogos/', allViews.ListaLogos, name = 'listaLogos'),
 
 ]
