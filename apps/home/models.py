@@ -187,7 +187,7 @@ class Paciente(models.Model):
 class Logos(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField('Titulo', max_length=250, blank=True, null=True)
-    logo = models.ImageField(upload_to='media/logos/', blank=True, null=True, verbose_name="ImagenLogo")
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True, verbose_name="ImagenLogo")
     actualizado = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
