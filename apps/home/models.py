@@ -3,7 +3,7 @@
 import os
 from django.db import models
 from django.contrib.auth.models import User
-
+from PIL import Image
 # Create your models here.
 
 
@@ -185,10 +185,16 @@ class Paciente(models.Model):
 
 
 class Logos(models.Model):
-    titulo = models.CharField(max_length=250)
-    logo = models.ImageField(upload_to='media/logos', null=True)
+    id = models.AutoField(primary_key=True)
+    titulo = models.CharField('Titulo', max_length=250, blank=True, null=True)
+    logo = models.ImageField(upload_to='media/logos/', blank=True, null=True, verbose_name="ImagenLogo")
     actualizado = models.DateTimeField(auto_now_add=True)
 
-class LogosImagen(models.Model):
-    logo = models.ImageField(upload_to='media/logos')
-    logoIma = models.ForeignKey(Logos, on_delete=models.CASCADE)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.logo.path)
+
+        if img.height > 85:
+            output_size = (None,85)
+            img.thumbanail(output_size, Image.LANCZOS)
+            img.save(self.logo.path)

@@ -1,7 +1,8 @@
+from urllib import request
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.urls import reverse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import redirect, render
 from apps.home.models import *
 from apps.home.forms.allForms import *
 from django.contrib.auth.models import User
@@ -9,9 +10,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 from PIL import Image, ImageTk
 from PIL import ImageOps
-
-
-DIR_REC = "./media/" # donde guardamos las imagenes
+from django.views.generic import TemplateView, ListView,UpdateView
 
 
 def roles_required(roles, redirect_url=None):
@@ -171,24 +170,8 @@ def delEstablecimiento(request, pk):
     except Exception as e:
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDelEstablecimiento'}))
 
-
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
-def ActualizarLogos(request):
-    if request.method == 'POST':
-        form = LogosForm(request.POST, request.logo)
-        if form.is_valid():
-            handle_actualizarLogo(request.logo['logo'])
-            return redirect('home')#redirigue a donde deseas
-    else:
-        form = LogosForm()
-    return redirect(reverse('logos', kwargs={'msg':'exitoDelEstablecimiento'}))
-
-def handle_actualizarLogo(f):
-    with open('media/logos/', 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
-@login_required(login_url="/login/")
 def verLogo():
     logos = Logos.objects.all()
     data = {
@@ -200,3 +183,67 @@ def verLogo():
     #logo.save(imagen)
     #return 0
 
+class guardarLogo():
+    def get(self, request):
+        logos = Logos.objects.all
+        return render, "actLogo.html", {"form: form"}
+    
+    def post (self, request):
+        form = LogosForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request('home/index.html'))
+
+@login_required(login_url="/login/")
+def actualizarLogos(request):
+    if request.method == 'POST':
+        form = LogosForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return render(request, 'home/index.html', {
+                'form': form,
+                'msg' : "1"
+                })
+            except:
+                return render(request, 'home/index.html', {
+                'form': form,
+                'msg' : "0"
+                })
+    else:
+        form = LogosForm()
+    
+    return render(request, 'home/index.html', {'form': form})
+
+    
+
+class ListaLogos(ListView):
+    model = Logos
+    template_name = 'logos/actualizarLogos.html'
+    context_object_name = 'logos'
+    
+
+class actualizarLogos2(UpdateView):
+    model = Logos
+    form_class = LogosForm
+    template_name = 'home/actualizarLogos.html'
+    #success_url = reverse_lazy('logos:listaLogos')
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(data = request.POST, files = request.FILES, instance=self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje': mensaje, 'error':error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido actualizar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error':error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('home/index.html')

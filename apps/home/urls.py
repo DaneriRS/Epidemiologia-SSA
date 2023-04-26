@@ -67,7 +67,9 @@ urlpatterns = [
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
 
     #Logos
-    path('logos', allViews.ActualizarLogos,name = 'ActualizarLogos'),
-    path('verLogos', allViews.verLogo,name = 'verLogo'),
+    path('verLogos', allViews.verLogo, name = 'verLogo'),
+    path('logos', allViews.actualizarLogos, name = 'actualizarLogos'),
+    path('logos', allViews.actualizarLogos2, name = 'actualizarLogos2'),
+    path('listaLogos/', allViews.ListaLogos, name = 'listaLogos'),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
