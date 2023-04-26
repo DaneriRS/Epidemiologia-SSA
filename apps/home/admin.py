@@ -13,5 +13,6 @@ admin.site.register(InformacionUsuario)
 admin.site.register(Jurisdiccion)
 admin.site.register(Unidad)
 admin.site.register(Entidad)
+admin.site.register(RegistroEstudio)
+admin.site.register(Estudio)
 admin.site.register(Logos)
-

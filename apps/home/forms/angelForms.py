@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from apps.home.models import *
 from django.contrib.auth.models import User, Group
+from django.forms import formset_factory
 
 MUNICIPIOS =(
     ("1", "MORELIA"),
@@ -43,6 +44,7 @@ class registroPaciente(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
+
 class ContactForm1(forms.Form):
     folio = forms.CharField(
         max_length=20,
@@ -178,7 +180,6 @@ class ContactForm1(forms.Form):
             }
         )
     )
-
 
 class ContactForm2(forms.Form):
     noAfili = forms.CharField(
@@ -368,6 +369,98 @@ class ContactForm3(forms.Form):
         )
     )
 
+class ContactoForm4(forms.Form):
+    nombre = forms.CharField(
+        max_length=30,
+        label="Estudio",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+            }
+        )
+    )
+    tipo = forms.CharField(
+        max_length=30,
+        label="Tipo",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    fecha = forms.CharField(
+        label = 'Fecha: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepickerfechaEstudio'
+            }
+        )
+    )
+    resultado = forms.CharField(
+        max_length=30,
+        label="Resultado: ",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False
+    )
+
+class ContactoForm5(forms.Form):
+    id = forms.CharField(
+        max_length=30,
+        label="Id",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+                'hidden': 'true'
+            }
+        ),
+        required=False,
+    )
+    nombre = forms.CharField(
+        max_length=30,
+        label="Estudio",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+            }
+        )
+    )
+    tipo = forms.CharField(
+        max_length=30,
+        label="Tipo",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    fecha = forms.CharField(
+        label = 'Fecha: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepickerfechaEstudio'
+            }
+        )
+    )
+    resultado = forms.CharField(
+        max_length=30,
+        label="Resultado: ",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False
+    )
+
+
 class addJurisdiccion(ModelForm):
     
     class Meta:
@@ -382,16 +475,16 @@ class addJurisdiccion(ModelForm):
                 'required': 'required'
             })
 
-class addInstitucion(ModelForm):
+# class addInstitucion(ModelForm):
 
-    class Meta:
-        model = Institucion
-        fields = '__all__'
+#     class Meta:
+#         model = Institucion
+#         fields = '__all__'
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'required': 'required'
-            })
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         for field in self.fields:
+#             self.fields[field].widget.attrs.update({
+#                 'class': 'form-control',
+#                 'required': 'required'
+#             })

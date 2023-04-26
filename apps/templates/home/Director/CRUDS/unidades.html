@@ -7,6 +7,8 @@
                 <th>Tipologia</th>
                 <th>Establecimiento</th>
                 <th>Institucion</th>
+                <th>Jurisdiccion</th>
+                <th>Municipio</th>
                 <th>Localidad</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -19,6 +21,8 @@
                 <td>{{ Umedica.tipologia }}</td>
                 <td>{{ Umedica.establecimiento }}</td>
                 <td>{{ Umedica.institucion }}</td>
+                <td>{{ Umedica.jurisdiccion }}</td>
+                <td>{{ Umedica.municipio }}</td>
                 <td>{{ Umedica.localidad }}</td>
                 <td class="td-actions text-center">
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar">
@@ -78,7 +82,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form action="{% url 'editMunicipio' 1 %}" method="post">
+            <form autocomplete="off" action="{% url 'editMunicipio' 1 %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
 

@@ -14,6 +14,8 @@ urlpatterns = [
     path('', allViews.index, name='home'),
     path('import_excel/', allViews.import_excel, name='import_excel_view'),
     path('multiForm/', allViews.BookingWizzadView.as_view() , name="multiForm"),
+    path('editForm/<int:id>', allViews.RegistroEstudioUpdateView.as_view() , name="editForm"),
+    path('listaFormularios/', allViews.listaFormularios , name="listaFormularios"),
     path('nuevoPaciente/', allViews.nuevoPaciente, name="nuevoPaciente"),
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
@@ -29,13 +31,19 @@ urlpatterns = [
     # re_path(r'^.*\.*', allViews.pages, name='pages'),
 
     #CRUD INSTITUCION
-    path('tablas/jurisdiccion/add', allViews.addInstitucionCrud, name = 'addInstitucionCrud'),
-    path('tablas/jurisdiccion/del/<int:pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    path('tablas/institucion/add', allViews.addInstitucion, name = 'addInstitucion'),
+    path('tablas/institucion/del/<int:pk>', allViews.delInstitucion, name = 'delInstitucion'),
+    path('tablas/institucion/edit/<int:pk>', allViews.editInstitucion, name = 'editInstitucion'),
     
     #CRUD MUNICIPIO
     path('tablas/municipio/add', allViews.addMunicipio, name = 'addMunicipio'),
     path('tablas/municipio/del/<int:pk>', allViews.delMunicipio, name = 'delMunicipio'),
     path('tablas/municipio/edit/<int:pk>', allViews.editMunicipio, name = 'editMunicipio'),
+    
+    #CRUD JURISDICCION
+    path('tablas/jurisdiccion/add', allViews.addjurisdiccion, name = 'addjurisdiccion'),
+    path('tablas/jurisdiccion/del/<int:pk>', allViews.deljurisdiccion, name = 'deljurisdiccion'),
+    path('tablas/jurisdiccion/edit/<int:pk>', allViews.editjurisdiccion, name = 'editjurisdiccion'),
     
     #CRUD LOCALIDAD
     path('tablas/localidad/add', allViews.addLocalidad, name = 'addLocalidad'),

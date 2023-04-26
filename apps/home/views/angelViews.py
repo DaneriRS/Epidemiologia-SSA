@@ -5,6 +5,7 @@ from apps.home.models import *
 from apps.home.forms.allForms import *
 from formtools.wizard.views import *
 from django.contrib.auth.decorators import user_passes_test
+from django.forms.models import model_to_dict
 
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
@@ -14,11 +15,25 @@ def roles_required(roles, redirect_url=None):
         return wrapper
     return decorator
 
-def multiForm(request):
-    return render(request, "home/exampleForm.html")
+FormSET1=formset_factory(ContactoForm4, extra=2)
+FORMS = [
+            ("1", ContactForm1),
+            ("2", ContactForm2),
+            ("3", ContactForm3),
+            ("4", FormSET1)
+        ]
+
+FormSET2=formset_factory(ContactoForm5, extra=0)
+FORMS2 = [
+            ("1", ContactForm1),
+            ("2", ContactForm2),
+            ("3", ContactForm3),
+            ("4", FormSET2)
+        ]
 
 class BookingWizzadView(CookieWizardView):
-    form_list = [ContactForm1, ContactForm2, ContactForm3]
+    form_list=FORMS
+    form_dict=dict(form_list)
     template_name = 'home/exampleForm.html'
 
     def get(self, request, *args, **kwargs):
@@ -26,11 +41,100 @@ class BookingWizzadView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
+        
+    def get_context_data(self,form, **kwargs):
+    #Here I try to append the formset in the first step. It shows the
+    #field, but no success on saving it
+        data = super(BookingWizzadView,self).get_context_data(form,**kwargs)
+        if self.steps.current == "4":
+            if self.request.POST:
+                data['4'] = FormSET1(self.request.POST)
+            else:
+                data['4'] = FormSET1()
+        return data
 
     def done(self, form_list, **kwargs):
-        return HttpResponse("Enviado")
+        registroDataFormSet1=[]
+        registroData={}
+        for i,form in enumerate(form_list):
+            if i != 3:
+                registroData.update(form.cleaned_data)
+            else:
+                for formset in form:
+                    registroDataFormSet1.append(formset.cleaned_data)
+            
+        rd = RegistroEstudio(**registroData)
+        rd.save()
+
+        for item in registroDataFormSet1:
+            print(item)
+            est=Estudio(
+                nombre=item['nombre'],
+                tipo=item['tipo'],
+                fecha=item['fecha'],
+                resultado=item['resultado'],
+                registroEstudio=rd
+            )
+            est.save()
+        return redirect('listaFormularios')
+
+class RegistroEstudioUpdateView(CookieWizardView):
+    form_list=FORMS2
+    form_dict=dict(form_list)
+    template_name = 'home/editForm1.html'
+
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        if 'id' in self.kwargs:
+            project_id = self.kwargs['id']
+            project = RegistroEstudio.objects.get(id=project_id)
+            if step == "4":
+                project_dict=[]
+                estudios=Estudio.objects.filter(registroEstudio_id=project.id)
+                for estudio in estudios:
+                    project_d = model_to_dict(estudio)
+                    project_dict.append(project_d)
+                return project_dict
+            else:
+                project_dict = model_to_dict(project)
+                return project_dict
+
+    def done(self, form_list, **kwargs):
+        id = self.kwargs['id']
+
+        registroDataFormSet1=[]
+        registroData={}
+
+        for i,form in enumerate(form_list):
+            if i != 3:
+                registroData.update(form.cleaned_data)
+            else:
+                for formset in form:
+                    registroDataFormSet1.append(formset.cleaned_data)
+
+        print(registroDataFormSet1)
+        re=RegistroEstudio.objects.filter(id=id)
+        re.update(**registroData)
+
+        for item in registroDataFormSet1:
+            print(item)
+            est=Estudio.objects.get(id=item['id'])
+            print(est.nombre)
+            est.nombre=item['nombre']
+            est.tipo=item['tipo']
+            est.fecha=item['fecha']
+            est.resultado=item['resultado']
+            est.save()
+
+        return redirect('listaFormularios')
     
 @login_required    
+def listaFormularios(request):
+    if request.method == 'GET':
+        formularios = RegistroEstudio.objects.all()
+        return render(request, 'home/tablaForms.html', {'formularios': formularios})
+    else:
+        return redirect ('home')
 def nuevoPaciente(request):
     if request.method == 'POST':
         formA = registroPaciente(request.POST)
@@ -55,53 +159,51 @@ def nuevoPaciente(request):
     #CRUD JURISDICCION
 
     #CRUD INSTITUCION
-def addInstitucionCrud(request):
-    formAddJurisdiccion = addJurisdiccion()
-    formAddInstitucion = addInstitucion()
-    if request.method == 'POST':
-        form = addInstitucion(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                # mensaje = None
-                # msgType = None
-                # mensaje = 'Mensaje 1 de prueba'
-                # msgType = 'success'
-                # context = {
-                #     'segment': 'CRUD_tablas',
-                #     'mensaje':mensaje,
-                #     'msg': mensaje,
-                #     'msgType': msgType,
-                #     'formAddJurisdiccion' : formAddJurisdiccion,
-                #     'formAddInstitucion' : formAddInstitucion
-                # }
-                # return render(request, 'home/Director/CRUDTablas.html', context)
-                return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
-            except:
-                print('error')
-                
+# def addInstitucionCrud(request):
+#     formAddJurisdiccion = addJurisdiccion()
+#     formAddInstitucion = addInstitucion()
+#     if request.method == 'POST':
+#         form = addInstitucion(request.POST)
+#         if form.is_valid():
+#             try:
+#                 form.save()
+#                 # mensaje = None
+#                 # msgType = None
+#                 # mensaje = 'Mensaje 1 de prueba'
+#                 # msgType = 'success'
+#                 # context = {
+#                 #     'segment': 'CRUD_tablas',
+#                 #     'mensaje':mensaje,
+#                 #     'msg': mensaje,
+#                 #     'msgType': msgType,
+#                 #     'formAddJurisdiccion' : formAddJurisdiccion,
+#                 #     'formAddInstitucion' : formAddInstitucion
+#                 # }
+#                 # return render(request, 'home/Director/CRUDTablas.html', context)
+#                 return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
+#             except:
+#                 print('error')
+# def delInstitucion(request, pk):
+#     formAddJurisdiccion = addJurisdiccion()
+#     formAddInstitucion = addInstitucion()
 
-def delInstitucion(request, pk):
-    formAddJurisdiccion = addJurisdiccion()
-    formAddInstitucion = addInstitucion()
+#     try:
+#         insti = Institucion.objects.get(id=pk)
+#         insti.delete()
+#     except:
+#         print("error")
 
-    try:
-        insti = Institucion.objects.get(id=pk)
-        insti.delete()
-    except:
-        print("error")
-
-    mensaje = None
-    msgType = None
-    mensaje = 'Mensaje 1 de prueba'
-    msgType = 'success'
-    context = {
-        'segment': 'CRUD_tablas',
-        'mensaje':mensaje,
-        'msg': mensaje,
-        'msgType': msgType,
-        'formAddJurisdiccion' : formAddJurisdiccion,
-        'formAddInstitucion' : formAddInstitucion
-    }
-    return render(request, 'home/Director/CRUDTablas.html', context)
+#     mensaje = None
+#     msgType = None
+#     mensaje = 'Mensaje 1 de prueba'
+#     msgType = 'success'
+#     context = {
+#         'segment': 'CRUD_tablas',
+#         'mensaje':mensaje,
+#         'msg': mensaje,
+#         'msgType': msgType,
+#         'formAddJurisdiccion' : formAddJurisdiccion,
+#         'formAddInstitucion' : formAddInstitucion
+#     }
+#     return render(request, 'home/Director/CRUDTablas.html', context)
 

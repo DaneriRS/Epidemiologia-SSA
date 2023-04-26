@@ -80,15 +80,14 @@ def LocalidadExcel(request):
             # Itera a través de cada fila del DataFrame
             for index, row in df.iterrows():
                 # Crea una instancia del modelo con los datos de la fila
-                print(row['clave'] + " - " +row['nombre']+ " - " +row['municipio'])
-                # obj = Localidad(
-                #     clave=row['clave'],
-                #     nombre=row['nombre'],
-                #     municipio=row['municipio'],
-                #     # Continúa agregando todos los campos del modelo que quieras importar
-                # )
+                print(str(row['clave']) + " - " +str(row['nombre']))
+                obj = Localidad(
+                    clave=row['clave'],
+                    nombre=row['nombre'],
+                    # Continúa agregando todos los campos del modelo que quieras importar
+                )
                 # # Guarda la instancia del modelo en la base de datos
-                # obj.save()
+                obj.save()
             return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
         except:
             print('error')
@@ -96,7 +95,7 @@ def LocalidadExcel(request):
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
     
-    
+
 @login_required
 @roles_required(['Director'], redirect_url='home')
 def MunicipioExcel(request):
@@ -107,25 +106,26 @@ def MunicipioExcel(request):
 
         try:
             # Itera a través de cada fila del DataFrame
+            print(df)
             for index, row in df.iterrows():
+                print(str(row['clave']) + " - " +str(row['nombre'])+ " - " +str(row['entidad']))
+                entidad=Entidad.objects.get(clave=row['entidad'])
                 # Crea una instancia del modelo con los datos de la fila
-                print(row['clave'] + " - " +row['nombre']+ " - " +row['entidad']+ " - " +row['jurisdiccion'])
-                # obj = Municipio(
-                #     clave=row['clave'],
-                #     nombre=row['nombre'],
-                #     municipio=row['municipio'],
-                #     jurisdiccion=row['jurisdiccion']
-                #     # Continúa agregando todos los campos del modelo que quieras importar
-                # )
+                obj = Municipio(
+                    clave=row['clave'],
+                    nombre=row['nombre'],
+                    entidad=entidad,
+                    # Continúa agregando todos los campos del modelo que quieras importar
+                )
                 # # Guarda la instancia del modelo en la base de datos
-                # obj.save()
+                obj.save()
             return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
-        except:
+        except Exception as e:
             print('error')
             return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
-    
+ 
 
 @login_required
 @roles_required(['Director'], redirect_url='home')
@@ -138,19 +138,27 @@ def UMedicaExcel(request):
         try:
             # Itera a través de cada fila del DataFrame
             for index, row in df.iterrows():
+                tipologia= Tipologia.objects.get(clave=row['tipologia'])
+                establecimiento= Establecimiento.objects.get(clave=row['establecimiento'])
+                institucion= Institucion.objects.get(clave=row['institucion'])
+                localidad= Localidad.objects.get(clave=row['localidad'])
+                municipio=Municipio.objects.get(nombre=row['municipio'])
+                jurisdiccion=Jurisdiccion.objects.get(clave=row['jurisdiccion'])
                 # Crea una instancia del modelo con los datos de la fila
-                print(row['claveclues'] + " - " +row['claveSuave']+ " - " +row['tipologia']+ " - " +row['establecimiento']+ " - " +row['institucion']+ " - " +row['localidad'])
-                # obj = Unidad(
-                #     claveclues=row['claveclues'],
-                #     claveSuave=row['claveSuave'],
-                #     tipologia=row['tipologia'],
-                #     establecimiento=row['establecimiento'],
-                #     institucion=row['institucion'],
-                #     localidad=row['localidad'],
-                #     # Continúa agregando todos los campos del modelo que quieras importar
-                # )
+                print(str(row['claveclues']) + " - " +str(row['claveSuave'])+ " - " +str(row['tipologia'])+ " - " +str(row['establecimiento'])+ " - " +str(row['institucion'])+ " - " +str(row['localidad'])+ " - " +str(row['municipio'])+ " - " +str(row['jurisdiccion']))
+                obj = Unidad(
+                    claveclues=row['claveclues'],
+                    claveSuave=row['claveSuave'],
+                    tipologia=tipologia,
+                    establecimiento=establecimiento,
+                    institucion=institucion,
+                    localidad=localidad,
+                    municipio=municipio,
+                    jurisdiccion=jurisdiccion
+                    # Continúa agregando todos los campos del modelo que quieras importar
+                )
                 # #Guarda la instancia del modelo en la base de datos
-                # obj.save()
+                obj.save()
             return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
         except:
             print('error')

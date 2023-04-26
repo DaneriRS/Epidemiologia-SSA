@@ -4,7 +4,6 @@
             <tr>
                 <th class="text-center">Clave</th>
                 <th>Nombre</th>
-                <th>Municipio</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -13,9 +12,8 @@
             <tr>
                 <td class="text-center">{{ Localidad.clave }}</td>
                 <td>{{ Localidad.nombre }}</td>
-                <td>{{ Localidad.municipio.nombre }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLocalidadModal" title="Editar" onclick="editLocalidad('{% url 'editLocalidad' Localidad.id %}', '{{Localidad.clave}}', '{{Localidad.nombre}}', '{{Localidad.municipio.id}}')">
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLocalidadModal" title="Editar" onclick="editLocalidad('{% url 'editLocalidad' Localidad.id %}', '{{Localidad.clave}}', '{{Localidad.nombre}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delLocalidad' Localidad.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -46,7 +44,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{% url 'addLocalidad' %}" method="post">
+                <form autocomplete="off" action="{% url 'addLocalidad' %}" method="post">
                     {% csrf_token %}
                         <h4 class="modal-title">Individual</h4>
     
@@ -54,17 +52,17 @@
     
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
                 <div class="dropdown-divider"></div>
-                <form action="{% url 'LocalidadExcel' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form autocomplete="off" action="{% url 'LocalidadExcel' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                         <h4 class="modal-title">Con Excel</h4>
                         {{ formExcelLocalidad }}
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" name="ExcelMunicipio">Guardar</button>
+                        <button type="submit" class="btn btn-primary" name="ExcelLocalidad">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -83,7 +81,7 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </div>
-            <form method="post" id="editLocalidadForm">
+            <form autocomplete="off" method="post" id="editLocalidadForm">
                 {% csrf_token %}
                 <div class="modal-body">
 

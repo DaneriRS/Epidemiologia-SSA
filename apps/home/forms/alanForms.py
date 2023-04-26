@@ -79,3 +79,31 @@ class TipologiaForm(forms.ModelForm):
                 'class': 'form-control'
             })
             self.fields[field].required = True
+
+class JurisdiccionForm(forms.ModelForm):
+    
+    class Meta:
+        model = Jurisdiccion
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True
+
+class InstitucionForm(forms.ModelForm):
+    
+    class Meta:
+        model = Institucion
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control'
+            })
+            self.fields[field].required = True

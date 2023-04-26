@@ -2,32 +2,25 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-center">#</th>
-                <th>Clave</th>
+                <th class="text-center">Clave</th>
                 <th>Nombre</th>
                 <th>Entidad</th>
-                <th>Jurisdiccion</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for jur in Jurisdicciones %}
             <tr>
-                <td class="text-center">{{ jur.pk }}</td>
-                <td>{{ jur.clave }}</td>
+                <td class="text-center">{{ jur.clave }}</td>
                 <td>{{ jur.nombre }}</td>
                 <td>{{ jur.entidad }}</td>
-                <td>{{ jur.jurisdiccion }}</td>
                 <td class="td-actions text-right">
-                    <button type="button" rel="tooltip" class="btn btn-info btn-sm btn-icon">
-                        <i class="tim-icons icon-single-02"></i>
-                    </button>
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon">
-                        <i class="tim-icons icon-settings"></i>
-                    </button>
-                    <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                        <i class="tim-icons icon-simple-remove"></i>
-                    </button>
+                  <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editJurisdiccionModal" title="Editar" onclick="editJurisdiccion('{% url 'editjurisdiccion' jur.id %}', '{{jur.clave}}', '{{jur.nombre}}', '{{jur.entidad.id}}')">
+                    <i class="tim-icons icon-settings"></i>
+                  </button>
+                  <a href="{% url 'deljurisdiccion' jur.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                      <i class="tim-icons icon-simple-remove"></i>
+                  </a>
                 </td>
             </tr>
             {% endfor %}
@@ -40,24 +33,53 @@
     </div>
 </div>
 
+<!-- MODAL AGREGAR JURISDICCION -->
 <div class="modal fade" id="addJurisdiccionModal" tabindex="-1" role="dialog" aria-labelledby="addJurisdiccionModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="addJurisdiccionModalLabel">Agregar nueva jurisdiccion</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            <i class="tim-icons icon-simple-remove"></i>
-          </button>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="addJurisdiccionModalLabel">Agregar nueva jurisdiccion</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <i class="tim-icons icon-simple-remove"></i>
+        </button>
+      </div>
+      <form autocomplete="off" action="{% url 'addjurisdiccion' %}" method='post'>
         <div class="modal-body">
-          <form action="">
+            {% csrf_token %}
             {{ formAddJurisdiccion }}
-          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
+</div>
+
+<!-- MODAL EDITAR JURISDICCION -->
+<div class="modal fade" id="editJurisdiccionModal" tabindex="-1" role="dialog" aria-labelledby="editJurisdiccionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="editJurisdiccionModalLabel">Editar jurisdiccion</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </div>
+            <form autocomplete="off" method="post" id="editJurisdiccionForm">
+                {% csrf_token %}
+                <div class="modal-body">
+
+                    {{ formEditJurisdiccion }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

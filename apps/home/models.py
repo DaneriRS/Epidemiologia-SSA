@@ -94,35 +94,35 @@ class CustomUser(User):
         return cls.objects.is_encarUni()
 
 class Tipologia(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     
     def __str__(self):
         return self.clave + ' - ' + self.nombre
 
 class Establecimiento(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     
     def __str__(self):
         return self.clave + ' - ' + self.nombre
 
 class Institucion(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     
     def __str__(self):
         return self.clave + ' - ' + self.nombre
 
 class Entidad(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
 
     def __str__(self):
         return self.clave + ' - ' + self.nombre
     
 class Jurisdiccion(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
     
@@ -130,10 +130,10 @@ class Jurisdiccion(models.Model):
         return self.clave + ' - ' + self.nombre
 
 class Municipio(models.Model):
-    clave = models.CharField(verbose_name = "Clave", max_length = 50)
+    clave = models.CharField(verbose_name = "Clave", max_length = 50, unique=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
-    jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE)
+    
     
     def __str__(self):
         return self.clave + ' - ' + self.nombre   
@@ -141,18 +141,20 @@ class Municipio(models.Model):
 class Localidad(models.Model):
     clave = models.CharField(verbose_name = "Clave", max_length = 50)
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
-    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
+    
     
     def __str__(self):
         return self.clave + ' - ' + self.nombre
 
 class Unidad(models.Model):
-    claveclues = models.CharField(verbose_name = "Clave Clues", max_length = 50)
-    claveSuave = models.CharField(verbose_name = "Clave Suave", max_length = 50, null=True, blank=True)
+    claveclues = models.CharField(verbose_name = "Clave Clues", max_length = 50, unique=True)
+    claveSuave = models.CharField(verbose_name = "Clave Suave", max_length = 50, null=True, blank=True, unique=True)
     tipologia = models.ForeignKey(Tipologia, on_delete=models.CASCADE)
     establecimiento = models.ForeignKey(Establecimiento, on_delete=models.CASCADE)
     institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
+    municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
+    jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.claveclues
@@ -167,7 +169,7 @@ class Paciente(models.Model):
     nombre = models.CharField(verbose_name = "Nombre", max_length = 50)
     apellidoPa = models.CharField(verbose_name = "Apellido paterno", max_length = 50)
     apellidoMa = models.CharField(verbose_name = "Apellido materno", max_length = 50)
-    numAfiliacion = models.CharField(verbose_name = "Numero de afiliacion", max_length = 50)
+    numAfiliacion = models.CharField(verbose_name = "Numero de afiliacion", max_length = 50, unique = True)
     sexo = models.CharField(verbose_name = "Genero", max_length=2, choices=GENEROS)
     nacimiento = models.DateField(verbose_name = "Fecha de nacimiento")
     calle = models.CharField(verbose_name = "Calle", max_length = 50)
@@ -182,8 +184,56 @@ class Paciente(models.Model):
     codigoPostal = models.CharField(verbose_name = "Codigo postal", max_length=5)
     telefonoPaciente = models.CharField(verbose_name = "Telefono", max_length = 10)
 
+class RegistroEstudio(models.Model):
+    folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
+    unidadNot = models.CharField(verbose_name = "unidad Notificante", max_length=50, null=True, blank=True)
+    local = models.CharField(verbose_name = "Localidad", max_length=50,null=True, blank=True)
+    entOdEL = models.CharField(verbose_name = "Entidad", max_length=50,null=True, blank=True)
+    cvClue = models.CharField(verbose_name = "claveClue", max_length=50,null=True, blank=True)
+    municipio1 = models.CharField(verbose_name = "Municipio", max_length=50,null=True, blank=True)
+    institucion = models.CharField(verbose_name = "Institucion", max_length=50,null=True, blank=True)
+    cvSuUni = models.CharField(verbose_name = "claveSuave", max_length=50,null=True, blank=True)
+    jurisdicEq = models.CharField(verbose_name = "Jurisdiccion", max_length=50,null=True, blank=True)
+    fechaNot = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    fechaIni = models.CharField(verbose_name = "Fecha Inicio Estudio", max_length=50,null=True, blank=True)
+    fechaFin = models.CharField(verbose_name = "Fecha Fin Estudio", max_length=50,null=True, blank=True)
+    DiaProHep = models.CharField(verbose_name = "diagnosticoProbable", max_length=50,null=True, blank=True)
+    DiaFin = models.CharField(verbose_name = "diagnosticoFinal", max_length=50,null=True, blank=True)
+    otroDia = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
 
+    noAfili = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    nombre = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    ap = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    am = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    sexo = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    fechaNac = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    anos = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    meses = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    dias = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    calle = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    num = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    colonia = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    municipio2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    cvMun2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    ent2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    cvEnt2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    cp2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    tel2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    
+    fechaIn3 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    signoSint3 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    tratamiento3 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    
+    def __str__(self):
+        return self.folio + ' - ' + self.unidadNot
 
+class Estudio(models.Model):
+    nombre = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    tipo = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    fecha = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    resultado = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
+    
 class Logos(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField('Titulo', max_length=250, blank=True, null=True)

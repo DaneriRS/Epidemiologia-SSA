@@ -18,7 +18,7 @@
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editEstablecimientoModal" title="Editar" onclick="editEstablecimiento('{% url 'editEstablecimiento' estb.id %}', '{{estb.clave}}', '{{estb.nombre}}')">
                         <i class="tim-icons icon-settings"></i>
                     </button>
-                    <a href="{% url 'delestablecimiento' estb.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
+                    <a href="{% url 'delEstablecimiento' estb.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
                         <i class="tim-icons icon-simple-remove"></i>
                     </a>
                 </td>
