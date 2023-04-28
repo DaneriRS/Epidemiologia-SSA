@@ -30,8 +30,25 @@ FORMS2 = [
             ("3", ContactForm3),
             ("4", FormSET2)
         ]
+FormSET3=formset_factory(NotificacionBrote5, extra=2)
+FORMS3 =[
+            ("1", NotificacionBrote1),
+            ("2", NotificacionBrote2),
+            ("3", FormSET3),
+            ("4", NotificacionBrote6),
+            ("5", NotificacionBrote7)
+        ]
 
-class BookingWizzadView(CookieWizardView):
+FormSET4=formset_factory(NotificacionBrote8, extra=0)
+FORMS4 =[
+            ("1", NotificacionBrote1),
+            ("2", NotificacionBrote2),
+            ("3", FormSET4),
+            ("4", NotificacionBrote6),
+            ("5", NotificacionBrote7)
+        ]
+
+class RegistroEstudioView(CookieWizardView):
     form_list=FORMS
     form_dict=dict(form_list)
     template_name = 'home/exampleForm.html'
@@ -41,17 +58,6 @@ class BookingWizzadView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
-        
-    def get_context_data(self,form, **kwargs):
-    #Here I try to append the formset in the first step. It shows the
-    #field, but no success on saving it
-        data = super(BookingWizzadView,self).get_context_data(form,**kwargs)
-        if self.steps.current == "4":
-            if self.request.POST:
-                data['4'] = FormSET1(self.request.POST)
-            else:
-                data['4'] = FormSET1()
-        return data
 
     def done(self, form_list, **kwargs):
         registroDataFormSet1=[]
@@ -67,7 +73,6 @@ class BookingWizzadView(CookieWizardView):
         rd.save()
 
         for item in registroDataFormSet1:
-            print(item)
             est=Estudio(
                 nombre=item['nombre'],
                 tipo=item['tipo'],
@@ -112,14 +117,11 @@ class RegistroEstudioUpdateView(CookieWizardView):
                 for formset in form:
                     registroDataFormSet1.append(formset.cleaned_data)
 
-        print(registroDataFormSet1)
         re=RegistroEstudio.objects.filter(id=id)
         re.update(**registroData)
 
         for item in registroDataFormSet1:
-            print(item)
             est=Estudio.objects.get(id=item['id'])
-            print(est.nombre)
             est.nombre=item['nombre']
             est.tipo=item['tipo']
             est.fecha=item['fecha']
@@ -127,7 +129,100 @@ class RegistroEstudioUpdateView(CookieWizardView):
             est.save()
 
         return redirect('listaFormularios')
-    
+
+class RegistroNotificacionBroteView(CookieWizardView):
+    form_list=FORMS3
+    form_dict=dict(form_list)
+    template_name = 'home/notificacionBrote.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return self.render(self.get_form())
+        except KeyError:
+            return super().get(request, *args, **kwargs)
+
+    def done(self, form_list, **kwargs):
+        registroDataFormSet3=[]
+        registroData={}
+        for i,form in enumerate(form_list):
+            if i != 2:
+                registroData.update(form.cleaned_data)
+            elif i == 2:
+                for formset in form:
+                    registroDataFormSet3.append(formset.cleaned_data)
+
+        notificacion=NotificacionBrote(**registroData)
+        notificacion.save()
+
+        for item in registroDataFormSet3:
+            DistGeo=DistribucionGeografica(
+                area=item['area'],
+                manzana=item['manzana'],
+                colonia=item['colonia'],
+                localidad=item['localidad'],
+                escuela=item['escuela'],
+                guardeOvivienda=item['guardeOvivienda'],
+                numeroCasos=item['numeroCasos'],
+                numeroDefunciones=item['numeroDefunciones'],
+                notificacionBrote=notificacion
+            )
+            DistGeo.save()
+
+        return redirect('listaNotificacionBrote')
+        
+
+class UpdateNotificacionBroteView(CookieWizardView):
+    form_list=FORMS4
+    form_dict=dict(form_list)
+    template_name = 'home/editarNotBrote.html'
+
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        if 'id' in self.kwargs:
+            project_id = self.kwargs['id']
+            project = NotificacionBrote.objects.get(id=project_id)
+            if step == "3":
+                project_dict=[]
+                distGeo=DistribucionGeografica.objects.filter(notificacionBrote_id=project.id)
+                for dist in distGeo:
+                    project_d = model_to_dict(dist)
+                    project_dict.append(project_d)
+                return project_dict
+            else:
+                project_dict = model_to_dict(project)
+                return project_dict
+
+    def done(self, form_list, **kwargs):
+        id = self.kwargs['id']
+
+        registroDataFormSet4=[]
+        registroData={}
+
+        for i,form in enumerate(form_list):
+            if i != 2:
+                registroData.update(form.cleaned_data)
+            elif i == 2:
+                for formset in form:
+                    registroDataFormSet4.append(formset.cleaned_data)
+
+        notificacion=NotificacionBrote.objects.filter(id=id)
+        notificacion.update(**registroData)
+
+        for item in registroDataFormSet4:
+            dist=DistribucionGeografica.objects.get(id=item['id'])
+            dist.area=item['area']
+            dist.manzana=item['manzana']
+            dist.colonia=item['colonia']
+            dist.localidad=item['localidad']
+            dist.escuela=item['escuela']
+            dist.guardeOvivienda=item['guardeOvivienda']
+            dist.numeroCasos=item['numeroCasos']
+            dist.numeroDefunciones=item['numeroDefunciones']
+                                           
+            dist.save()
+
+        return redirect('listaNotificacionBrote')
+
 @login_required    
 def listaFormularios(request):
     if request.method == 'GET':
@@ -135,6 +230,15 @@ def listaFormularios(request):
         return render(request, 'home/tablaForms.html', {'formularios': formularios})
     else:
         return redirect ('home')
+    
+@login_required
+def listaNotificacionBrote(request):
+    if request.method == 'GET':
+        formularios = NotificacionBrote.objects.all()
+        return render(request, 'home/ListaNotificacionBrotes.html', {'formularios': formularios})
+    else:
+        return redirect ('home')
+
 def nuevoPaciente(request):
     if request.method == 'POST':
         formA = registroPaciente(request.POST)
@@ -155,55 +259,3 @@ def nuevoPaciente(request):
         form = registroPaciente()
     
     return render(request, 'home/nuevoPaciente.html', {'form': form})
-
-    #CRUD JURISDICCION
-
-    #CRUD INSTITUCION
-# def addInstitucionCrud(request):
-#     formAddJurisdiccion = addJurisdiccion()
-#     formAddInstitucion = addInstitucion()
-#     if request.method == 'POST':
-#         form = addInstitucion(request.POST)
-#         if form.is_valid():
-#             try:
-#                 form.save()
-#                 # mensaje = None
-#                 # msgType = None
-#                 # mensaje = 'Mensaje 1 de prueba'
-#                 # msgType = 'success'
-#                 # context = {
-#                 #     'segment': 'CRUD_tablas',
-#                 #     'mensaje':mensaje,
-#                 #     'msg': mensaje,
-#                 #     'msgType': msgType,
-#                 #     'formAddJurisdiccion' : formAddJurisdiccion,
-#                 #     'formAddInstitucion' : formAddInstitucion
-#                 # }
-#                 # return render(request, 'home/Director/CRUDTablas.html', context)
-#                 return redirect(reverse('vista_tablas', kwargs={'msg':'Exito create insti'}))
-#             except:
-#                 print('error')
-# def delInstitucion(request, pk):
-#     formAddJurisdiccion = addJurisdiccion()
-#     formAddInstitucion = addInstitucion()
-
-#     try:
-#         insti = Institucion.objects.get(id=pk)
-#         insti.delete()
-#     except:
-#         print("error")
-
-#     mensaje = None
-#     msgType = None
-#     mensaje = 'Mensaje 1 de prueba'
-#     msgType = 'success'
-#     context = {
-#         'segment': 'CRUD_tablas',
-#         'mensaje':mensaje,
-#         'msg': mensaje,
-#         'msgType': msgType,
-#         'formAddJurisdiccion' : formAddJurisdiccion,
-#         'formAddInstitucion' : formAddInstitucion
-#     }
-#     return render(request, 'home/Director/CRUDTablas.html', context)
-

@@ -248,3 +248,44 @@ class Logos(models.Model):
             output_size = (None,85)
             img.thumbanail(output_size, Image.LANCZOS)
             img.save(self.logo.path)
+
+class NotificacionBrote(models.Model):
+    folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
+    unidadNot = models.CharField(verbose_name = "unidad Notificante", max_length=50, null=True, blank=True)
+    local = models.CharField(verbose_name = "Localidad", max_length=50,null=True, blank=True)
+    entOdEL = models.CharField(verbose_name = "Entidad", max_length=50,null=True, blank=True)
+    cvClue = models.CharField(verbose_name = "claveClue", max_length=50,null=True, blank=True)
+    municipio1 = models.CharField(verbose_name = "Municipio", max_length=50,null=True, blank=True)
+    institucion = models.CharField(verbose_name = "Institucion", max_length=50,null=True, blank=True)
+    fechaNot = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    fechaEstudio = models.CharField(verbose_name = "Fecha Fin Estudio", max_length=50,null=True, blank=True)
+    DiaProHep = models.CharField(verbose_name = "diagnosticoProbable", max_length=50,null=True, blank=True)
+    DiaFin = models.CharField(verbose_name = "diagnosticoFinal", max_length=50,null=True, blank=True)
+
+    DiaProHep2 = models.CharField(verbose_name = "diagnosticoProbable", max_length=50,null=True, blank=True)
+    DiaFin2 = models.CharField(verbose_name = "diagnosticoFinal", max_length=50,null=True, blank=True)
+    fechaNot2 = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    fechaNot3 = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    casosProbables = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    casosConfirmados = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    hospitalizados = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+
+    anteEpiBrote = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    probFuenBrote = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    probMecTransmision = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+
+    accionesPrevControl = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+
+  
+
+
+class DistribucionGeografica(models.Model):
+    area = models.CharField(verbose_name = "diagnosticoProbable", max_length=50,null=True, blank=True)
+    manzana = models.CharField(verbose_name = "diagnosticoFinal", max_length=50,null=True, blank=True)
+    colonia = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    localidad = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    escuela = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    guardeOvivienda = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    numeroCasos = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)   
+    numeroDefunciones = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    notificacionBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
