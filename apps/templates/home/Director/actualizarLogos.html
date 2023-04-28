@@ -1,55 +1,53 @@
-<div class="card">
-    <table class="table table-striped table-hover" id="tabla_logos">
-        <thead>
-            <tr>
-                <th class="text-center">#</th>
-                <th>Titulo</th>
-                <th>img</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for Logos in Logos %}
-            <tr>
-                <td class="text-center">{{ Logos.id }}</td>
-                <td>{{ Logos.title }}</td>
-                <td>{{ Logos.logo }}</td>
-                <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLogoModal" title="Editar">
-                        <i class="tim-icons icon-settings"></i>
-                    </button>
-                    <a href="{% url 'delLogo' logo.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
-                        <i class="tim-icons icon-simple-remove"></i>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+{% extends "layouts/base.html" %}
+{% load static %}
 
-<!-- MODAL ACT LOGO -->
-<div class="modal-diaog modal-lg" id="editLogoModal" role"document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">Edición de Logos: {{ object }}</h2>
-      <button class="close" type="button" data-dismiss="modal" aria-label="Cerrar">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <form enctype="multipart/form-data" action="{% url 'logo:actualizarLogos' object.id %}" method="POST" id="form_edicion"> 
-        {% csrf_token %}
-        <div class="modal-body">
-          <div id="errorActualizacion">
+{% block title %} Logos {% endblock %} 
 
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        {% include 'includes/mensajes.html' %}
+      <div role="tablist" aria-multiselectable="true" class="table">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col text-left">
+                    <h2 class="card-title">Administrador de logos</h2>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {% include 'home/Director/editar_logos.html' %}
+              </div>
+            </div>
           </div>
-          {{ form.as_p }}
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" type="button" onclick="cerrar_modal_actualizar();">Cancelar</button>
-          <button id="boton_actualizar" class="btn btn-primary" type="button" onclick="actualizar();">Confirmar</button>
-        </div>
-    </form>
-    <p><a href="{% url 'index.html' %}">Regresar</a></p>
-  </div>
-</div>
+      </div>
+    </div>
+
+{% endblock content %}
+<script>
+  function editLogo(url, id, titulo) {
+        // Obtener el formulario
+        const form = document.getElementById('editLogoForm');
+      
+        // Asignar los valores a los inputs del formulario
+        //console.log(id);
+        console.log(logo);
+        //form.querySelector('#editLogo_nombre').value = nombre;
+        form.querySelector('#editLogo_logo').value = logo;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    {% if presionar %}
+        document.getElementById("btn{{ btnPresionar }}").click()
+    {% endif %}
+</script>

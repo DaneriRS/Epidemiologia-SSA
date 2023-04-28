@@ -402,3 +402,35 @@ def vista_tablas(request, msg):
     }
     
     return render(request, 'home/Director/CRUDTablas.html', context)
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def vista_logos(request, msg):
+    formEditLogos = LogosForm(auto_id="editLogos_%s")
+    Logo = Logos.objects.all()
+
+    mensaje = None
+    msgType = None
+    presionar = False
+    btnPresionar = None
+    if msg == 'exitoEditLogo':
+        mensaje = 'Logo Editado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
+    elif msg == 'exitoDelLogo':
+        mensaje = 'Logo Eliminado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
+
+    context = {
+        'segment': 'Logos_tabla',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'Logos' : Logos,
+        'formEditLogos' : formEditLogos,
+        'presionar' : presionar,
+        'btnPresionar' : btnPresionar,
+    }
+    return render(request, 'home/Director/actualizarLogos.html', context)

@@ -24,6 +24,8 @@ urlpatterns = [
     
 
     path('tablas/<str:msg>/', allViews.vista_tablas, name='vista_tablas'),
+    path('tabla/<str:msg>/', allViews.vista_logos, name='vista_logos'),
+    #path('logos/<str:msg>/', allViews.vista_logos, name='vista_logos'),
     path('perfil/', allViews.user, name='user'),
 
     # Matches any html file
@@ -75,9 +77,9 @@ urlpatterns = [
     path('tablas/umedica/Excel/', allViews.UMedicaExcel, name = 'UMedicaExcel'),
 
     #Logos
-    path('verLogos', allViews.verLogo, name = 'verLogo'),
-    path('logos', allViews.actualizarLogos, name = 'actualizarLogos'),
-    path('logos', allViews.actualizarLogos2, name = 'actualizarLogos2'),
+    path('Logos/', allViews.actualizarLogos, name = 'actualizarLogos'),
     path('listaLogos/', allViews.ListaLogos, name = 'listaLogos'),
+    path('tabla/Logos/edit/<int:pk>', allViews.editLogo, name = 'editLogo'),
+    path('tablas/Logos/del/<int:pk>', allViews.delLogo, name = 'delLogo'),
 
 ]
