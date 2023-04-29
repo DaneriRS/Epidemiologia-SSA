@@ -460,6 +460,369 @@ class ContactoForm5(forms.Form):
         required=False
     )
 
+class NotificacionBrote1(forms.Form):
+    folio = forms.CharField(
+        max_length=20,
+        label="Folio:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+            }
+        )
+    )
+    unidadNot = forms.CharField(
+        max_length=20,
+        label="Unidad notificante:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    local = forms.CharField(
+        max_length=20,
+        label="Localidad:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    entOdEL = forms.CharField(
+        max_length=20,
+        label="Entidad o delegacion:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    cvClue = forms.CharField(
+        max_length=20,
+        label="Clave CLUES:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    municipio1 = forms.ChoiceField(
+        choices = MUNICIPIOS,
+        label = 'Municipio: ',
+        widget = forms.Select(
+            attrs={'class': 'form-control '}
+        )
+    )
+    institucion = forms.ChoiceField(
+        choices = INSTITUCION,
+        label = 'Institucion: ',
+        widget = forms.Select(
+            attrs={'class': 'form-control '}
+        )
+    )
+    fechaNot = forms.CharField(
+        label = 'Fecha de Notificacion',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepicker1'
+            }
+        )
+    )
+    fechaEstudio = forms.CharField(
+        label = 'Inicio de estudio: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepicker1'
+            }
+        )
+    )
+    DiaProHep = forms.ChoiceField(
+        choices = TIPOHEP,
+        label = 'Diagnostico probable de hepatitis: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        )
+    )
+    DiaFin = forms.ChoiceField(
+        choices = TIPOHEP,
+        label = 'Diagnostico final: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        )
+    )
+
+class NotificacionBrote2(forms.Form):
+    DiaProHep2 = forms.ChoiceField(
+        choices = TIPOHEP,
+        label = 'Diagnostico probable de hepatitis: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        )
+    )
+    DiaFin2 = forms.ChoiceField(
+        choices = TIPOHEP,
+        label = 'Diagnostico final: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        )
+    )
+    fechaNot2 = forms.CharField(
+        label = 'Fecha de Notificacion',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepicker1'
+            }
+        )
+    )
+    fechaNot3 = forms.CharField(
+        label = 'Inicio de estudio: ',
+        widget=forms.DateInput(
+            format='%YYYY-%MM-%DD',
+            attrs={
+                'class': 'form-control', 'type': 'date',
+                'data-target': '#datetimepicker1'
+            }
+        )
+    )
+    casosProbables = forms.CharField(
+        max_length=4,
+        label="Casos Probables:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    casosConfirmados = forms.CharField(
+        max_length=4,
+        label="Casos Confirmados:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    hospitalizados = forms.CharField(
+        max_length=4,
+        label="Hospitalizados:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    
+class NotificacionBrote5(forms.Form):
+    area = forms.CharField(
+        max_length=20,
+        label="Area:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    manzana = forms.CharField(
+        max_length=20,
+        label="Manzana:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    colonia = forms.CharField(
+        max_length=20,
+        label="Colonia:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    localidad = forms.CharField(
+        max_length=20,
+        label="Localidad:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    escuela = forms.CharField(
+        max_length=20,
+        label="Escuela:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    guardeOvivienda = forms.CharField(
+        max_length=20,
+        label="Guarderia o Vivienda:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroCasos = forms.CharField(
+        max_length=20,
+        label="Casos:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroDefunciones = forms.CharField(
+        max_length=20,
+        label="Defunciones:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+class NotificacionBrote6(forms.Form):
+    anteEpiBrote = forms.CharField(
+        max_length=20,
+        label="Antecedentes epidemiológicos del brote:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    probFuenBrote = forms.CharField(
+        max_length=20,
+        label="Probables fuentes del brote:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    probMecTransmision = forms.CharField(
+        max_length=20,
+        label="Probables mecanismos de transmisión:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+class NotificacionBrote7(forms.Form):
+    accionesPrevControl = forms.CharField(
+        max_length=200,
+        label="Acciones de prevención y control realizadas:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+class NotificacionBrote8(forms.Form):
+    id = forms.CharField(
+        max_length=20,
+        label="Area:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+                'hidden': 'true'
+            }
+        )
+    )
+    area = forms.CharField(
+        max_length=20,
+        label="Area:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    manzana = forms.CharField(
+        max_length=20,
+        label="Manzana:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    colonia = forms.CharField(
+        max_length=20,
+        label="Colonia:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    localidad = forms.CharField(
+        max_length=20,
+        label="Localidad:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    escuela = forms.CharField(
+        max_length=20,
+        label="Escuela:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    guardeOvivienda = forms.CharField(
+        max_length=20,
+        label="Guarderia o Vivienda:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroCasos = forms.CharField(
+        max_length=20,
+        label="Casos:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroDefunciones = forms.CharField(
+        max_length=20,
+        label="Defunciones:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
 
 class addJurisdiccion(ModelForm):
     
@@ -474,17 +837,3 @@ class addJurisdiccion(ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
-
-# class addInstitucion(ModelForm):
-
-#     class Meta:
-#         model = Institucion
-#         fields = '__all__'
-    
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         for field in self.fields:
-#             self.fields[field].widget.attrs.update({
-#                 'class': 'form-control',
-#                 'required': 'required'
-#             })

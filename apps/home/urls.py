@@ -13,9 +13,8 @@ urlpatterns = [
     # The home page
     path('', allViews.index, name='home'),
     path('import_excel/', allViews.import_excel, name='import_excel_view'),
-    path('multiForm/', allViews.BookingWizzadView.as_view() , name="multiForm"),
-    path('editForm/<int:id>', allViews.RegistroEstudioUpdateView.as_view() , name="editForm"),
     path('listaFormularios/', allViews.listaFormularios , name="listaFormularios"),
+    path('listaNotificacionBrote/', allViews.listaNotificacionBrote , name="listaNotificacionBrote"),
     path('nuevoPaciente/', allViews.nuevoPaciente, name="nuevoPaciente"),
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
@@ -82,4 +81,11 @@ urlpatterns = [
     path('tabla/Logos/edit/<int:pk>', allViews.editLogo, name = 'editLogo'),
     path('tablas/Logos/del/<int:pk>', allViews.delLogo, name = 'delLogo'),
 
+    #FormWizardViews
+    path('multiForm/', allViews.RegistroEstudioView.as_view() , name="multiForm"),
+    path('editForm/<int:id>', allViews.RegistroEstudioUpdateView.as_view() , name="editForm"),
+    path('notificacion/brote', allViews.RegistroNotificacionBroteView.as_view() , name="notificacionBrote"),
+    path('notificacion/brote/update/<int:id>', allViews.UpdateNotificacionBroteView.as_view() , name="notificacionBroteUpdate"),
+
 ]
+
