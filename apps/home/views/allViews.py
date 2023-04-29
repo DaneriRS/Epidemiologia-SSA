@@ -428,7 +428,7 @@ def vista_logos(request, msg):
         'segment': 'Logos_tabla',
         'mensaje':mensaje,
         'msg': mensaje,
-        'Logos' : Logos,
+        'Logos' : Logo,
         'formEditLogos' : formEditLogos,
         'presionar' : presionar,
         'btnPresionar' : btnPresionar,

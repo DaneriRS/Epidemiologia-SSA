@@ -10,13 +10,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for Logs in Logos %}
+            {% for logs in Logos %}
             <tr>
                 <td class="text-center">{{ logs.id }}</td>
                 <td>{{ logs.titulo }}</td>
                 <td>{{ logs.actualizado }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLogoModal" title="Editar" onclick="editLogo('{% url 'editLogo' {{logs.logo}}')">{% comment "" %}logs.id %}', '{{logs.titulo}}',{% endcomment %}
+                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLogoModal" title="Editar" onclick="editLogo({% url 'editLogo' {{logs.id}})">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delLogo' logs.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
@@ -39,7 +39,7 @@
 
 <!-- MODAL ACT LOGO -->
 <div class="modal fade" id="editLogoModal" tabindex="-1" aria-labelledby="editLogosModalLabel" aria-hidden="true">
-  <div class="modal-dialog role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="editLogosModalLabel">Edición de Logos: {{object}}</h2>
