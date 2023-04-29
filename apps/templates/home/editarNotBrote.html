@@ -1,0 +1,301 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+{% block title %} Notifications {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    {% include 'includes/logos.html' %}
+    <div class="card">  
+        <div class="card-body">
+            <div class="progress-container progress-primary" style="text-align: center;">
+                <span class="progress-badge">PROGRESO</span>
+                <div class="progress mt-1 mb-1">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70"
+                        aria-valuemin="0" aria-valuemax="100" style="width: {{ wizard.steps.step1 }}0%;" id="progressBarWidth">
+                        <!-- <span class="progress-value">{{ wizard.steps.step1 }}0%</span> -->
+                    </div>
+                    <script language="Javascript">
+                        var customWidth = {{ wizard.steps.step1 }} / {{ wizard.steps.count }} * 100;
+                        var div = document.getElementById('progressBarWidth');
+                        div.style.width = customWidth + '%';
+                        console.log(customWidth)
+                     </script>
+                </div>
+                <p class="text-center">{{ wizard.steps.step1 }}/{{ wizard.steps.count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="post" autocomplete="off">{% csrf_token %}
+                {{ wizard.management_form }}
+                {% if wizard.steps.step1 == 1 %}
+                    <div class="text-left">
+                        <h2 class="card-title">I - IDENTIFICACION DE LA UNIDAD</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.folio.label}}
+                            {% if wizard.form.folio.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.folio}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.unidadNot.label}}
+                            {% if wizard.form.unidadNot.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.unidadNot}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.cvClue.label}}
+                            {% if wizard.form.cvClue.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.cvClue}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.local.label}}
+                            {% if wizard.form.local.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.local}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.municipio1.label}}
+                            {% if wizard.form.municipio1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.municipio1}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.entOdEL.label}}
+                            {% if wizard.form.entOdEL.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.entOdEL}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.institucion.label}}
+                            {% if wizard.form.institucion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.institucion}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaNot.label}}
+                            {% if wizard.form.fechaNot.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaNot}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaEstudio.label}}
+                            {% if wizard.form.fechaEstudio.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaEstudio}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.DiaProHep.label}}
+                            {% if wizard.form.DiaProHep.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaProHep}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.DiaFin.label}}
+                            {% if wizard.form.DiaFin.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaFin}}
+                        </div>
+                    </div>
+                {% elif wizard.steps.step1 == 2 %}
+                    <div class="text-left">
+                        <h2 class="card-title">II - ANTECEDENTES</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.DiaProHep2.label}}
+                            {% if wizard.form.DiaProHep2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaProHep2}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.DiaFin2.label}}
+                            {% if wizard.form.DiaFin2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaFin2}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaNot2.label}}
+                            {% if wizard.form.fechaNot2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaNot2}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaNot3.label}}
+                            {% if wizard.form.fechaNot3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaNot3}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.casosProbables.label}}
+                            {% if wizard.form.casosProbables.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.casosProbables}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.casosConfirmados.label}}
+                            {% if wizard.form.casosConfirmados.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.casosConfirmados}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.hospitalizados.label}}
+                            {% if wizard.form.hospitalizados.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.hospitalizados}}
+                        </div>
+                    </div>
+                {% elif wizard.steps.step1 == 3 %}
+                    <div class="text-left">
+                        <h2 class="card-title">III - DISTRIBUCIÓN GEOGRÁFICA</h2>
+                    </div>
+                    {{ wizard.form.management_form}} 
+                    {%for form in wizard.form.forms %}
+                        {{form.id}}
+                        <div class="form-row">
+                            <div class="form-group col-md-1">
+                                {{form.area.label}}
+                                {% if form.area.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.area}}
+                            </div>
+                            <div class="form-group col-md-1">
+                                {{form.manzana.label}}
+                                {% if form.manzana.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.manzana}}
+                            </div>
+                            <div class="form-group col-md-1">
+                                {{form.colonia.label}}
+                                {% if wform.colonia.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.colonia}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.localidad.label}}
+                                {% if form.localidad.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.localidad}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.escuela.label}}
+                                {% if form.escuela.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.escuela}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.guardeOvivienda.label}}
+                                {% if form.guardeOvivienda.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.guardeOvivienda}}
+                            </div>
+                            <div class="form-group col-md-1">
+                                {{form.numeroCasos.label}}
+                                {% if form.numeroCasos.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.numeroCasos}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.numeroDefunciones.label}}
+                                {% if form.numeroDefunciones.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.numeroDefunciones}}
+                            </div>
+                        </div>
+                        <br>
+                    {% endfor %}
+                {% elif wizard.steps.step1 == 4 %}
+                <div class="form-row">
+                    {{wizard.form.anteEpiBrote.label}}
+                    {% if wizard.form.anteEpiBrote.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{wizard.form.anteEpiBrote}}
+
+                    <br>
+
+                    {{wizard.form.probFuenBrote.label}}
+                    {% if wizard.form.probFuenBrote.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{wizard.form.probFuenBrote}}
+
+                    <br>
+
+                    {{wizard.form.probMecTransmision.label}}
+                    {% if wizard.form.probMecTransmision.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{wizard.form.probMecTransmision}}
+                </div>
+                {% elif wizard.steps.step1 == 5 %}
+
+                    {{wizard.form.accionesPrevControl.label}}
+                    {% if wizard.form.accionesPrevControl.field.required %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                    {{wizard.form.accionesPrevControl}}
+                    <br>
+                {% endif %}
+                <div class="" style="text-align: center">
+                    {% if wizard.steps.prev %}
+                    <button name="wizard_goto_step" class="btn btn-info animation-on-hover" type="submit" value="{{ wizard.steps.prev }}" formnovalidate>Anterior</button>
+                    {% endif %}
+                    <input type="submit" class="btn btn-primary animation-on-hover" value="Siguiente" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
