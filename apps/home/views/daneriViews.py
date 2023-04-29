@@ -171,62 +171,28 @@ def delEstablecimiento(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDelEstablecimiento'}))
 
 @login_required(login_url="/login/")
-@roles_required(['Director'], redirect_url='home')
-def verLogo():
-    logos = Logos.objects.all()
-    data = {
-        'logos':logos
-    }
-    return render(request, 'home/index.html', data)
-    #logosAll = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    #imagen = Image.open(DIR_REC + logosAll)
-    #logo.save(imagen)
-    #return 0
-
-class guardarLogo():
-    def get(self, request):
-        logos = Logos.objects.all
-        return render, "actLogo.html", {"form: form"}
-    
-    def post (self, request):
-        form = LogosForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return render(request('home/index.html'))
-
-@login_required(login_url="/login/")
-def actualizarLogos(request):
-    if request.method == 'POST':
-        form = LogosForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                return render(request, 'home/index.html', {
-                'form': form,
-                'msg' : "1"
-                })
-            except:
-                return render(request, 'home/index.html', {
-                'form': form,
-                'msg' : "0"
-                })
-    else:
-        form = LogosForm()
-    
-    return render(request, 'home/index.html', {'form': form})
-
-    
-
 class ListaLogos(ListView):
     model = Logos
-    template_name = 'logos/actualizarLogos.html'
+    template_name = 'actualizarLogos.html'
     context_object_name = 'logos'
-    
+    #success_url = reverse_lazy('logos:listaLogos')
 
-class actualizarLogos2(UpdateView):
+    def get_queryset(self):
+        return self.model.objects.filter(estado=True)
+    
+    def get_context_data(self, **kwargs):
+        contexto = {}
+        contexto['logos']= self.get_queryset()
+        contexto['form'] = self.form_class
+        return contexto
+    
+    def get(self, request, *args,**kwargs):
+        return render(request, self.template_name,self.get_context_data)
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+class actualizarLogos(UpdateView):
     model = Logos
     form_class = LogosForm
-    template_name = 'home/actualizarLogos.html'
     #success_url = reverse_lazy('logos:listaLogos')
 
     def post(self, request, *args, **kwargs):
@@ -247,3 +213,38 @@ class actualizarLogos2(UpdateView):
                 return response
         else:
             return redirect('home/index.html')
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editLogo(request, pk):
+    success_url = reverse_lazy('logos:listaLogos')
+    if request.method == 'POST':
+        try:
+            logs = Logos.objects.get(id = pk)
+        except Exception as e:
+                return redirect(reverse('vista_logos', kwargs={'msg':'errorExistLogos'}))
+        form = LogosForm(data = request.POST, files = request.FILES, instance=logs)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_logos', kwargs={'msg':'exitoEditLogos'}))
+            except:
+                return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogos'}))
+        else:
+            return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+    else:
+        return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def delLogo(request, pk):
+    try:
+        logoImg = Logos.objects.get(id=pk)
+    except:
+        return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogo'}))
+
+    try:
+        logoImg.delete()
+        return redirect(reverse('vista_logos', kwargs={'msg':'exitoDelLogo'}))
+    except Exception as e:
+        return redirect(reverse('vista_logos', kwargs={'msg':'errorDelLogo'}))

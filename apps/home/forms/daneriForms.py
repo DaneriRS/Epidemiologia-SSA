@@ -57,17 +57,6 @@ class LogosForm(forms.ModelForm):
         model = Logos
         fields = '__all__'
 
-    def resize(logo,new_height):
-        carpeta_logos = os.path.dirname('logos.urls')
-        logos_names = os.listdir(carpeta_logos)
-
-        for logos_names in logos_names:
-            if logos_names.split(".")[-1] not in ["png"]:
-                continue
-            image_path = carpeta_logos + "/" + logos_names
-            imagenLogo = ImageTk.PhotoImage(Image.open(image_path).resize((0,85), Image.ANTIALIAS))
-
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
