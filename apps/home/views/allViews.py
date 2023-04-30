@@ -406,6 +406,7 @@ def vista_tablas(request, msg):
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
 def vista_logos(request, msg):
+    formAddLogos = LogosForm(auto_id="addLogos_%s")
     formEditLogos = LogosForm(auto_id="editLogos_%s")
     Logo = Logos.objects.all()
 
@@ -423,11 +424,17 @@ def vista_logos(request, msg):
         msgType = 'success'
         presionar = True
         btnPresionar = 'Logo'
+    elif msg == 'exitoAddLogo':
+        mensaje = 'Logo Addado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
 
     context = {
         'segment': 'Logos_tabla',
         'mensaje':mensaje,
         'msg': mensaje,
+        'msgType': msgType,
         'Logos' : Logo,
         'formEditLogos' : formEditLogos,
         'presionar' : presionar,

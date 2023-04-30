@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('titulo', models.CharField(blank=True, max_length=250, null=True, verbose_name='Titulo')),
-                ('logo', models.ImageField(blank=True, null=True, upload_to='media/logos/', verbose_name='ImagenLogo')),
+                ('logo', models.ImageField(blank=True, null=True, upload_to='media/logos/', verbose_name='Imagen')),
                 ('actualizado', models.DateTimeField(auto_now_add=True)),
             ],
         ),

@@ -171,29 +171,83 @@ def delEstablecimiento(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDelEstablecimiento'}))
 
 @login_required(login_url="/login/")
-class ListaLogos(ListView):
+class lista_logos(ListView):
     model = Logos
-    template_name = 'actualizarLogos.html'
+    template_name = 'home/actualizarLogos.html'
     context_object_name = 'logos'
-    #success_url = reverse_lazy('logos:listaLogos')
+    success_url = reverse_lazy('logos:lista_logos')
 
     def get_queryset(self):
         return self.model.objects.filter(estado=True)
     
     def get_context_data(self, **kwargs):
         contexto = {}
-        contexto['logos']= self.get_queryset()
+        contexto['id', 'titulo', 'logos']= self.get_queryset()
         contexto['form'] = self.form_class
         return contexto
     
     def get(self, request, *args,**kwargs):
         return render(request, self.template_name,self.get_context_data)
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def addLogo(request):
+    #formAddLogo = addLogo()
+    if request.method == 'POST':
+        form = LogosForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_logos', kwargs={'msg':'exitoAddLogo'}))
+            except:
+                return redirect(reverse('vista_logos', kwargs={'msg':'errorAddLogo'}))
+        else:
+            return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+    else:
+        return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editLogo(request, pk):
+    success_url = reverse_lazy('logos:lista_logos')
+    if request.method == 'POST':
+        try:
+            logs = Logos.objects.get(id = pk)
+        except Exception as e:
+                return redirect(reverse('vista_logos', kwargs={'msg':'errorExistLogos'}))
+        form = LogosForm(data = request.POST, files = request.FILES, instance=self.get_object())
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_logos', kwargs={'msg':'exitoEditLogos'}))
+            except:
+                return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogos'}))
+        else:
+            return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+    else:
+        return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
+
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def delLogo(request, pk):
+    try:
+        logs = Logos.objects.get(id=pk)
+    except:
+        return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogo'}))
+
+    try:
+        logs.delete()
+        return redirect(reverse('vista_logos', kwargs={'msg':'exitoDelLogo'}))
+    except Exception as e:
+        return redirect(reverse('vista_logos', kwargs={'msg':'errorDelLogo'}))
+
+
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
 class actualizarLogos(UpdateView):
     model = Logos
     form_class = LogosForm
-    #success_url = reverse_lazy('logos:listaLogos')
+    #success_url = reverse_lazy('logos:lista_logos')
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -213,38 +267,3 @@ class actualizarLogos(UpdateView):
                 return response
         else:
             return redirect('home/index.html')
-
-@login_required(login_url="/login/")
-@roles_required(['Director'], redirect_url='home')
-def editLogo(request, pk):
-    success_url = reverse_lazy('logos:listaLogos')
-    if request.method == 'POST':
-        try:
-            logs = Logos.objects.get(id = pk)
-        except Exception as e:
-                return redirect(reverse('vista_logos', kwargs={'msg':'errorExistLogos'}))
-        form = LogosForm(data = request.POST, files = request.FILES, instance=logs)
-        if form.is_valid():
-            try:
-                form.save()
-                return redirect(reverse('vista_logos', kwargs={'msg':'exitoEditLogos'}))
-            except:
-                return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogos'}))
-        else:
-            return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
-    else:
-        return redirect(reverse('vista_logos', kwargs={'msg':'false'}))
-
-@login_required(login_url="/login/")
-@roles_required(['Director'], redirect_url='home')
-def delLogo(request, pk):
-    try:
-        logoImg = Logos.objects.get(id=pk)
-    except:
-        return redirect(reverse('vista_logos', kwargs={'msg':'errorEditLogo'}))
-
-    try:
-        logoImg.delete()
-        return redirect(reverse('vista_logos', kwargs={'msg':'exitoDelLogo'}))
-    except Exception as e:
-        return redirect(reverse('vista_logos', kwargs={'msg':'errorDelLogo'}))

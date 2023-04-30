@@ -77,7 +77,8 @@ urlpatterns = [
 
     #Logos
     path('Logos/', allViews.actualizarLogos, name = 'actualizarLogos'),
-    path('listaLogos/', allViews.ListaLogos, name = 'listaLogos'),
+    path('listaLogos/', allViews.lista_logos, name = 'lista_logos'),
+    path('tablas/Logos/add', allViews.addLogo, name = 'addLogo'),
     path('tabla/Logos/edit/<int:pk>', allViews.editLogo, name = 'editLogo'),
     path('tablas/Logos/del/<int:pk>', allViews.delLogo, name = 'delLogo'),
 

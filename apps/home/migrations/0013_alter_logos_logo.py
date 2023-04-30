@@ -12,7 +12,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='logos',
+            name='actualizado',
+            field=models.DateTimeField(auto_now_add=True, verbose_name='Fecha de actualización'),
+        ),
+        migrations.AlterField(
+            model_name='logos',
             name='logo',
-            field=models.ImageField(blank=True, null=True, upload_to='logos/', verbose_name='ImagenLogo'),
+            field=models.ImageField(blank=True, null=True, upload_to='logos/', verbose_name='Imagen'),
         ),
     ]

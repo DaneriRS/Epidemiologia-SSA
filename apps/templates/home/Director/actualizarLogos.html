@@ -11,7 +11,7 @@
     <div class="content">
         {% include 'includes/logos.html' %}
         {% include 'includes/mensajes.html' %}
-      <div role="tablist" aria-multiselectable="true" class="accordion">
+      <div role="tablist" aria-multiselectable="true" class="editLogo">
         <div class="row">
           <div class="col-12">
             <div class="card">
@@ -33,14 +33,14 @@
 
 {% endblock content %}
 <script>
-  function editLogo(url, id, titulo) {
+  function editLogo(url, id, titulo, logo) {
         // Obtener el formulario
         const form = document.getElementById('editLogoForm');
       
         // Asignar los valores a los inputs del formulario
-        //console.log(id);
+        console.log(titulo);
         console.log(logo);
-        //form.querySelector('#editLogo_nombre').value = nombre;
+        form.querySelector('#editLogo_titulo').value = titulo;
         form.querySelector('#editLogo_logo').value = logo;
       
         // Modificar el action del formulario

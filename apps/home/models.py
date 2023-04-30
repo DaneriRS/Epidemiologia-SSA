@@ -237,16 +237,16 @@ class Estudio(models.Model):
 class Logos(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField('Titulo', max_length=250, blank=True, null=True)
-    logo = models.ImageField(upload_to='logos/', blank=True, null=True, verbose_name="ImagenLogo")
-    actualizado = models.DateTimeField(auto_now_add=True)
+    logo = models.ImageField(upload_to='logos/', blank=True, null=True, verbose_name="Imagen")
+    actualizado = models.DateTimeField('Fecha de actualización', auto_now_add=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         img = Image.open(self.logo.path)
 
-        if img.height > 85:
-            output_size = (None,85)
-            img.thumbanail(output_size, Image.LANCZOS)
+        if img.height > 82:
+            output_size = (300,80)
+            img.thumbnail(output_size, Image.LANCZOS)
             img.save(self.logo.path)
 
 class NotificacionBrote(models.Model):
