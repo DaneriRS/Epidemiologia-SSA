@@ -188,13 +188,14 @@ class ListaLogos(ListView):
     
     def get(self, request, *args,**kwargs):
         return render(request, self.template_name,self.get_context_data)
+    
 @login_required(login_url="/login/")
 @roles_required(['Director'], redirect_url='home')
 class actualizarLogos(UpdateView):
     model = Logos
     form_class = LogosForm
     #success_url = reverse_lazy('logos:listaLogos')
-
+    
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             form = self.form_class(data = request.POST, files = request.FILES, instance=self.get_object())

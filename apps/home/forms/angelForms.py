@@ -634,7 +634,8 @@ class NotificacionBrote5(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=True
     )
     manzana = forms.CharField(
         max_length=20,

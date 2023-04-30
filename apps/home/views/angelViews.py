@@ -30,7 +30,7 @@ FORMS2 = [
             ("3", ContactForm3),
             ("4", FormSET2)
         ]
-FormSET3=formset_factory(NotificacionBrote5, extra=2)
+FormSET3=formset_factory(NotificacionBrote5, extra=1)
 FORMS3 =[
             ("1", NotificacionBrote1),
             ("2", NotificacionBrote2),
