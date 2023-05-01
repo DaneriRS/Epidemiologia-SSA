@@ -46,83 +46,85 @@ class registroPaciente(ModelForm):
             })
 
 class ContactForm1(forms.Form):
-    folio = forms.CharField(
-        max_length=20,
-        label="Folio:",
-        widget=forms.TextInput(
+    # folio = forms.CharField(
+    #     max_length=20,
+    #     label="Folio:",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control',
+    #         }
+    #     )
+    # )
+    unidadNot = forms.ModelChoiceField(
+        queryset=Unidad.objects.all(),
+        label='Unidad notificante:',
+        widget=forms.Select(
             attrs={
-                'placeholder': '', 'class': 'form-control',
+                'class': 'form-control',
+                'readonly': True
             }
-        )
+        ),
+        required=True
     )
-    unidadNot = forms.CharField(
-        max_length=20,
-        label="Unidad notificante:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    local = forms.CharField(
-        max_length=20,
-        label="Localidad:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    entOdEL = forms.CharField(
-        max_length=20,
-        label="Entidad o delegacion:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    cvClue = forms.CharField(
-        max_length=20,
-        label="Clave CLUES:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    municipio1 = forms.ChoiceField(
-        choices = MUNICIPIOS,
-        label = 'Municipio: ',
-        widget = forms.Select(
-            attrs={'class': 'form-control '}
-        )
-    )
-    institucion = forms.ChoiceField(
-        choices = INSTITUCION,
-        label = 'Institucion: ',
-        widget = forms.Select(
-            attrs={'class': 'form-control '}
-        )
-    )
-    cvSuUni = forms.CharField(
-        max_length=20,
-        label="Clave suave de la unidad:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    jurisdicEq = forms.ChoiceField(
-        choices = JUROEQUI,
-        label = 'Jurisdiccion o equivalente: ',
-        widget = forms.Select(
-            attrs={
-                'class': 'form-control selectpicker',
-                }
-        )
-    )
+    # local = forms.CharField(
+    #     max_length=20,
+    #     label="Localidad:",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+    # entOdEL = forms.CharField(
+    #     max_length=20,
+    #     label="Entidad o delegacion:",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+    # cvClue = forms.CharField(
+    #     max_length=20,
+    #     label="Clave CLUES:",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+    # municipio1 = forms.ChoiceField(
+    #     choices = MUNICIPIOS,
+    #     label = 'Municipio: ',
+    #     widget = forms.Select(
+    #         attrs={'class': 'form-control '}
+    #     )
+    # )
+    # institucion = forms.ChoiceField(
+    #     choices = INSTITUCION,
+    #     label = 'Institucion: ',
+    #     widget = forms.Select(
+    #         attrs={'class': 'form-control '}
+    #     )
+    # )
+    # cvSuUni = forms.CharField(
+    #     max_length=20,
+    #     label="Clave suave de la unidad:",
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+    # jurisdicEq = forms.ChoiceField(
+    #     choices = JUROEQUI,
+    #     label = 'Jurisdiccion o equivalente: ',
+    #     widget = forms.Select(
+    #         attrs={
+    #             'class': 'form-control selectpicker',
+    #             }
+    #     )
+    # )
     fechaNot = forms.CharField(
         label = 'Fecha de creacion',
         widget=forms.DateInput(
@@ -131,7 +133,8 @@ class ContactForm1(forms.Form):
                 'class': 'form-control', 'type': 'date',
                 'data-target': '#datetimepicker1'
             }
-        )
+        ),
+        required=True
     )
     fechaIni = forms.CharField(
         label = 'Inicio de estudio: ',
@@ -141,7 +144,8 @@ class ContactForm1(forms.Form):
                 'class': 'form-control', 'type': 'date',
                 'data-target': '#datetimepicker1'
             }
-        )
+        ),
+        required=True
     )
     fechaFin = forms.CharField(
         label = 'Terminacion de estudio: ',
@@ -160,7 +164,8 @@ class ContactForm1(forms.Form):
             attrs={
                 'class': 'form-control selectpicker',
                 }
-        )
+        ),
+        required=True
     )
     DiaFin = forms.ChoiceField(
         choices = TIPOHEP,
@@ -180,160 +185,19 @@ class ContactForm1(forms.Form):
             }
         )
     )
+    
+    def __init__(self, usuario, *args, **kwargs):
+        super(ContactForm1, self).__init__(*args, **kwargs)
+        # Obtenemos la unidad del usuario y la asignamos como valor inicial del campo 'unidadNot'
+        info = InformacionUsuario.objects.filter(user = usuario)
+        self.fields['unidadNot'].initial = info.unidad
+        # contactForm(usuario=2)
 
 class ContactForm2(forms.Form):
-    noAfili = forms.CharField(
+    paciente = forms.ModelChoiceField(
         max_length=30,
         label="Num, de afiliacion o expediente: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    nombre = forms.CharField(
-        max_length=30,
-        label="Nombre(s): ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    ap = forms.CharField(
-        max_length=30,
-        label="Apellido paterno: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    am = forms.CharField(
-        max_length=30,
-        label="Apellido materno: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    sexo = forms.ChoiceField(
-        choices = GENERO,
-        label = 'Genero: ',
-        widget = forms.Select(
-            attrs={
-                'class': 'form-control selectpicker',
-                }
-        )
-    )
-    fechaNac = forms.CharField(
-        label = 'Fecha de nacimiento: ',
-        widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
-            attrs={
-                'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerFechaNac'
-            }
-        )
-    )
-    anos = forms.IntegerField(
-        label='Años: ',
-         widget = forms.NumberInput(
-            attrs={
-                'class': 'form-control', 'min': '0', 'max': '120'
-            }
-        )
-    )
-    meses = forms.IntegerField(
-        label='Meses: ',
-         widget = forms.NumberInput(
-            attrs={
-                'class': 'form-control', 'min': '0', 'max': '13'
-            }
-        )
-    )
-    dias = forms.IntegerField(
-        label='Dias: ',
-         widget = forms.NumberInput(
-            attrs={
-                'class': 'form-control', 'min': '0', 'max': '32'
-            }
-        )
-    )
-    calle = forms.CharField(
-        max_length=50,
-        label="Calle: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    num = forms.CharField(
-        max_length=10,
-        label="Numero interior y/o exterior: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    colonia = forms.CharField(
-        max_length=50,
-        label="Colonia o localidad: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    municipio2 = forms.ChoiceField(
-        choices = MUNICIPIOS,
-        label = 'Municipio: ',
-        widget = forms.Select(
-            attrs={'class': 'form-control '}
-        )
-    )
-    cvMun2 = forms.CharField(
-        max_length=3,
-        label="Clave: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    ent2 = forms.CharField(
-        max_length=20,
-        label="Entidad:",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    cvEnt2 = forms.CharField(
-        max_length=2,
-        label="Clave: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    cp2 = forms.CharField(
-        max_length=5,
-        label="CP: ",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
-    tel2 = forms.CharField(
-        max_length=15,
-        label="Telefono: ",
+        queryset=Paciente.objects.all(),
         widget=forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
