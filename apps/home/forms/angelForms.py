@@ -46,15 +46,6 @@ class registroPaciente(ModelForm):
             })
 
 class ContactForm1(forms.Form):
-    # folio = forms.CharField(
-    #     max_length=20,
-    #     label="Folio:",
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'placeholder': '', 'class': 'form-control',
-    #         }
-    #     )
-    # )
     unidadNot = forms.ModelChoiceField(
         queryset=Unidad.objects.all(),
         label='Unidad notificante:',
@@ -66,99 +57,34 @@ class ContactForm1(forms.Form):
         ),
         required=True
     )
-    # local = forms.CharField(
-    #     max_length=20,
-    #     label="Localidad:",
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'placeholder': '', 'class': 'form-control'
-    #         }
-    #     )
-    # )
-    # entOdEL = forms.CharField(
-    #     max_length=20,
-    #     label="Entidad o delegacion:",
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'placeholder': '', 'class': 'form-control'
-    #         }
-    #     )
-    # )
-    # cvClue = forms.CharField(
-    #     max_length=20,
-    #     label="Clave CLUES:",
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'placeholder': '', 'class': 'form-control'
-    #         }
-    #     )
-    # )
-    # municipio1 = forms.ChoiceField(
-    #     choices = MUNICIPIOS,
-    #     label = 'Municipio: ',
-    #     widget = forms.Select(
-    #         attrs={'class': 'form-control '}
-    #     )
-    # )
-    # institucion = forms.ChoiceField(
-    #     choices = INSTITUCION,
-    #     label = 'Institucion: ',
-    #     widget = forms.Select(
-    #         attrs={'class': 'form-control '}
-    #     )
-    # )
-    # cvSuUni = forms.CharField(
-    #     max_length=20,
-    #     label="Clave suave de la unidad:",
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'placeholder': '', 'class': 'form-control'
-    #         }
-    #     )
-    # )
-    # jurisdicEq = forms.ChoiceField(
-    #     choices = JUROEQUI,
-    #     label = 'Jurisdiccion o equivalente: ',
-    #     widget = forms.Select(
-    #         attrs={
-    #             'class': 'form-control selectpicker',
-    #             }
-    #     )
-    # )
-    fechaNot = forms.CharField(
+    fechaNot = forms.DateField(
         label = 'Fecha de creacion',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepicker1'
             }
         ),
         required=True
     )
-    fechaIni = forms.CharField(
+    fechaIni = forms.DateField(
         label = 'Inicio de estudio: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepicker1'
             }
         ),
         required=True
     )
-    fechaFin = forms.CharField(
+    fechaFin = forms.DateField(
         label = 'Terminacion de estudio: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepicker1'
             }
         )
     )
     DiaProHep = forms.ChoiceField(
-        choices = TIPOHEP,
+        choices = HEPATITIS_CHOICES,
         label = 'Diagnostico probable de hepatitis: ',
         widget = forms.Select(
             attrs={
@@ -168,7 +94,7 @@ class ContactForm1(forms.Form):
         required=True
     )
     DiaFin = forms.ChoiceField(
-        choices = TIPOHEP,
+        choices = HEPATITIS_CHOICES,
         label = 'Diagnostico final: ',
         widget = forms.Select(
             attrs={
@@ -185,20 +111,12 @@ class ContactForm1(forms.Form):
             }
         )
     )
-    
-    def __init__(self, usuario, *args, **kwargs):
-        super(ContactForm1, self).__init__(*args, **kwargs)
-        # Obtenemos la unidad del usuario y la asignamos como valor inicial del campo 'unidadNot'
-        info = InformacionUsuario.objects.filter(user = usuario)
-        self.fields['unidadNot'].initial = info.unidad
-        # contactForm(usuario=2)
 
 class ContactForm2(forms.Form):
     paciente = forms.ModelChoiceField(
-        max_length=30,
         label="Num, de afiliacion o expediente: ",
         queryset=Paciente.objects.all(),
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
@@ -206,13 +124,11 @@ class ContactForm2(forms.Form):
     )
 
 class ContactForm3(forms.Form):
-    fechaIn3 = forms.CharField(
+    fechaIn3 = forms.DateField(
         label = 'Fecha de inicio de signos: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
-                'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerFechaIn3'
+                'class': 'form-control', 'type': 'date'
             }
         )
     )

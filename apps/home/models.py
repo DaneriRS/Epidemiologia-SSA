@@ -187,13 +187,13 @@ class Paciente(models.Model):
     numInt = models.CharField(verbose_name = "Numero interior", max_length = 50)
     numExt = models.CharField(verbose_name = "Numero exterior", max_length = 50)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
-    # coloniaLocalidad = models.CharField(verbose_name = "Colonia o localidad", max_length=5, choices=COLLOC)
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
-    # idMunicipio = models.CharField(verbose_name = "Municipio", max_length=5, choices=MUNICIPIOS)
-    # idEntidad = models.CharField(verbose_name = "Entidad", max_length=2, choices=ENTIDADES) 
     codigoPostal = models.CharField(verbose_name = "Codigo postal", max_length=5)
     telefonoPaciente = models.CharField(verbose_name = "Telefono", max_length = 10)
+
+    def __str__(self):
+        return str(self.id) + ' - ' + self.nombre + ' - ' + self.apellidoPa + ' - ' + self.apellidoMa
 
 class RegistroEstudio(models.Model):
     PROCEDENCIA_OPCIONES = [
@@ -202,42 +202,17 @@ class RegistroEstudio(models.Model):
     ]
     folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
     unidadNot = models.ForeignKey(Unidad, verbose_name="Unidad notificante", on_delete=models.SET_NULL, null=True, blank=True)
-    # local = models.ForeignKey(Localidad, verbose_name="Localidad", on_delete=models.SET_NULL, null=True, blank=True)
-    # entOdEL = models.CharField(verbose_name = "Entidad", max_length=50,null=True, blank=True)
-    # cvClue = models.CharField(verbose_name = "claveClue", max_length=50,null=True, blank=True)
-    # municipio1 = models.CharField(verbose_name = "Municipio", max_length=50,null=True, blank=True)
-    # institucion = models.CharField(verbose_name = "Institucion", max_length=50,null=True, blank=True)
-    # cvSuUni = models.CharField(verbose_name = "claveSuave", max_length=50,null=True, blank=True)
-    # jurisdicEq = models.CharField(verbose_name = "Jurisdiccion", max_length=50,null=True, blank=True)
     fechaNot = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
     fechaIni = models.DateField(verbose_name = "Fecha Inicio Estudio")
     fechaFin = models.DateField(verbose_name = "Fecha Fin Estudio", null=True, blank=True)
-    DiaProHep = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES)
+    DiaProHep = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
     DiaFin = models.CharField(verbose_name = "Diagnóstico Final", max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
-    otroDia = models.CharField(verbose_name = "Otro Diagnóstico", null=True, blank=True)
-
-    # noAfili = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # nombre = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # ap = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # am = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # sexo = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # fechaNac = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # anos = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # meses = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # dias = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # calle = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # num = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # colonia = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # municipio2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # cvMun2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # ent2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # cvEnt2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # cp2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    # tel2 = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    otroDia = models.CharField(verbose_name = "Otro Diagnóstico", max_length=50, null=True, blank=True)
+    
     paciente = models.ForeignKey(Paciente, verbose_name="Paciente", on_delete=models.SET_NULL, null=True, blank=True)
-    edadAnio = models.PositiveIntegerField(verbose_name="Edad (años)")
-    edadMes = models.PositiveIntegerField(verbose_name="Edad (meses)")
-    edadDia = models.PositiveIntegerField(verbose_name="Edad (días)")
+    edadAnio = models.PositiveIntegerField(verbose_name="Edad (años)", null=True, blank=True)
+    edadMes = models.PositiveIntegerField(verbose_name="Edad (meses)", null=True, blank=True)
+    edadDia = models.PositiveIntegerField(verbose_name="Edad (días)", null=True, blank=True)
     
     
     
@@ -249,26 +224,12 @@ class RegistroEstudio(models.Model):
     boolLab = models.BooleanField(verbose_name = "Ya se registro laboratorio", default=False)
     boolFinalizado = models.BooleanField(verbose_name = "Finalizado", default=False)
     
-    procedencia = models.CharField(verbose_name="Procedencia", max_length=10, choices=PROCEDENCIA_OPCIONES)
+    procedencia = models.CharField(verbose_name="Procedencia", max_length=10, choices=PROCEDENCIA_OPCIONES, null=True, blank=True)
     municipioProc = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
     localidadProc = models.ForeignKey(Localidad, on_delete=models.SET_NULL, null=True, blank=True)
     llegadaProc = models.DateField(verbose_name = "Llegada de procedencia", null=True, blank=True)
     salidaProc = models.DateField(verbose_name = "Salida de procedencia", null=True, blank=True)
     
-    
-    
-    def __str__(self):
-        return self.id + ' - ' + self.unidadNot.claveclues
-    
-    def save(self, *args, **kwargs):
-        # Si el paciente existe, calculamos su edad y la asignamos a los campos correspondientes
-        if self.paciente:
-            fecha_actual = date.today()
-            edad = relativedelta(fecha_actual, self.paciente.nacimiento)
-            self.edadAnio = edad.years
-            self.edadMes = edad.months
-            self.edadDia = edad.days
-        super(RegistroEstudio, self).save(*args, **kwargs)
 
 class Estudio(models.Model):
     nombre = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)

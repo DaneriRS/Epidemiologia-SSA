@@ -53,11 +53,6 @@ class RegistroEstudioView(CookieWizardView):
     form_dict=dict(form_list)
     template_name = 'home/exampleForm.html'
 
-    # def get_form_list(request, *args, **kwargs):
-    #     Definir la lista de formularios
-    #     form_list = [('form1', Form1(usuario = request.user)), ('form2', Form2)]
-    #     return form_list
-
     def get(self, request, *args, **kwargs):
         try:
             return self.render(self.get_form())
@@ -88,8 +83,6 @@ class RegistroEstudioView(CookieWizardView):
             est.save()
         return redirect('listaFormularios')
 
-@login_required(login_url="/login/")
-@roles_required(['Encargado de unidad'], redirect_url='home')
 class RegistroEstudioUpdateView(CookieWizardView):
     form_list=FORMS2
     form_dict=dict(form_list)
