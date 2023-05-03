@@ -37,60 +37,12 @@
                         <h2 class="card-title">I - IDENTIFICACION DE LA UNIDAD</h2>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-4">
-                            {{wizard.form.folio.label}}
-                            {% if wizard.form.folio.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.folio}}
-                        </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             {{wizard.form.unidadNot.label}}
                             {% if wizard.form.unidadNot.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.unidadNot}}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{wizard.form.cvClue.label}}
-                            {% if wizard.form.cvClue.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.cvClue}}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{wizard.form.local.label}}
-                            {% if wizard.form.local.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.local}}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{wizard.form.municipio1.label}}
-                            {% if wizard.form.municipio1.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.municipio1}}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{wizard.form.entOdEL.label}}
-                            {% if wizard.form.entOdEL.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.entOdEL}}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {{wizard.form.institucion.label}}
-                            {% if wizard.form.institucion.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.institucion}}
                         </div>
                     </div>
                     <div class="form-row">
@@ -192,56 +144,21 @@
                     {%for form in wizard.form.forms %}
                         {{form.id}}
                         <div class="form-row">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-6">
                                 {{form.area.label}}
                                 {% if form.area.field.required %}
                                     <span class="text-danger">*</span>
                                 {% endif %}
                                 {{form.area}}
                             </div>
-                            <div class="form-group col-md-1">
-                                {{form.manzana.label}}
-                                {% if form.manzana.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.manzana}}
-                            </div>
-                            <div class="form-group col-md-1">
-                                {{form.colonia.label}}
-                                {% if wform.colonia.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.colonia}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{form.localidad.label}}
-                                {% if form.localidad.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.localidad}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{form.escuela.label}}
-                                {% if form.escuela.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.escuela}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{form.guardeOvivienda.label}}
-                                {% if form.guardeOvivienda.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.guardeOvivienda}}
-                            </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-3">
                                 {{form.numeroCasos.label}}
                                 {% if form.numeroCasos.field.required %}
                                     <span class="text-danger">*</span>
                                 {% endif %}
                                 {{form.numeroCasos}}
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-3">
                                 {{form.numeroDefunciones.label}}
                                 {% if form.numeroDefunciones.field.required %}
                                     <span class="text-danger">*</span>
@@ -252,29 +169,29 @@
                         <br>
                     {% endfor %}
                 {% elif wizard.steps.step1 == 4 %}
-                <div class="form-row">
-                    {{wizard.form.anteEpiBrote.label}}
-                    {% if wizard.form.anteEpiBrote.field.required %}
-                        <span class="text-danger">*</span>
-                    {% endif %}
-                    {{wizard.form.anteEpiBrote}}
+                    <div class="form-row">
+                        {{wizard.form.anteEpiBrote.label}}
+                        {% if wizard.form.anteEpiBrote.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                        {{wizard.form.anteEpiBrote}}
 
-                    <br>
+                        <br>
 
-                    {{wizard.form.probFuenBrote.label}}
-                    {% if wizard.form.probFuenBrote.field.required %}
-                        <span class="text-danger">*</span>
-                    {% endif %}
-                    {{wizard.form.probFuenBrote}}
+                        {{wizard.form.probFuenBrote.label}}
+                        {% if wizard.form.probFuenBrote.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                        {{wizard.form.probFuenBrote}}
 
-                    <br>
+                        <br>
 
-                    {{wizard.form.probMecTransmision.label}}
-                    {% if wizard.form.probMecTransmision.field.required %}
-                        <span class="text-danger">*</span>
-                    {% endif %}
-                    {{wizard.form.probMecTransmision}}
-                </div>
+                        {{wizard.form.probMecTransmision.label}}
+                        {% if wizard.form.probMecTransmision.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                        {{wizard.form.probMecTransmision}}
+                    </div>
                 {% elif wizard.steps.step1 == 5 %}
 
                     {{wizard.form.accionesPrevControl.label}}

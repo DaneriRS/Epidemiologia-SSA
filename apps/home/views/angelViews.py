@@ -158,11 +158,6 @@ class RegistroNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet3:
             DistGeo=DistribucionGeografica(
                 area=item['area'],
-                manzana=item['manzana'],
-                colonia=item['colonia'],
-                localidad=item['localidad'],
-                escuela=item['escuela'],
-                guardeOvivienda=item['guardeOvivienda'],
                 numeroCasos=item['numeroCasos'],
                 numeroDefunciones=item['numeroDefunciones'],
                 notificacionBrote=notificacion
@@ -212,11 +207,6 @@ class UpdateNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet4:
             dist=DistribucionGeografica.objects.get(id=item['id'])
             dist.area=item['area']
-            dist.manzana=item['manzana']
-            dist.colonia=item['colonia']
-            dist.localidad=item['localidad']
-            dist.escuela=item['escuela']
-            dist.guardeOvivienda=item['guardeOvivienda']
             dist.numeroCasos=item['numeroCasos']
             dist.numeroDefunciones=item['numeroDefunciones']
                                            
