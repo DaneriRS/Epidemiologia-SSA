@@ -47,7 +47,9 @@ FORMS4 =[
         ]
 FORMS5 =[
     ('1', Anexo8P1),
-    ('2', Anexo8P2)
+    ('2', Anexo8P2),
+    ('3', Anexo8P3),
+    ('4', Anexo8P4)
 ]
 
 class RegistroEstudioView(CookieWizardView):

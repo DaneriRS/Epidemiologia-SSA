@@ -585,6 +585,159 @@ class Anexo8P2(forms.Form):
         )
     )
 
+class Anexo8P3(forms.Form):
+    ratifica = forms.CharField(
+        max_length=100,
+        label="Ratifica",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaVigEpi2 = forms.CharField(
+        max_length=100,
+        label="Causa sujeta a vigilancia epidemiologica",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causasDef3 = forms.CharField(
+        max_length=100,
+        label="Causas de defunción3",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causasDef4 = forms.CharField(
+        max_length=100,
+        label="Causas de defunción4",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    fechaRecolección = forms.CharField(
+        label = 'Fecha de recolección',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    fechaInicio = forms.CharField(
+        label = 'Fecha de inicio',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    fechaConclusion = forms.CharField(
+        label = 'Fecha de conclusión',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    reporteInegi = forms.CharField(
+        label = 'Fecha de reporte a INEGI',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    observaciones = forms.CharField(
+        max_length=100,
+        label="Observaciones",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    nombreResponsableInv = forms.CharField(
+        max_length=100,
+        label="Nombre del responsable de la investigación",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    cargo = forms.CharField(
+        max_length=100,
+        label="Cargo",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    firma = forms.CharField(
+        max_length=100,
+        label="Firma",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+class Anexo8P4(forms.Form):
+    tipoDocumento = forms.CharField(
+        max_length=100,
+        label="Tipo de documento",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numPaquete = forms.CharField(
+        max_length=100,
+        label="Número de paquete",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numActa = forms.CharField(
+        max_length=100,
+        label="Número de acta",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    folioCaptura = forms.CharField(
+        max_length=100,
+        label="Folio de captura",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    nombreCodificador = forms.CharField(
+        max_length=100,
+        label="Nombre del codificador",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
 class addJurisdiccion(ModelForm):
     
     class Meta:
