@@ -86,6 +86,7 @@ urlpatterns = [
     path('editForm/<int:id>', allViews.RegistroEstudioUpdateView.as_view() , name="editForm"),
     path('notificacion/brote', allViews.RegistroNotificacionBroteView.as_view() , name="notificacionBrote"),
     path('notificacion/brote/update/<int:id>', allViews.UpdateNotificacionBroteView.as_view() , name="notificacionBroteUpdate"),
+    path('anexo8/', allViews.Anexo8View.as_view() , name="anexo8"),
 
 ]
 

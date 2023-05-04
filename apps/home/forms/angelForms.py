@@ -459,6 +459,132 @@ class NotificacionBrote8(forms.Form):
         )
     )
 
+class Anexo8P1(forms.Form):
+    nombreFallecido = forms.ModelChoiceField(
+        queryset=Paciente.objects.all(),
+        label='Nombre del Fallecido:',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    institucion = forms.ModelChoiceField(
+        queryset=Institucion.objects.all(),
+        label='Institución:',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    fechaDefuncion = forms.CharField(
+        label = 'Fecha de Defuncion',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    escolaridad = forms.ChoiceField(
+        choices = ESCOLARIDAD_CHOICES,
+        label = 'Escolaridad: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        )
+    )
+    ocupacion = forms.CharField(
+        max_length=20,
+        label="Ocupacion:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    lugardeResidenciaMuni = forms.ModelChoiceField(
+        queryset=Municipio.objects.all(),
+        label='Lugar de Residencia Habitual (Municipio):',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    lugardeResidenciaEnti = forms.ModelChoiceField(
+        queryset=Entidad.objects.all(),
+        label='Lugar de Residencia Habitual (Entidad Federativa):',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    lugarDefMuni = forms.ModelChoiceField(
+        queryset=Municipio.objects.all(),
+        label='Lugar de Donde Ocurrio la Defunsion (Municipio):',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    lugarDefEnti = forms.ModelChoiceField(
+        queryset=Entidad.objects.all(),
+        label='Lugar de Donde Ocurrio la Defunsion (Entidad Federativa):',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    nombreCertificante = forms.CharField(
+        max_length=20,
+        label="Nombre del Certificante:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+class Anexo8P2(forms.Form):
+    causasDef = forms.CharField(
+        max_length=100,
+        label="I:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causasDef2 = forms.CharField(
+        max_length=100,
+        label="II:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaVigEpi = forms.CharField(
+        max_length=100,
+        label="Causa sujeta a vigilancia epidemiologica:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
 class addJurisdiccion(ModelForm):
     
     class Meta:

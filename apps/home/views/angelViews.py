@@ -22,7 +22,6 @@ FORMS = [
             ("3", ContactForm3),
             ("4", FormSET1)
         ]
-
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FORMS2 = [
             ("1", ContactForm1),
@@ -38,7 +37,6 @@ FORMS3 =[
             ("4", NotificacionBrote6),
             ("5", NotificacionBrote7)
         ]
-
 FormSET4=formset_factory(NotificacionBrote8, extra=0)
 FORMS4 =[
             ("1", NotificacionBrote1),
@@ -47,6 +45,10 @@ FORMS4 =[
             ("4", NotificacionBrote6),
             ("5", NotificacionBrote7)
         ]
+FORMS5 =[
+    ('1', Anexo8P1),
+    ('2', Anexo8P2)
+]
 
 class RegistroEstudioView(CookieWizardView):
     form_list=FORMS
@@ -164,8 +166,7 @@ class RegistroNotificacionBroteView(CookieWizardView):
             )
             DistGeo.save()
 
-        return redirect('listaNotificacionBrote')
-        
+        return redirect('listaNotificacionBrote')    
 
 class UpdateNotificacionBroteView(CookieWizardView):
     form_list=FORMS4
@@ -213,6 +214,28 @@ class UpdateNotificacionBroteView(CookieWizardView):
             dist.save()
 
         return redirect('listaNotificacionBrote')
+
+class Anexo8View(CookieWizardView):
+    form_list = FORMS5
+    form_dict = dict(form_list)
+    template_name = 'home/anexo8.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return self.render(self.get_form())
+        except KeyError:
+            return super().get(request, *args, **kwargs)
+        
+    def done(self, form_list, **kwargs):
+        registroData={}
+        for i,form in enumerate(form_list):
+            registroData.update(form.cleaned_data)
+
+        anexo8=Anexo8(**registroData)
+        anexo8.save()
+
+        return redirect('lista_usuarios')    
+
 
 @login_required    
 def listaFormularios(request):

@@ -68,6 +68,25 @@ HEPATITIS_CHOICES = (
     ('E', 'Hepatitis E'),
 )
 
+ESCOLARIDAD_CHOICES = (
+    ('1', 'Ninguna'),
+    ('2', 'Preescolar'),
+    ('3', 'Primaria Incompleta'),
+    ('4', 'Primaria Completa'),
+    ('5', 'Secundaria Incompleta'),
+    ('6', 'Secundaria Completa'),
+    ('7', 'Preparatoria Incompleta'),
+    ('8', 'Preparatoria Completa'),
+    ('9', 'Profesional'),
+    ('10', 'Posgrado'),
+    ('11', 'Se ignora'),
+
+)
+
+RATIFICA_CHOICES = (
+    ('1', 'Ratifica'),
+    ('2', 'Rectifica'),
+)
 class CustomUserManager(models.Manager):
     def imprimir(self):
         return self.email
@@ -275,11 +294,45 @@ class NotificacionBrote(models.Model):
 
     accionesPrevControl = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
 
-  
-
 
 class DistribucionGeografica(models.Model):
     area = models.CharField(verbose_name = "Área, Manzana, Colonia, Localidad, Escuela, Guardería O Vivienda", max_length=50,null=True, blank=True)
     numeroCasos = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)   
     numeroDefunciones = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
     notificacionBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+
+class Anexo8(models.Model):
+    nombreFallecido = models.ForeignKey(Paciente, on_delete=models.CASCADE)
+    institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
+    fechaDefuncion = models.DateField(verbose_name = "Fecha de defunción", null=True, blank=True)
+    escolaridad = models.CharField(verbose_name='Escolaridad', max_length=10, choices=ESCOLARIDAD_CHOICES, null=True, blank=True)
+    ocupacion = models.CharField(verbose_name='Ocupación', max_length=30, null=True, blank=True)
+    lugardeResidenciaMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE)
+    lugardeResidenciaEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE)
+    lugarDefMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE, related_name='municipioDef')
+    lugarDefEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE, related_name='entidadDef')
+    nombreCertificante = models.CharField(verbose_name="Nombre del Certificante", max_length=20)
+
+    causasDef = models.CharField(verbose_name="Causas de defunción", max_length=200)
+    causasDef2 = models.CharField(verbose_name="Causas de defunción2", max_length=100)
+    causaVigEpi = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
+
+    ratifica = models.CharField(verbose_name="Ratifica", max_length=100, choices=RATIFICA_CHOICES, null=True, blank=True)
+    causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
+    causasDef3 = models.CharField(verbose_name="Causas de defunción3", max_length=200)
+    causasDef4 = models.CharField(verbose_name="Causas de defunción4", max_length=100)
+    fechaRecolección = models.DateField(verbose_name = "Fecha de recolección", null=True, blank=True)
+    fechaInicio = models.DateField(verbose_name = "Fecha de inicio", null=True, blank=True)
+    fechaConclusion = models.DateField(verbose_name = "Fecha de conclusión", null=True, blank=True)
+    reporteInegi = models.DateField(verbose_name = "Fecha de reporte a INEGI", null=True, blank=True)
+    observaciones = models.CharField(verbose_name="Observaciones", max_length=200, null=True, blank=True)
+    nombreResponsableInv = models.CharField(verbose_name="Nombre del responsable de la investigación", max_length=50, null=True, blank=True)
+    cargo = models.CharField(verbose_name="Cargo", max_length=50, null=True, blank=True)
+    firma = models.CharField(verbose_name="Firma", max_length=50, null=True, blank=True)
+
+    tipoDocumento = models.CharField(verbose_name="Tipo de documento", max_length=50, null=True, blank=True)
+    numPaquete = models.CharField(verbose_name="Número de paquete", max_length=50, null=True, blank=True)
+    numActa = models.CharField(verbose_name="Número de acta", max_length=50, null=True, blank=True)
+    folioCaptura = models.CharField(verbose_name="Folio de captura", max_length=50, null=True, blank=True)
+    nombreCodificador = models.CharField(verbose_name="Nombre del codificador", max_length=50, null=True, blank=True)
+    
