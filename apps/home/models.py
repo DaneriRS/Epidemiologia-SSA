@@ -321,7 +321,7 @@ class Anexo8(models.Model):
     causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
     causasDef3 = models.CharField(verbose_name="Causas de defunción3", max_length=200)
     causasDef4 = models.CharField(verbose_name="Causas de defunción4", max_length=100)
-    fechaRecolección = models.DateField(verbose_name = "Fecha de recolección", null=True, blank=True)
+    fechaRecoleccion = models.DateField(verbose_name = "Fecha de recolección", null=True, blank=True)
     fechaInicio = models.DateField(verbose_name = "Fecha de inicio", null=True, blank=True)
     fechaConclusion = models.DateField(verbose_name = "Fecha de conclusión", null=True, blank=True)
     reporteInegi = models.DateField(verbose_name = "Fecha de reporte a INEGI", null=True, blank=True)

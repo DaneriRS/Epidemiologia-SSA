@@ -622,7 +622,7 @@ class Anexo8P3(forms.Form):
             }
         )
     )
-    fechaRecolección = forms.CharField(
+    fechaRecoleccion = forms.CharField(
         label = 'Fecha de recolección',
         widget=forms.DateInput(
             attrs={

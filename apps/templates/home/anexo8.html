@@ -148,6 +148,152 @@
                             {{wizard.form.causaVigEpi}}
                         </div>
                     </div>
+                {% elif wizard.steps.step1 == 3 %}
+                    <div class="text-left">
+                        <h2 class="card-title">III - RESULTADOS DE LA INVESTIGACIÓN EPIDEMIOLÓGICA</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.ratifica.label}}
+                            {% if wizard.form.ratifica.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.ratifica}}
+                        </div>
+                        
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaVigEpi2.label}}
+                            {% if wizard.form.causaVigEpi2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaVigEpi2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef3.label}}
+                            {% if wizard.form.causasDef3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef3}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef4.label}}
+                            {% if wizard.form.causasDef4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef4}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaRecoleccion.label}}
+                            {% if wizard.form.fechaRecoleccion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaRecoleccion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaInicio.label}}
+                            {% if wizard.form.fechaInicio.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaInicio}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaConclusion.label}}
+                            {% if wizard.form.fechaConclusion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaConclusion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.reporteInegi.label}}
+                            {% if wizard.form.reporteInegi.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.reporteInegi}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.observaciones.label}}
+                            {% if wizard.form.observaciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.observaciones}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.nombreResponsableInv.label}}
+                            {% if wizard.form.nombreResponsableInv.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.nombreResponsableInv}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.cargo.label}}
+                            {% if wizard.form.cargo.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.cargo}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.firma.label}}
+                            {% if wizard.form.firma.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.firma}}
+                        </div>
+                    </div>
+                {% elif wizard.steps.step1 == 4 %}
+                    <div class="text-left">
+                        <h2 class="card-title">IV - DATOS DE CONTROL (EXCLUSIVO INEGI)</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.tipoDocumento.label}}
+                            {% if wizard.form.tipoDocumento.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.tipoDocumento}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numPaquete.label}}
+                            {% if wizard.form.numPaquete.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numPaquete}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numActa.label}}
+                            {% if wizard.form.numActa.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numActa}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.folioCaptura.label}}
+                            {% if wizard.form.folioCaptura.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.folioCaptura}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.nombreCodificador.label}}
+                            {% if wizard.form.nombreCodificador.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.nombreCodificador}}
+                        </div>
+                    </div>
                 {% endif %}
                 <div class="" style="text-align: center">
                     {% if wizard.steps.prev %}
