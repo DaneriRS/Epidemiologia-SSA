@@ -14,7 +14,6 @@ from datetime import date
 GENEROS = (
     ('M', 'Masculino'),
     ('F', 'Femenino'),
-    ('NB', 'No Binario'),
 )
 
 COLLOC = (

@@ -51,6 +51,12 @@ FORMS5 =[
     ('3', Anexo8P3),
     ('4', Anexo8P4)
 ]
+FORMS6 =[
+    ('1', Anexo8P1),
+    ('2', Anexo8P2),
+    ('3', Anexo8P3),
+    ('4', Anexo8P4)
+]
 
 class RegistroEstudioView(CookieWizardView):
     form_list=FORMS
@@ -236,8 +242,32 @@ class Anexo8View(CookieWizardView):
         anexo8=Anexo8(**registroData)
         anexo8.save()
 
-        return redirect('lista_usuarios')    
+        return redirect('listaAnexo8')
 
+class UpdateAnexo8View(CookieWizardView):
+    form_list = FORMS6
+    form_dict = dict(form_list)
+    template_name = 'home/editarAnexo8.html'
+
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        if 'id' in self.kwargs:
+            project_id = self.kwargs['id']
+            project = Anexo8.objects.get(id=project_id)
+            project_dict = model_to_dict(project)
+            return project_dict
+        
+    def done(self, form_list, **kwargs):
+        id = self.kwargs['id']
+
+        registroData={}
+        for i,form in enumerate(form_list):
+            registroData.update(form.cleaned_data)
+
+        anexo8=Anexo8.objects.filter(id=id)
+        anexo8.update(**registroData)
+
+        return redirect('listaAnexo8')
 
 @login_required    
 def listaFormularios(request):
@@ -252,6 +282,14 @@ def listaNotificacionBrote(request):
     if request.method == 'GET':
         formularios = NotificacionBrote.objects.all()
         return render(request, 'home/ListaNotificacionBrotes.html', {'formularios': formularios})
+    else:
+        return redirect ('home')
+
+@login_required
+def listaAnexo8(request):
+    if request.method == 'GET':
+        formularios = Anexo8.objects.all()
+        return render(request, 'home/ListaAnexo8.html', {'formularios': formularios})
     else:
         return redirect ('home')
 
