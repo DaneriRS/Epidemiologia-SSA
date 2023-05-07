@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+{% load i18n %}
+{% block title %} Reportes {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    {% include 'includes/logos.html' %}
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="post" >{% csrf_token %}
+                    <div class="text-left">
+                        <h2 class="card-title">Reportes</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>{{unidadNot}}</p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <p>Clave CLUES</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <p>Minicipio</p>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

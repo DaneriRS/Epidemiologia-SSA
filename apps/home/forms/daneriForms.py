@@ -64,3 +64,14 @@ class LogosForm(forms.ModelForm):
                 'class': 'form-control',
                 'required': 'required'
             })
+
+class Reportes(forms.ModelForm):
+    #logosAll = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'required': 'required'
+            })

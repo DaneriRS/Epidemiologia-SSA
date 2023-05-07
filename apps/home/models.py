@@ -241,13 +241,14 @@ class Logos(models.Model):
     actualizado = models.DateTimeField('Fecha de actualización', auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
         img = Image.open(self.logo.path)
 
         if img.height > 82:
             output_size = (300,80)
             img.thumbnail(output_size, Image.LANCZOS)
             img.save(self.logo.path)
+        
+        super().save(*args, **kwargs)
 
 class NotificacionBrote(models.Model):
     folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)

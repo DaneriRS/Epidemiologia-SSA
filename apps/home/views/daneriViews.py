@@ -215,7 +215,7 @@ def editLogo(request, pk):
             logs = Logos.objects.get(id = pk)
         except Exception as e:
                 return redirect(reverse('vista_logos', kwargs={'msg':'errorExistLogos'}))
-        form = LogosForm(data = request.POST, files = request.FILES, instance=self.get_object())
+        form = LogosForm(data = request.POST, files = request.FILES, instance=logs)
         if form.is_valid():
             try:
                 form.save()
@@ -267,3 +267,13 @@ class actualizarLogos(UpdateView):
                 return response
         else:
             return redirect('home/index.html')
+
+@login_required
+def reportes(request):
+    model=Unidad
+    fields = '__all__'
+    if request.method == 'POST':
+        #formularios = Reportes.objects.all()
+        return render(request, 'home/reportes.html')
+    else:
+        return redirect ('home')

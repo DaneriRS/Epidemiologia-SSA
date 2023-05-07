@@ -60,11 +60,6 @@
             <div id="errorActualizacion">
             </div>
             {{ formEditLogos }}
-            {% for logs in Logos_img %}
-                        <div class="col-md-2">
-                            <img src="{{logs.Logos.logo.url}}" class="img-responsive" style="width: 100%;float: left; margin-right:10px;"/>
-                        </div>
-                    {% endfor %}
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal" >Cancelar</button>{% comment  %}onclick="cerrar_modal_actualizar();" onclick="actualizar();"{% endcomment %}
@@ -78,6 +73,12 @@
   </div>
 </div>
 {% comment "" %}
+
+{% for logs in Logos_img %}
+                        <div class="col-md-2">
+                            <img src="{{logs.Logos.logo.url}}" class="img-responsive" style="width: 100%;float: left; margin-right:10px;"/>
+                        </div>
+            {% endfor %}
 
 <script type="text/javascript">
     function editLogoModal(url){
