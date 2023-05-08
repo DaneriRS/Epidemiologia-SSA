@@ -65,13 +65,13 @@ class LogosForm(forms.ModelForm):
                 'required': 'required'
             })
 
-class Reportes(forms.ModelForm):
+#class ReporteView(forms.ModelForm):
     #logosAll = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'required': 'required'
-            })
+ #   template_name= 'home/reportes.html'
+  #  def __init__(self, *args, **kwargs):
+   #     super().__init__(*args, **kwargs)
+    #    for field in self.fields:
+     #       self.fields[field].widget.attrs.update({
+      #          'class': 'form-control',
+       #         'required': 'required'
+        #    })

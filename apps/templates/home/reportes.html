@@ -1,38 +1,152 @@
 {% extends "layouts/base.html" %}
-{% load i18n %}
-{% block title %} Reportes {% endblock %}
+{% load static %}
+
+{% block title %} Tablas Catalogos {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<div class="content">
-    {% include 'includes/logos.html' %}
-    <div class="card">
-        <div class="card-body">
-            <form action="" method="post" >{% csrf_token %}
-                    <div class="text-left">
-                        <h2 class="card-title">Reportes</h2>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <p>{{unidadNot}}</p>
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        {% include 'includes/mensajes.html' %}
+        <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col text-left">
+                                    <h2 class="card-title">Administrador de Reportes</h2>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <p>Clave CLUES</p>
+                        <div class="card-body">
+                            <a id="btnTabla" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseTabla" aria-expanded="false" aria-controls="collapseTablaHeading">
+                                Tabla
+                            </a>
+                            <a id="btnEpi" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstudio" aria-expanded="false" aria-controls="collapseEstudioHeading">
+                                Estudio Epidemiológico
+                            </a>
+                            <a id="btnLab" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLaboratorio" aria-expanded="false" aria-controls="collapseLaboratorioHeading">
+                                Estudio Laboratorio
+                            </a>
+                            <a id="btnAnex" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseAnexo" aria-expanded="false" aria-controls="collapseAnexoHeading">
+                                Anexo 8
+                            </a>
+                            <a id="btnMort" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMortalidad" aria-expanded="false" aria-controls="collapseMortalidadHeading">
+                                Mortalidad
+                            </a>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <p>Minicipio</p>
+                </div>
+            </div>
+
+            <div id="collapseTabla" class="collapse" role="tabpanel" aria-labelledby="collapseTablaHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% include 'home/reporteTabla.html' %}
+                            </div>
                         </div>
                     </div>
-            </form>
+                </div>
+            </div>
+
+            <div id="collapseEstudio" class="collapse" role="tabpanel" aria-labelledby="collapseEstudioHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% include 'home/reporteEstudio.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseLaboratorio" class="collapse" role="tabpanel" aria-labelledby="collapseLaboratorioHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% include 'home/reporteLaboratorio.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseMortalidad" class="collapse" role="tabpanel" aria-labelledby="collapseMortalidadHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Mortalidad</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/reporteMortalidad.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('.table').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [{
+            "extend": "copy",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "csv",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "pdf",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "print",
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });      
+    });
+
+    {% if presionar %}
+        document.getElementById("btn{{ btnPresionar }}").click()
+    {% endif %}
+
+</script>
+{% endblock javascripts %}

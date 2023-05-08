@@ -441,3 +441,34 @@ def vista_logos(request, msg):
         'btnPresionar' : btnPresionar,
     }
     return render(request, 'home/Director/actualizarLogos.html', context)
+
+@login_required(login_url="/login/")
+def vista_filtros(request, msg):
+    formfiltros = EntidadForm(auto_id="verfiltros_%s")
+    info = Estudio.objects.all()
+
+    mensaje = None
+    msgType = None
+    presionar = False
+    btnPresionar = None
+    if msg == 'exitoVerfiltros':
+        mensaje = 'Fitros aplicados con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Info'
+    elif msg == 'errorFiltrps':
+        mensaje = '¡ERROR! Filtros no existentes'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'info'
+    context = {
+        'segment': 'tabla_info',
+        'mensaje':mensaje,
+        'msg': mensaje,
+        'msgType': msgType,
+        'Info' : info,
+        'formfiltros' : formfiltros,
+        'presionar' : presionar,
+        'btnPresionar' : btnPresionar,
+    }
+    return render(request, 'home/Director/reportes.html', context)

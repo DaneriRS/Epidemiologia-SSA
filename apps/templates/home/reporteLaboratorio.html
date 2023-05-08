@@ -1,0 +1,131 @@
+{% block content %}
+<div class="content">
+{% include 'includes/logos.html' %}
+    <div class="card">
+        <div class="card-body" id="reporte_estudio">
+            <h2 class="card-title">{{title}}</h2>
+            <h4 class="card-subtitle mb-2 text-muted">I. IDENTIFICACIÓN DE LA UNIDAD</h4>
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        FOLIO
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        UNIDAD NOTIFICANTE:
+                    </div>
+                    <div class="form-group col-md-4">
+                        CLAVE CLUES:
+                    </div>
+                    <div class="form-group col-md-4">
+                        CLAVE SUAVE DE LA UNIDAD:
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        LOCALIDAD
+                    </div>
+                    <div class="form-group col-md-4">
+                        M U N I C I P I O:
+                    </div>
+                    <div class="form-group col-md-4">
+                        JURISDICCIÓN O EQUIVALENTE:
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        ENTIDAD O DELEGACIÓN:
+                    </div>
+                    <div class="form-group col-md-4">
+                        INSTITUCIÓN:
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        FECHA DE NOTIFICACIÓN:
+                    </div>
+                    <div class="form-group col-md-4">
+                        INICIO DE ESTUDIO:
+                    </div>
+                    <div class="form-group col-md-4">
+                        TERMINACIÓN DE ESTUDIO:
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        DIAGNÓSTICO PROBABLE DE HEPATITIS:
+                    </div>
+                    <div class="form-group col-md-4">
+                        DIAGNÓSTICO FINAL:
+                    </div>
+                    <div class="form-group col-md-4">
+                        OTRO DIAGNÓSTICO:
+                    </div>
+                </div>
+                {% comment "" %}
+                <div style="text-align: center;">
+                    <button class="btn btn-primary animation-on-hover" type="reset">Limpiar</button>
+                    <input class="btn btn-info animation-on-hover" type="submit" value="Registrar">
+                </div>
+                {% endcomment %}
+            </form><br></br>
+            <h4 class="card-subtitle mb-2 text-muted">II. IDENTIFICACIÓN DEL CASO</h4>
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                          Núm. de afiliación o expediente:
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Apellido paterno
+                    </div>
+                    <div class="form-group col-md-4">
+                        Apellido materno
+                    </div>
+                    <div class="form-group col-md-4">
+                        Nombre (s)
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Sexo:
+                    </div>
+                    <div class="form-group col-md-4">
+                        Fecha de nacimiento:
+                    </div>
+                    <div class="form-group col-md-4">
+                        Edad:
+                        <p>años</P>
+                    </div>
+                </div>
+            </form><br></br>
+            <h4 class="card-subtitle mb-2 text-muted">IV. LABORATORIO Y GABINETE</h4>
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Estudio
+                    </div>
+                    <div class="form-group col-md-4">
+                        Tipo
+                    </div>
+                    <div class="form-group col-md-4">
+                        Fecha
+                    </div>
+                    <div class="form-group col-md-4">
+                        Resultado
+                    </div>
+                </div>
+            </form><br></br>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -88,6 +88,7 @@ urlpatterns = [
     path('notificacion/brote', allViews.RegistroNotificacionBroteView.as_view() , name="notificacionBrote"),
     path('notificacion/brote/update/<int:id>', allViews.UpdateNotificacionBroteView.as_view() , name="notificacionBroteUpdate"),
 
-    path('reporte/', allViews.reportes , name="reportes"),
+    path('reporte/', allViews.ReporteEstudioView.as_view() , name="reporte"),
+    
 ]
 

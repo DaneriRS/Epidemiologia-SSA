@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from urllib import request
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -268,12 +269,23 @@ class actualizarLogos(UpdateView):
         else:
             return redirect('home/index.html')
 
-@login_required
-def reportes(request):
-    model=Unidad
-    fields = '__all__'
-    if request.method == 'POST':
-        #formularios = Reportes.objects.all()
-        return render(request, 'home/reportes.html')
-    else:
-        return redirect ('home')
+
+class ReporteEstudioView(TemplateView):
+    template_name= "home/reportes.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reporte de Estudio'
+        context['entidy'] = 'Reportes'
+        context['list_url'] = reverse_lazy('reporte')
+        return context
+    
+#class Filtros(request):
+ #   if request.method == 'POST':
+  #      form = Estudio(request.POST)
+   #     if form.is_valid():
+    #        return redirect(reverse('vista_filtros', kwargs={'msg':'exitoVerFiltros'}))
+     #   else:
+      #      return redirect(reverse('vista_filtros', kwargs={'msg':'false'}))
+    #else:
+     #   return redirect(reverse('vista_filtros', kwargs={'msg':'false'}))
