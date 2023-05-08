@@ -47,11 +47,14 @@
                             <a id="btnUnidades" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseUnidades" aria-expanded="false" aria-controls="collapseUnidadesHeading">
                                 Unidades
                             </a>
-                        </div>                    
+                            <a id="btnLogos" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLogos" aria-expanded="false" aria-controls="collapseLogosHeading">
+                                Logos
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        
+
             <div id="collapseEntidad" class="collapse" role="tabpanel" aria-labelledby="collapseEntidadHeading" data-parent="#accordion">
                 <div class="row">
                     <div class="col-12">
@@ -203,6 +206,25 @@
                     </div>
                 </div>
             </div>
+
+            <div id="collapseLogos" class="collapse" role="tabpanel"  aria-labelledby="collapseLogosHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                <div class="col text-left">
+                                    <h4 class="card-title">Administrador de logos</h4>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'home/Director/editar_logos.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -332,6 +354,20 @@
         console.log(nombre);
         form.querySelector('#editInstitucion_clave').value = clave;
         form.querySelector('#editInstitucion_nombre').value = nombre;
+      
+        // Modificar el action del formulario
+        form.action = url;
+    }
+
+    function editLogo(url, id, titulo, logo) {
+        // Obtener el formulario
+        const form = document.getElementById('editLogoForm');
+      
+        // Asignar los valores a los inputs del formulario
+        console.log(titulo);
+        console.log(logo);
+        form.querySelector('#editLogo_titulo').value = titulo;
+        form.querySelector('#editLogo_logo').value = logo;
       
         // Modificar el action del formulario
         form.action = url;

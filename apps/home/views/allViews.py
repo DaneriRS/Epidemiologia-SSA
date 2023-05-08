@@ -88,6 +88,9 @@ def vista_tablas(request, msg):
     Tipologias = Tipologia.objects.all()
     Jurisdicciones = Jurisdiccion.objects.all()
 
+    formEditLogos = LogosForm(auto_id="editLogos_%s")
+    Logo = Logos.objects.all()
+
     mensaje = None
     msgType = None
     presionar = False
@@ -366,6 +369,21 @@ def vista_tablas(request, msg):
         presionar = True
         btnPresionar = 'Institucion'
         
+    elif msg == 'exitoEditLogo':
+        mensaje = 'Logo Editado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
+    elif msg == 'exitoDelLogo':
+        mensaje = 'Logo Eliminado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
+    elif msg == 'exitoAddLogo':
+        mensaje = 'Logo Addado con exito!'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Logo'
         
     context = {
         'segment': 'CRUD_tablas',
@@ -397,6 +415,8 @@ def vista_tablas(request, msg):
         'formEditTipologia' : formEditTipologia,
         'formAddInstitucion' : formAddInstitucion,
         'formEditInstitucion' : formEditInstitucion,
+        'Logos' : Logo,
+        'formEditLogos' : formEditLogos,
         'presionar' : presionar,
         'btnPresionar' : btnPresionar,
     }

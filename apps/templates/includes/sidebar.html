@@ -88,7 +88,7 @@
                         <i class="tim-icons icon-bell-55"></i>
                         <p>Notifications</p>
                     </a>
-                </li> {% endcomment %}
+                
                 {% if request.user.is_director %}
                     <li class="{% if 'Logos_tabla' in segment %} active {% endif %}">
                         <a href="{% url 'vista_logos' 'false' %}">
@@ -96,7 +96,7 @@
                             <p>Actualizar Logos</p>
                         </a>
                     </li>
-                {% endif %} 
+                {% endif %} </li> {% endcomment %}
                 {% comment "" %}
                 <li class="{% if 'CRUD_tablas' in segment %} active {% endif %} ">
                         <a href="{% url 'vista_tablas' 'false' %}">

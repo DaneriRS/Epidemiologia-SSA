@@ -6,9 +6,6 @@
                 <th>Titulo</th>
                 <th>Fecha de actualización</th>
                 <th>Imagen</th>
-                {% comment "" %}
-                <th>Usuario</th>
-                {% endcomment %}
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -19,9 +16,6 @@
                 <td>{{ logs.titulo }}</td>
                 <td>{{ logs.actualizado }}</td>
                 <td><img src="{{logs.logo.url}}" class="img-responsive" style="height: 80%;float: left; margin-right:1px;"/></td>
-                {% comment "" %}
-                <td>{{ logs.username }}</td>
-                {% endcomment %}
                 <td class="td-actions text-center">
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editLogoModal" title="Editar" onclick="editLogo('{% url 'editLogo' logs.id %}', '{{logs.nombre}}','{{logs.logo}}')">
                         <i class="tim-icons icon-settings"></i>
@@ -34,14 +28,6 @@
             {% endfor %}
         </tbody>
     </table>
-    {% comment "" %}
-      <div class="text-right" style="width: 100%;">
-            <button class="btn btn-primary btn-fab btn-lg btn-icon btn-round" style="margin: 20px;" title="Opciones"
-            data-toggle="modal" data-target="#addLogoModal">
-                <i class="tim-icons icon-simple-add"></i>
-            </button>
-        </div>
-    {% endcomment %}
 </div>
 
 <!-- MODAL ACT LOGO -->
@@ -63,59 +49,9 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal" >Cancelar</button>{% comment  %}onclick="cerrar_modal_actualizar();" onclick="actualizar();"{% endcomment %}
-            <button id="boton_actualizar" class="btn btn-primary" type="submit" >Buscar</button>
+            <button id="boton_actualizar" class="btn btn-primary" type="submit" >Aplicar</button>
           </div>
       </form>
-      {% comment "" %}
-      <p><a href="{% url 'home/index.html' %}">Regresar</a></p>
-      {% endcomment %}
     </div>
   </div>
 </div>
-{% comment "" %}
-
-{% for logs in Logos_img %}
-                        <div class="col-md-2">
-                            <img src="{{logs.Logos.logo.url}}" class="img-responsive" style="width: 100%;float: left; margin-right:10px;"/>
-                        </div>
-            {% endfor %}
-
-<script type="text/javascript">
-    function editLogoModal(url){
-        $('#editLogo').load(url, function(){
-            $(this).modal('show');
-        });
-    }
-</script>
-
-<!-- MODAL AGREGAR Entidad -->
-<div class="modal fade" id="addLogoModal" tabindex="-1" aria-labelledby="addLogoModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="addLogoModalLabel">Agregar nuevo Logo</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    <i class="tim-icons icon-simple-remove"></i>
-                </button>
-            </div>
-            <form autocomplete="off" action="{% url 'addLogo' %}" method="post">
-                {% csrf_token %}
-                <div class="modal-body">
-
-                    {{ formAddLogos }}
-                    {% for logs in Logos_img %}
-                        <div class="col-md-2">
-                            <img src="{{logs.Logos.logo.url}}" class="img-responsive" style="width: 100%;float: left; margin-right:10px;"/>
-                        </div>
-                    {% endfor %}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>{% endcomment %}

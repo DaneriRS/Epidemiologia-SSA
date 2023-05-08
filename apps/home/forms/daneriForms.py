@@ -55,7 +55,7 @@ class LogosForm(forms.ModelForm):
     #logosAll = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = Logos
-        fields = '__all__'
+        fields = ['logo']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
