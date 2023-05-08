@@ -25,12 +25,12 @@
                 <td>{{ Umedica.municipio }}</td>
                 <td>{{ Umedica.localidad }}</td>
                 <td class="td-actions text-center">
-                    <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar">
+                    {% comment %} <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editMunicipioModal" title="Editar">
                         <i class="tim-icons icon-settings"></i>
                     </button>
                     <a href="{% url 'delMunicipio' muni.pk %}" type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon" title="Eliminar">
                         <i class="tim-icons icon-simple-remove"></i>
-                    </a>
+                    </a> {% endcomment %}
                 </td>
             </tr>
             {% endfor %}

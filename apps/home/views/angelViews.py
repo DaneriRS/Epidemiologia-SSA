@@ -22,7 +22,6 @@ FORMS = [
             ("3", ContactForm3),
             ("4", FormSET1)
         ]
-
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FORMS2 = [
             ("1", ContactForm1),
@@ -30,7 +29,7 @@ FORMS2 = [
             ("3", ContactForm3),
             ("4", FormSET2)
         ]
-FormSET3=formset_factory(NotificacionBrote5, extra=2)
+FormSET3=formset_factory(NotificacionBrote5, extra=1)
 FORMS3 =[
             ("1", NotificacionBrote1),
             ("2", NotificacionBrote2),
@@ -38,7 +37,6 @@ FORMS3 =[
             ("4", NotificacionBrote6),
             ("5", NotificacionBrote7)
         ]
-
 FormSET4=formset_factory(NotificacionBrote8, extra=0)
 FORMS4 =[
             ("1", NotificacionBrote1),
@@ -47,6 +45,12 @@ FORMS4 =[
             ("4", NotificacionBrote6),
             ("5", NotificacionBrote7)
         ]
+FORMS5 =[
+    ('1', Anexo8P1),
+    ('2', Anexo8P2),
+    ('3', Anexo8P3),
+    ('4', Anexo8P4)
+]
 
 class RegistroEstudioView(CookieWizardView):
     form_list=FORMS
@@ -87,6 +91,7 @@ class RegistroEstudioUpdateView(CookieWizardView):
     form_list=FORMS2
     form_dict=dict(form_list)
     template_name = 'home/editForm1.html'
+    
 
     def get_form_initial(self, step):
         step = step or self.steps.current
@@ -157,19 +162,13 @@ class RegistroNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet3:
             DistGeo=DistribucionGeografica(
                 area=item['area'],
-                manzana=item['manzana'],
-                colonia=item['colonia'],
-                localidad=item['localidad'],
-                escuela=item['escuela'],
-                guardeOvivienda=item['guardeOvivienda'],
                 numeroCasos=item['numeroCasos'],
                 numeroDefunciones=item['numeroDefunciones'],
                 notificacionBrote=notificacion
             )
             DistGeo.save()
 
-        return redirect('listaNotificacionBrote')
-        
+        return redirect('listaNotificacionBrote')    
 
 class UpdateNotificacionBroteView(CookieWizardView):
     form_list=FORMS4
@@ -211,17 +210,34 @@ class UpdateNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet4:
             dist=DistribucionGeografica.objects.get(id=item['id'])
             dist.area=item['area']
-            dist.manzana=item['manzana']
-            dist.colonia=item['colonia']
-            dist.localidad=item['localidad']
-            dist.escuela=item['escuela']
-            dist.guardeOvivienda=item['guardeOvivienda']
             dist.numeroCasos=item['numeroCasos']
             dist.numeroDefunciones=item['numeroDefunciones']
                                            
             dist.save()
 
         return redirect('listaNotificacionBrote')
+
+class Anexo8View(CookieWizardView):
+    form_list = FORMS5
+    form_dict = dict(form_list)
+    template_name = 'home/anexo8.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return self.render(self.get_form())
+        except KeyError:
+            return super().get(request, *args, **kwargs)
+        
+    def done(self, form_list, **kwargs):
+        registroData={}
+        for i,form in enumerate(form_list):
+            registroData.update(form.cleaned_data)
+
+        anexo8=Anexo8(**registroData)
+        anexo8.save()
+
+        return redirect('lista_usuarios')    
+
 
 @login_required    
 def listaFormularios(request):

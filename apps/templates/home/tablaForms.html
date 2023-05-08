@@ -25,17 +25,17 @@
                                     <th>Folio del Caso</th>
                                     <th>Nombre</th>
                                     <th>Apellidos</th>
-                                    <th>Numero de Afiliado</th>
+                                    <th>Numero de Afiliación</th>
                                     <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for formulario in formularios %}
                                 <tr>
-                                    <td>{{ formulario.folio }}</td>
-                                    <td>{{ formulario.nombre }}</td>
-                                    <td>{{ formulario.ap }} {{ formulario.am }}</td>
-                                    <td>{{ formulario.noAfili }}</td>
+                                    <td>{{ formulario.id }}</td>
+                                    <td>{{ formulario.paciente.nombre }}</td>
+                                    <td>{{ formulario.paciente.apellidoPa }} {{ formulario.paciente.apellidoMa }}</td>
+                                    <td>{{ formulario.paciente.numAfiliacion }}</td>
                                     <td class="td-actions text-center">
                                         <a href="{% url 'editForm' formulario.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
                                             <i class="tim-icons icon-settings"></i>
