@@ -167,5 +167,28 @@ def UMedicaExcel(request):
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
    
 
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def ReporteRegExcel(request):
+    registros=RegistroEstudio.objects.all()
+    return render(request, 'home/reporteRegExcel.html',{
+        'query': registros
+    })
+
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def ReporteNotiExcel(request):
+    noti=NotificacionBrote.objects.all()
+    return render(request, 'home/reporteNotiExcel.html',{
+        'query': noti
+    })
+
+@login_required
+@roles_required(['Director'], redirect_url='home')
+def ReporteAnexoExcel(request):
+    anexo=Anexo8.objects.all()
+    return render(request, 'home/reporteAnexoExcel.html',{
+        'query': anexo
+    })
 
     
