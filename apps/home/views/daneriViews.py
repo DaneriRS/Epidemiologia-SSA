@@ -281,6 +281,15 @@ class ReporteEstudioView(TemplateView):
         context['list_url'] = reverse_lazy('reporte')
         return context
     
+class GraficasView(TemplateView):
+    template_name= "home/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Indicadores'
+        context['entidy'] = 'Graficas'
+        context['list_url'] = reverse_lazy('graficas')
+        return context
 #class Filtros(request):
  #   if request.method == 'POST':
   #      form = Estudio(request.POST)

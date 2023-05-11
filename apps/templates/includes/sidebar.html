@@ -19,6 +19,12 @@
                         <p>Estadísticas</p>
                     </a>
                 </li> {% endcomment %}
+                <li class="">
+                    <a href="{% url 'graficas' %}">
+                        <i class="tim-icons icon-book-bookmark"></i>
+                        <p>Indicadores</p>
+                    </a>
+                </li>
                 {% if request.user.is_director %}
                     <li class="{% if 'CRUD_tablas' in segment %} active {% endif %} ">
                         <a href="{% url 'vista_tablas' 'false' %}">
@@ -69,6 +75,12 @@
                     <a href="{% url 'listaNotificacionBrote' %}">
                          <i class="tim-icons icon-bullet-list-67"></i>
                         <p>Lista Notificacion de Brote</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'anexo8' %}">
+                         <i class="tim-icons icon-bullet-list-67"></i>
+                        <p>Anexo 8</p>
                     </a>
                 </li>
                 <li class="">
