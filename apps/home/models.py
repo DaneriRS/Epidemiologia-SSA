@@ -219,6 +219,11 @@ class RegistroEstudio(models.Model):
         ('local', 'Local'),
         ('importado', 'Importado')
     ]
+    OTRA_PERSONA_OPCIONES = [
+        ('investigada', 'Investigada'),
+        ('confirmada', 'Confirmada'),
+        ('ninguna', 'Ninguna')
+    ]
     folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
     unidadNot = models.ForeignKey(Unidad, verbose_name="Unidad notificante", on_delete=models.SET_NULL, null=True, blank=True)
     fechaNot = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
@@ -248,6 +253,20 @@ class RegistroEstudio(models.Model):
     localidadProc = models.ForeignKey(Localidad, on_delete=models.SET_NULL, null=True, blank=True)
     llegadaProc = models.DateField(verbose_name = "Llegada de procedencia", null=True, blank=True)
     salidaProc = models.DateField(verbose_name = "Salida de procedencia", null=True, blank=True)
+    
+    otraPersona = models.CharField(verbose_name="Otra persona", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    alimentos = models.CharField(verbose_name="Alimentos", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    agua = models.CharField(verbose_name="Agua", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    fomites = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    animales = models.CharField(verbose_name="Animales", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    otrosFuentes = models.CharField(verbose_name="Otras fuentes", null=True, blank=True)
+    
+    personaPersona = models.CharField(verbose_name="Persona a persona", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    aerea = models.CharField(verbose_name="Aerea", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    digestiva = models.CharField(verbose_name="Digestiva", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    fomitesMec = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    vectores = models.CharField(verbose_name="Vectores", max_length=20, choices=OTRA_PERSONA_OPCIONES)
+    otrosMecanismos = models.CharField(verbose_name="Otras mecanismos", null=True, blank=True)
     
 
 class Estudio(models.Model):
