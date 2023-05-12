@@ -87,6 +87,31 @@ RATIFICA_CHOICES = (
     ('1', 'Ratifica'),
     ('2', 'Rectifica'),
 )
+
+PROCEDENCIA_OPCIONES = [
+    ('local', 'Local'),
+    ('importado', 'Importado')
+]
+OTRA_PERSONA_OPCIONES = [
+    ('investigada', 'Investigada'),
+    ('confirmada', 'Confirmada'),
+    ('ninguna', 'Ninguna')
+]
+SI_NO_OPCIONES = [
+    ('si', 'Si'),
+    ('no', 'No')
+]
+ESTADOS_FORMULARIOS = [
+    ('Tiempo1', 'Tiempo1'),
+    ('Tiempo2', 'Tiempo2'),
+    ('Finalizado', 'Finalizado'),
+]
+TIPO_ESTUDIOS_CHOICES = (
+    ('PR', 'Preliminar'),
+    ('CF', 'Confirmatorio'),
+    ('CT', 'Control'),
+)
+
 class CustomUserManager(models.Manager):
     def imprimir(self):
         return self.email
@@ -215,15 +240,7 @@ class Paciente(models.Model):
         return str(self.id) + ' - ' + self.nombre + ' - ' + self.apellidoPa + ' - ' + self.apellidoMa
 
 class RegistroEstudio(models.Model):
-    PROCEDENCIA_OPCIONES = [
-        ('local', 'Local'),
-        ('importado', 'Importado')
-    ]
-    OTRA_PERSONA_OPCIONES = [
-        ('investigada', 'Investigada'),
-        ('confirmada', 'Confirmada'),
-        ('ninguna', 'Ninguna')
-    ]
+    
     folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
     unidadNot = models.ForeignKey(Unidad, verbose_name="Unidad notificante", on_delete=models.SET_NULL, null=True, blank=True)
     fechaNot = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
@@ -246,7 +263,6 @@ class RegistroEstudio(models.Model):
     
     tratamiento3 = models.TextField(verbose_name = "Tratamiento")
     boolLab = models.BooleanField(verbose_name = "Ya se registro laboratorio", default=False)
-    boolFinalizado = models.BooleanField(verbose_name = "Finalizado", default=False)
     
     procedencia = models.CharField(verbose_name="Procedencia", max_length=10, choices=PROCEDENCIA_OPCIONES, null=True, blank=True)
     municipioProc = models.ForeignKey(Municipio, on_delete=models.SET_NULL, null=True, blank=True)
@@ -259,21 +275,52 @@ class RegistroEstudio(models.Model):
     agua = models.CharField(verbose_name="Agua", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     fomites = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     animales = models.CharField(verbose_name="Animales", max_length=20, choices=OTRA_PERSONA_OPCIONES)
-    otrosFuentes = models.CharField(verbose_name="Otras fuentes",max_length=200, null=True, blank=True)
+    otrosFuentes = models.TextField(verbose_name="Otras fuentes", null=True, blank=True)
     
     personaPersona = models.CharField(verbose_name="Persona a persona", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     aerea = models.CharField(verbose_name="Aerea", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     digestiva = models.CharField(verbose_name="Digestiva", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     fomitesMec = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     vectores = models.CharField(verbose_name="Vectores", max_length=20, choices=OTRA_PERSONA_OPCIONES)
-    otrosMecanismos = models.CharField(verbose_name="Otras mecanismos",max_length=200, null=True, blank=True)
+    otrosMecanismos = models.TextField(verbose_name="Otras mecanismos", null=True, blank=True)
+    
+    accionesMedidas = models.TextField(verbose_name="Acciones y medidas de control")
+    
+    reestablecer = models.CharField(verbose_name="Se reestablecio integrante?", max_length=2, choices=SI_NO_OPCIONES)
+    secuelas = models.CharField(verbose_name="Quedo secuelas?", max_length=2, choices=SI_NO_OPCIONES)
+    portador = models.CharField(verbose_name="Quedo como portador?", max_length=2, choices=SI_NO_OPCIONES)
+    perdioCaso = models.CharField(verbose_name="Se perdio el caso?", max_length=2, choices=SI_NO_OPCIONES)
+    fallecio = models.CharField(verbose_name="Fallecio?", max_length=2, choices=SI_NO_OPCIONES)
+    fechaDefuncion = models.DateField(verbose_name = "Salida de procedencia", null=True, blank=True)
+    
+    platicas = models.CharField(verbose_name="Platicas de fomentos para la salud", max_length=2, choices=SI_NO_OPCIONES)
+    numPlaticas = models.IntegerField(verbose_name="Numero platicas", default=0)
+    vacunacion = models.CharField(verbose_name="Vacunacion", max_length=2, choices=SI_NO_OPCIONES)
+    numVacunacion = models.IntegerField(verbose_name="Numero vacunacion", default=0)
+    tratamientosInd = models.CharField(verbose_name="Tratamientos individuales", max_length=2, choices=SI_NO_OPCIONES)
+    numTratamientosInd = models.IntegerField(verbose_name="Numero tratamientos individuales", default=0)
+    tratamientosFam = models.CharField(verbose_name="Tratamientos familiares", max_length=2, choices=SI_NO_OPCIONES)
+    numTratamientosFam = models.IntegerField(verbose_name="Numero tratamientos familiares", default=0)
+    cloracion = models.CharField(verbose_name="Cloracion", max_length=2, choices=SI_NO_OPCIONES)
+    numCloracion = models.IntegerField(verbose_name="Numero cloracion", default=0)
+    letrinizacion = models.CharField(verbose_name="Letrinizacion", max_length=2, choices=SI_NO_OPCIONES)
+    numLetrinizacion = models.IntegerField(verbose_name="Numero letrinizacion", default=0)
+    otrasActividades = models.TextField(verbose_name="Otras actividades")
+    
+    comentariosConclusiones = models.TextField(verbose_name="Comentarios y conclusion")
+    
+    
+    fechaCap = models.DateField(verbose_name = "Fecha Captura", default=timezone.now)
+    estado = models.CharField(verbose_name="Estado del formulario", max_length=30, choices=ESTADOS_FORMULARIOS)
+    
+    
     
 
 class Estudio(models.Model):
-    nombre = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    tipo = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    fecha = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
-    resultado = models.CharField(verbose_name = "otroDiagnostico", max_length=50,null=True, blank=True)
+    nombre = models.CharField(verbose_name = "Nombre de estudio", max_length=100)
+    tipo = models.CharField(verbose_name = "Tipo", choices=TIPO_ESTUDIOS_CHOICES)
+    fecha = models.DateField(verbose_name = "Fecha")
+    resultado = models.CharField(verbose_name = "Resultado", max_length=100)
     registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
     
 class Logos(models.Model):

@@ -20,7 +20,8 @@ FORMS = [
             ("1", ContactForm1),
             ("2", ContactForm2),
             ("3", ContactForm3),
-            ("4", FormSET1)
+            ("4", FormSET1),
+            ("5", ContactoForm6)
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FORMS2 = [

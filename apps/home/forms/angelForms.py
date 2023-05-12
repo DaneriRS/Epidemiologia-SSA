@@ -240,9 +240,120 @@ class ContactoForm5(forms.Form):
         required=False
     )
 
+class ContactoForm6(forms.Form):
+    procedencia = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Procedencia: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=True
+    )
+    municipioProc = forms.ModelChoiceField(
+        queryset=Municipio.objects.all(),
+        label='Municipio:',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    localidadProc = forms.ModelChoiceField(
+        queryset=Localidad.objects.all(),
+        label='Localidad:',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=True
+    )
+    llegadaProc = forms.DateField(
+        label = 'Llegada:',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        ),
+        required=True
+    )
+    salidaProc = forms.DateField(
+        label = 'Salida:',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        ),
+        required=True
+    )
+    otraPersona = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Otra persona: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=True
+    )
+    alimentos = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Alimentos: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+  
+        ),      ),
+required=True
+    )
+    agua = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Agua: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=True
+    )
+    fomites = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Fomites: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=True
+    )
+    animales = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Animales: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=True
+    )
+    otrosFuentes = forms.ChoiceField(
+        choices = PROCEDENCIA_OPCIONES,
+        label = 'Otras fuentes: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
+        ),
+        required=Trued=True
+    )
+
+
 class NotificacionBrote1(forms.Form):
-    unidadNot = forms.ModelChoiceField(
-        queryset=Unidad.objects.all(),
+    unidadNot = forms.ModelChoiceField           queryset=Unidad.objects.all(),
         label='Unidad notificante:',
         widget=forms.Select(
             attrs={
