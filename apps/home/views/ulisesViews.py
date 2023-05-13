@@ -169,7 +169,10 @@ def UMedicaExcel(request):
         except Exception as e:
             print (e)
             print('error')
-            return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
+            # return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
+            mensaje_error = f"Error Registro Excel - {str(e)} - Error en esta CLUES: {row['CLUES']}"
+            return redirect(reverse('vista_tablas', kwargs={'msg': mensaje_error}))
+
     else:
         return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
    

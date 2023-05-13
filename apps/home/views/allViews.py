@@ -155,7 +155,7 @@ def vista_tablas(request, msg):
         presionar = True
         btnPresionar = 'Establecimiento'
     elif msg == 'exitoDelEstablecimiento':
-        mensaje = 'Establecimiento Eliminadao con exito!'
+        mensaje = 'Establecimiento Eliminado con exito!'
     elif msg == 'exitoDelEstablecimiento':
         mensaje = '¡ERROR Establecimiento NO Eliminado!'
         msgType = 'danger'
@@ -164,9 +164,15 @@ def vista_tablas(request, msg):
     elif msg == 'Exito Registro Excel':
         mensaje = 'Registros Realizados con Exito'
         msgType = 'success'
-    elif msg == 'Error Registro Excel':
-        mensaje = '¡ERROR! Registros no Realizados'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif 'Error Registro Excel' in msg:
+        mensaje_parts = msg.split(" - ")
+        # f"{mensaje_parts[0]} - {mensaje_parts[1]} - {mensaje_parts[2]}"
+        mensaje = f"¡ERROR! {mensaje_parts[0]} - {mensaje_parts[1]} - {mensaje_parts[2]}"
         msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
     elif msg == 'errorAddedMunicipio':
         mensaje = '¡ERROR! Municipio no creado'
         msgType = 'danger'
