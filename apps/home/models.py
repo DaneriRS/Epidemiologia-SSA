@@ -13,8 +13,7 @@ from datetime import date
 
 GENEROS = (
     ('M', 'Masculino'),
-    ('F', 'Femenino'),
-    ('NB', 'No Binario'),
+    ('F', 'Femenino')
 )
 
 COLLOC = (
@@ -89,17 +88,17 @@ RATIFICA_CHOICES = (
 )
 
 PROCEDENCIA_OPCIONES = [
-    ('local', 'Local'),
-    ('importado', 'Importado')
+    ('Local', 'Local'),
+    ('Importado', 'Importado')
 ]
 OTRA_PERSONA_OPCIONES = [
-    ('investigada', 'Investigada'),
-    ('confirmada', 'Confirmada'),
-    ('ninguna', 'Ninguna')
+    ('Investigada', 'Investigada'),
+    ('Confirmada', 'Confirmada'),
+    ('Ninguna', 'Ninguna')
 ]
 SI_NO_OPCIONES = [
-    ('si', 'Si'),
-    ('no', 'No')
+    ('Si', 'Si'),
+    ('No', 'No')
 ]
 ESTADOS_FORMULARIOS = [
     ('Tiempo1', 'Tiempo1'),
@@ -110,6 +109,10 @@ TIPO_ESTUDIOS_CHOICES = (
     ('PR', 'Preliminar'),
     ('CF', 'Confirmatorio'),
     ('CT', 'Control'),
+)
+CONTACTO_CHOICES = (
+    ('I', 'Intradomiciliario'),
+    ('E', 'Extradomiciliario'),
 )
 
 class CustomUserManager(models.Manager):
@@ -322,6 +325,15 @@ class Estudio(models.Model):
     fecha = models.DateField(verbose_name = "Fecha")
     resultado = models.CharField(verbose_name = "Resultado", max_length=100)
     registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
+    
+class Contacto(models.Model):
+    nombre = models.CharField(verbose_name = "Nombre", max_length=100)
+    domicilio = models.CharField(verbose_name = "Domicilio", max_length=100)
+    edad = models.SmallIntegerField(verbose_name = "Edad")
+    sexo = models.CharField(verbose_name = "Sexo", max_length=10, choices=GENEROS)
+    contacto = models.CharField(verbose_name = "Sexo", max_length=20, choices=CONTACTO_CHOICES)
+    caso = models.CharField(verbose_name = "Caso", max_length=2, choices=SI_NO_OPCIONES)
+
     
 class Logos(models.Model):
     id = models.AutoField(primary_key=True)
