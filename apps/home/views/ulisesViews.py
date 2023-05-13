@@ -138,17 +138,23 @@ def UMedicaExcel(request):
         try:
             # Itera a través de cada fila del DataFrame
             for index, row in df.iterrows():
-                tipologia= Tipologia.objects.get(clave=row['tipologia'])
-                establecimiento= Establecimiento.objects.get(clave=row['establecimiento'])
-                institucion= Institucion.objects.get(clave=row['institucion'])
-                localidad= Localidad.objects.get(clave=row['localidad'])
-                municipio=Municipio.objects.get(nombre=row['municipio'])
-                jurisdiccion=Jurisdiccion.objects.get(clave=row['jurisdiccion'])
+                # print(str(row['CLUES']) + " - " +str(row['NOMBRE DE TIPOLOGIA'])+ " - " +str(row['NOMBRE TIPO ESTABLECIMIENTO'])+ " - " +str(row['NOMBRE DE LA INSTITUCION'])+ " - " +str(row['CLAVE DE LA LOCALIDAD'])+ " - " +str(row['NOMBRE DEL MUNICIPIO'])+ " - " +str(row['NOMBRE DE LA JURISDICCION']))
+                if row['NOMBRE DE TIPOLOGIA'] == 'CONSULTORIO ADYACENTE A FARMACIA':
+                    tipologia = Tipologia.objects.get(nombre=row['NOMBRE DE TIPOLOGIA'], clave='CAF2')
+                else:
+                    tipologia = Tipologia.objects.get(clave=row['CLAVE DE TIPOLOGIA'], nombre=row['NOMBRE DE TIPOLOGIA'])
+                establecimiento= Establecimiento.objects.get(clave=row['CLAVE TIPO ESTABLECIMIENTO'], nombre=row['NOMBRE TIPO ESTABLECIMIENTO'])
+                institucion= Institucion.objects.get(clave=row['CLAVE DE LA INSTITUCION'], nombre=row['NOMBRE DE LA INSTITUCION'])
+                # localidad= Localidad.objects.get(clave=row['CLAVE DE LA LOCALIDAD'].lstrip('0'), nombre=row['NOMBRE DE LA LOCALIDAD'])
+                localidad= Localidad.objects.get(clave=row['CLAVE DE LA LOCALIDAD'], nombre=row['NOMBRE DE LA LOCALIDAD'])
+                municipio=Municipio.objects.get(clave=row['CLAVE DEL MUNICIPIO'], nombre=row['NOMBRE DEL MUNICIPIO'])
+                jurisdiccion=Jurisdiccion.objects.get(clave=row['CLAVE DE LA JURISDICCION'], nombre=row['NOMBRE DE LA JURISDICCION'])
                 # Crea una instancia del modelo con los datos de la fila
-                print(str(row['claveclues']) + " - " +str(row['claveSuave'])+ " - " +str(row['tipologia'])+ " - " +str(row['establecimiento'])+ " - " +str(row['institucion'])+ " - " +str(row['localidad'])+ " - " +str(row['municipio'])+ " - " +str(row['jurisdiccion']))
+                # print(str(row['claveclues']) + " - " +str(row['claveSuave'])+ " - " +str(row['tipologia'])+ " - " +str(row['establecimiento'])+ " - " +str(row['institucion'])+ " - " +str(row['localidad'])+ " - " +str(row['municipio'])+ " - " +str(row['jurisdiccion']))
+                # print ("Hasta aqui llego bien")
                 obj = Unidad(
-                    claveclues=row['claveclues'],
-                    claveSuave=row['claveSuave'],
+                    claveclues=row['CLUES'],
+                    # claveSuave=row['claveSuave'],
                     tipologia=tipologia,
                     establecimiento=establecimiento,
                     institucion=institucion,
@@ -160,7 +166,8 @@ def UMedicaExcel(request):
                 # #Guarda la instancia del modelo en la base de datos
                 obj.save()
             return redirect(reverse('vista_tablas', kwargs={'msg':'Exito Registro Excel'}))
-        except:
+        except Exception as e:
+            print (e)
             print('error')
             return redirect(reverse('vista_tablas', kwargs={'msg':'Error Registro Excel'}))
     else:

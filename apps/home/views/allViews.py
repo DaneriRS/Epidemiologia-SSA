@@ -73,6 +73,8 @@ def vista_tablas(request, msg):
     formEditJurisdiccion = JurisdiccionForm(auto_id="editJurisdiccion_%s")
     formAddInstitucion = InstitucionForm(auto_id="addInstitucion_%s")
     formEditInstitucion = InstitucionForm(auto_id="editInstitucion_%s")
+    formAddUnidad = UnidadForm(auto_id="addUnidad_%s")
+    formEditUnidad = UnidadForm(auto_id="editUnidad_%s")
     
     formAddEntidad = EntidadForm(auto_id="addEntidad_%s")
     formEditEntidad = EntidadForm(auto_id="editEntidad_%s")
@@ -365,6 +367,46 @@ def vista_tablas(request, msg):
         msgType = 'danger'
         presionar = True
         btnPresionar = 'Institucion'
+    elif msg == 'errorAddedUnidad':
+        mensaje = '¡ERROR! Unidad no creado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoAddedUnidad':
+        mensaje = '¡Exito! Unidad creado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorExistUnidad':
+        mensaje = '¡ERROR! Unidad no existe'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoAditedUnidad':
+        mensaje = '¡Exito! Unidad editado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorAditedUnidad':
+        mensaje = '¡ERROR! Unidad no editado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoDeletedUnidad':
+        mensaje = '¡Exito! Unidad eliminado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorDeletedUnidad':
+        mensaje = '¡ERROR! Unidad no eliminado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'uniqueAddedUnidad':
+        mensaje = '¡ERROR La clave de Unidad ya existe!'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
         
         
     context = {
@@ -397,6 +439,8 @@ def vista_tablas(request, msg):
         'formEditTipologia' : formEditTipologia,
         'formAddInstitucion' : formAddInstitucion,
         'formEditInstitucion' : formEditInstitucion,
+        'formAddUnidad': formAddUnidad,
+        'formEditUnidad': formEditUnidad,
         'presionar' : presionar,
         'btnPresionar' : btnPresionar,
     }

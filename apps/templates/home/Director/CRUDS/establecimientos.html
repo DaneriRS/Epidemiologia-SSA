@@ -2,8 +2,7 @@
     <table class="table table-striped table-hover" id="tabla_establecimiento">
         <thead>
             <tr>
-                <th class="text-center">#</th>
-                <th>Clave</th>
+                <th class="text-center">Clave</th>
                 <th>Nombre</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -11,8 +10,7 @@
         <tbody>
             {% for estb in Establecimientos %}
             <tr>
-                <td class="text-center">{{ estb.pk }}</td>
-                <td>{{ estb.clave }}</td>
+                <td class="text-center">{{ estb.clave }}</td>
                 <td>{{ estb.nombre }}</td>
                 <td class="td-actions text-center">
                     <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" data-toggle="modal" data-target="#editEstablecimientoModal" title="Editar" onclick="editEstablecimiento('{% url 'editEstablecimiento' estb.id %}', '{{estb.clave}}', '{{estb.nombre}}')">

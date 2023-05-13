@@ -321,7 +321,7 @@ class RegistroEstudio(models.Model):
 
 class Estudio(models.Model):
     nombre = models.CharField(verbose_name = "Nombre de estudio", max_length=100)
-    tipo = models.CharField(verbose_name = "Tipo", choices=TIPO_ESTUDIOS_CHOICES)
+    tipo = models.CharField(verbose_name = "Tipo", choices=TIPO_ESTUDIOS_CHOICES, max_length=2)
     fecha = models.DateField(verbose_name = "Fecha")
     resultado = models.CharField(verbose_name = "Resultado", max_length=100)
     registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
