@@ -48,15 +48,13 @@ class registroPaciente(ModelForm):
 
 class ContactForm1(forms.Form):
     unidadNot = forms.ModelChoiceField(
+        label="Unidad notificante:",
         queryset=Unidad.objects.all(),
-        label='Unidad notificante:',
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'readonly': True
+                'class': 'form-control', 'readonly':True
             }
-        ),
-        required=True
+        )
     )
     fechaNot = forms.DateField(
         label='Fecha de creacion',
@@ -165,22 +163,20 @@ class ContactoForm4(forms.Form):
             }
         )
     )
-    tipo = forms.CharField(
-        max_length=30,
+    tipo = forms.ChoiceField(
+        choices=TIPO_ESTUDIOS_CHOICES,
         label="Tipo",
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
+                'class': 'form-control selectpicker',
+                }
+        ),
     )
-    fecha = forms.CharField(
+    fecha = forms.DateField(
         label='Fecha: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerfechaEstudio'
             }
         )
     )
@@ -217,22 +213,20 @@ class ContactoForm5(forms.Form):
             }
         )
     )
-    tipo = forms.CharField(
-        max_length=30,
+    tipo = forms.ChoiceField(
+        choices=TIPO_ESTUDIOS_CHOICES,
         label="Tipo",
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
+                'class': 'form-control selectpicker',
+                }
+        ),
     )
-    fecha = forms.CharField(
+    fecha = forms.DateField(
         label='Fecha: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerfechaEstudio'
             }
         )
     )

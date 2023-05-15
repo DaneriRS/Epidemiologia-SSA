@@ -63,6 +63,15 @@ class RegistroEstudioView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
+        
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        initial = self.initial_dict.get(step, {})
+        if step == '1':
+            # Set initial data for step 2 form here
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad
+            
+        return initial
 
     def done(self, form_list, **kwargs):
         registroDataFormSet1=[]
@@ -257,21 +266,45 @@ def listaNotificacionBrote(request):
         return redirect ('home')
 
 def nuevoPaciente(request):
+    msg=''
+    msgType=''
     if request.method == 'POST':
         formA = registroPaciente(request.POST)
         form = registroPaciente()
+        print(request.POST.get('numAfiliacion'))
         if formA.is_valid():
+            
             try:
                 formA.save()
+                msg='Paciente Registrado con Exito'
+                msgType='success'
                 return render(request, 'home/nuevoPaciente.html', {
-                'form': form,
-                'msg' : "1"
+                    'form': form,
+                    'msg' : msg,
+                    'msgType' : msgType
                 })
             except:
+                msg='Error al registrar al paciente'
+                msgType='danger'
                 return render(request, 'home/nuevoPaciente.html', {
-                'form': form,
-                'msg' : "0"
+                    'form': form,
+                    'msg' : msg,
+                    'msgType' : msgType
                 })
+        else:
+            paciente_exist= Paciente.objects.filter(numAfiliacion=request.POST.get('numAfiliacion')).exists()
+            if paciente_exist:
+                msg='Ya existe el paciente con el numero de afiliacion: '+request.POST.get('numAfiliacion')
+                msgType='danger'
+            else:
+                msg='Error al registrar al paciente'
+                msgType='danger'
+
+            return render(request, 'home/nuevoPaciente.html', {
+                'form': form,
+                'msg' : msg,
+                'msgType' : msgType
+            })
     else:
         form = registroPaciente()
     
