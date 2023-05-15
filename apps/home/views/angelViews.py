@@ -16,12 +16,18 @@ def roles_required(roles, redirect_url=None):
     return decorator
 
 FormSET1=formset_factory(ContactoForm4, extra=2)
+FormSET12=formset_factory(ContactoForm7, extra=2)
 FORMS = [
             ("1", ContactForm1),
             ("2", ContactForm2),
             ("3", ContactForm3),
             ("4", FormSET1),
-            ("5", ContactoForm6)
+            ("5", ContactoForm6),
+            ("6", FormSET12),
+            ("7", ContactoForm8),
+            ("8", ContactoForm9),
+            ("9", ContactoForm10),
+            ("10", ContactoForm11),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FORMS2 = [
@@ -75,13 +81,17 @@ class RegistroEstudioView(CookieWizardView):
 
     def done(self, form_list, **kwargs):
         registroDataFormSet1=[]
+        registroDataFormSet12=[]
         registroData={}
         for i,form in enumerate(form_list):
-            if i != 3:
+            if i != 3 and i != 5:
                 registroData.update(form.cleaned_data)
-            else:
+            elif i == 3:
                 for formset in form:
                     registroDataFormSet1.append(formset.cleaned_data)
+            elif i==5:
+                for formset in form:
+                    registroDataFormSet12.append(formset.cleaned_data)
             
         rd = RegistroEstudio(**registroData)
         rd.save()
@@ -95,6 +105,17 @@ class RegistroEstudioView(CookieWizardView):
                 registroEstudio=rd
             )
             est.save()
+
+        for item in registroDataFormSet12:
+            cont=Contacto(
+                nombre=item['nombre'],
+                domicilio=item['domicilio'],
+                edad=item['edad'],
+                sexo=item['sexo'],
+                contacto=item['contacto'],
+                caso=item['caso']
+            )
+            cont.save()
         return redirect('listaFormularios')
 
 class RegistroEstudioUpdateView(CookieWizardView):
