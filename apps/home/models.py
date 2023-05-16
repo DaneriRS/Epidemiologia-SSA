@@ -221,6 +221,7 @@ class InformacionUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,verbose_name = "Usuario")
     unidad = models.ForeignKey(Unidad, on_delete=models.CASCADE,verbose_name = "Unidad", null=True, blank=True)
     jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE,verbose_name = "Jurisdiccion")
+    cargo = models.CharField(verbose_name = "Cargo", max_length=50, null=True, blank=True)
 
 class Paciente(models.Model):
     id = models.AutoField(primary_key=True)
@@ -314,17 +315,16 @@ class RegistroEstudio(models.Model):
     
     
     fechaCap = models.DateField(verbose_name = "Fecha Captura", default=timezone.now)
+    capturante = models.ForeignKey(User, verbose_name="Capturante", on_delete=models.SET_NULL, null=True, blank=True)
     estado = models.CharField(verbose_name="Estado del formulario", max_length=30, choices=ESTADOS_FORMULARIOS)
     
     
-    
-
 class Estudio(models.Model):
     nombre = models.CharField(verbose_name = "Nombre de estudio", max_length=100)
     tipo = models.CharField(verbose_name = "Tipo", choices=TIPO_ESTUDIOS_CHOICES, max_length=2)
     fecha = models.DateField(verbose_name = "Fecha")
     resultado = models.CharField(verbose_name = "Resultado", max_length=100)
-    registroEstudio=models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
+    registroEstudio = models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
     
 class Contacto(models.Model):
     nombre = models.CharField(verbose_name = "Nombre", max_length=100)
@@ -333,6 +333,7 @@ class Contacto(models.Model):
     sexo = models.CharField(verbose_name = "Sexo", max_length=10, choices=GENEROS)
     contacto = models.CharField(verbose_name = "Sexo", max_length=20, choices=CONTACTO_CHOICES)
     caso = models.CharField(verbose_name = "Caso", max_length=2, choices=SI_NO_OPCIONES)
+    registroEstudio = models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
 
     
 class Logos(models.Model):
@@ -354,29 +355,374 @@ class NotificacionBrote(models.Model):
     folio = models.CharField(verbose_name = "Folio", max_length=50, null=True, blank=True, unique=True)
     unidadNot = models.ForeignKey(Unidad, verbose_name="Unidad notificante", on_delete=models.SET_NULL, null=True, blank=True)
     fechaNot = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
-    fechaEstudio = models.DateField(verbose_name = "Fecha Inicio Estudio", null=True, blank=True)
-    DiaProHep = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
-    DiaFin = models.CharField(verbose_name = "Diagnóstico Final", max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
+    fechaInicio = models.DateField(verbose_name = "Fecha Inicio Estudio", default=timezone.now)
+    fechaTerminacion = models.DateField(verbose_name = "Fecha Terminacion Estudio", null=True, blank=True)
+    diaProHep = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES)
+    diaFin = models.CharField(verbose_name = "Diagnóstico Final", max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
+    otroDiag = models.CharField(verbose_name = "Otro diagnostico", max_length=100, null=True, blank=True)
 
-    DiaProHep2 = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
+    DiaProHep2 = models.CharField(verbose_name='Diagnóstico Probable', max_length=1, choices=HEPATITIS_CHOICES)
     DiaFin2 = models.CharField(verbose_name = "Diagnóstico Final", max_length=1, choices=HEPATITIS_CHOICES, null=True, blank=True)
     fechaNot2 = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
     fechaNot3 = models.DateField(verbose_name = "Fecha Notificacion", default=timezone.now)
-    casosProbables = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
-    casosConfirmados = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
-    hospitalizados = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    casosProbables = models.SmallIntegerField(verbose_name = "Casos probables")
+    casosConfirmados = models.SmallIntegerField(verbose_name = "Casos confirmados")
+    hospitalizados = models.SmallIntegerField(verbose_name = "Hospitalizados")
+    defunciones = models.SmallIntegerField(verbose_name="Defunciones")
 
-    anteEpiBrote = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
-    probFuenBrote = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
-    probMecTransmision = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    anteEpiBrote = models.TextField(verbose_name = "Antecedentes epidemiologicos del brote")
+    probFuenBrote = models.TextField(verbose_name = "Probables fuentes del brote")
+    probMecTransmision = models.TextField(verbose_name = "Probables mecanismos de transmision")
 
-    accionesPrevControl = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    accionesPrevControl = models.TextField(verbose_name = "Acciones de prevencion y control realizadas (Anotar fecha de inicio)")
+    
+    capturante = models.ForeignKey(User, verbose_name="Capturante", on_delete=models.SET_NULL, null=True, blank=True)
+    estado = models.CharField(verbose_name="Estado del formulario", max_length=30, choices=ESTADOS_FORMULARIOS)
+    
+class NumerosCasos(models.Model):
+    menor1Masc = models.SmallIntegerField(verbose_name="Numero de casos menores a 1 anio masculinos", default=0)
+    menor1Fem = models.SmallIntegerField(verbose_name="Numero de casos menores a 1 anio femeninos", default=0)
+    menor1Tot = models.SmallIntegerField(verbose_name="Numero de casos menores a 1 anio totales", default=0)
+    
+    de14Masc = models.SmallIntegerField(verbose_name="Numero de casos de 1 a 4 anios masculinos", default=0)
+    de14Fem = models.SmallIntegerField(verbose_name="Numero de casos de 1 a 4 anios femeninos", default=0)
+    de14Tot = models.SmallIntegerField(verbose_name="Numero de casos de 1 a 4 anios totales", default=0)
+    
+    de59Masc = models.SmallIntegerField(verbose_name="Numero de casos de 5 a 9 anios masculinos", default=0)
+    de59Fem = models.SmallIntegerField(verbose_name="Numero de casos de 5 a 9 anios femeninos", default=0)
+    de59Tot = models.SmallIntegerField(verbose_name="Numero de casos de 5 a 9 anios totales", default=0)
+    
+    de1014Masc = models.SmallIntegerField(verbose_name="Numero de casos de 10 a 14 anios masculinos", default=0)
+    de1014Fem = models.SmallIntegerField(verbose_name="Numero de casos de 10 a 14 anios femeninos", default=0)
+    de1014Tot = models.SmallIntegerField(verbose_name="Numero de casos de 10 a 14 anios totales", default=0)
+    
+    de1519Masc = models.SmallIntegerField(verbose_name="Numero de casos de 15 a 19 anio masculinos", default=0)
+    de1519Fem = models.SmallIntegerField(verbose_name="Numero de casos de 15 a 19 anio femeninos", default=0)
+    de1519Tot = models.SmallIntegerField(verbose_name="Numero de casos de 15 a 19 anio totales", default=0)
+    
+    de2024Masc = models.SmallIntegerField(verbose_name="Numero de casos de 20 a 24 anios masculinos", default=0)
+    de2024Fem = models.SmallIntegerField(verbose_name="Numero de casos de 20 a 24 anios femeninos", default=0)
+    de2024Tot = models.SmallIntegerField(verbose_name="Numero de casos de 20 a 24 anios totales", default=0)
+    
+    de2544Masc = models.SmallIntegerField(verbose_name="Numero de casos de 25 a 44 anios masculinos", default=0)
+    de2544Fem = models.SmallIntegerField(verbose_name="Numero de casos de 25 a 44 anios femeninos", default=0)
+    de2544Tot = models.SmallIntegerField(verbose_name="Numero de casos de 25 a 44 anios totales", default=0)
+    
+    de4549Masc = models.SmallIntegerField(verbose_name="Numero de casos de 45 a 49 anios masculinos", default=0)
+    de4549Fem = models.SmallIntegerField(verbose_name="Numero de casos de 45 a 49 anios femeninos", default=0)
+    de4549Tot = models.SmallIntegerField(verbose_name="Numero de casos de 45 a 49 anios totales", default=0)
+    
+    de5059Masc = models.SmallIntegerField(verbose_name="Numero de casos de 50 a 59 anios masculinos", default=0)
+    de5059Fem = models.SmallIntegerField(verbose_name="Numero de casos de 50 a 59 anios femeninos", default=0)
+    de5059Tot = models.SmallIntegerField(verbose_name="Numero de casos de 50 a 59 anios totales", default=0)
+    
+    de6064Masc = models.SmallIntegerField(verbose_name="Numero de casos de 60 a 64 anios masculinos", default=0)
+    de6064Fem = models.SmallIntegerField(verbose_name="Numero de casos de 60 a 64 anios femeninos", default=0)
+    de6064Tot = models.SmallIntegerField(verbose_name="Numero de casos de 60 a 64 anios totales", default=0)
+    
+    mas65Masc = models.SmallIntegerField(verbose_name="Numero de casos de mayores a 65 anios masculinos", default=0)
+    mas65Fem = models.SmallIntegerField(verbose_name="Numero de casos de mayores a 65 anios femeninos", default=0)
+    mas65Tot = models.SmallIntegerField(verbose_name="Numero de casos de mayores a 65 anios totales", default=0)
+    
+    seIgnoraMasc = models.SmallIntegerField(verbose_name="Numero de casos donde se ignora la edad en masculinos", default=0)
+    seIgnoraFem = models.SmallIntegerField(verbose_name="Numero de casos donde se ignora la edad en femeninos", default=0)
+    seIgnoraTot = models.SmallIntegerField(verbose_name="Numero de casos donde se ignora la edad en totales", default=0)
+    
+    totalMasc = models.SmallIntegerField(verbose_name="Numero de casos totales masculinos", default=0)
+    totalFem = models.SmallIntegerField(verbose_name="Numero de casos totales femeninos", default=0)
+    totalTot = models.SmallIntegerField(verbose_name="Numero de casos totales", default=0)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
 
+class NumerosDefunciones(models.Model):
+    menor1Masc = models.SmallIntegerField(verbose_name="Numero de defunciones menores a 1 anio masculinos", default=0)
+    menor1Fem = models.SmallIntegerField(verbose_name="Numero de defunciones menores a 1 anio femeninos", default=0)
+    menor1Tot = models.SmallIntegerField(verbose_name="Numero de defunciones menores a 1 anio totales", default=0)
+    
+    de14Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 1 a 4 anios masculinos", default=0)
+    de14Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 1 a 4 anios femeninos", default=0)
+    de14Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 1 a 4 anios totales", default=0)
+    
+    de59Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 5 a 9 anios masculinos", default=0)
+    de59Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 5 a 9 anios femeninos", default=0)
+    de59Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 5 a 9 anios totales", default=0)
+    
+    de1014Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 10 a 14 anios masculinos", default=0)
+    de1014Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 10 a 14 anios femeninos", default=0)
+    de1014Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 10 a 14 anios totales", default=0)
+    
+    de1519Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 15 a 19 anio masculinos", default=0)
+    de1519Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 15 a 19 anio femeninos", default=0)
+    de1519Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 15 a 19 anio totales", default=0)
+    
+    de2024Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 20 a 24 anios masculinos", default=0)
+    de2024Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 20 a 24 anios femeninos", default=0)
+    de2024Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 20 a 24 anios totales", default=0)
+    
+    de2544Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 25 a 44 anios masculinos", default=0)
+    de2544Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 25 a 44 anios femeninos", default=0)
+    de2544Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 25 a 44 anios totales", default=0)
+    
+    de4549Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 45 a 49 anios masculinos", default=0)
+    de4549Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 45 a 49 anios femeninos", default=0)
+    de4549Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 45 a 49 anios totales", default=0)
+    
+    de5059Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 50 a 59 anios masculinos", default=0)
+    de5059Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 50 a 59 anios femeninos", default=0)
+    de5059Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 50 a 59 anios totales", default=0)
+    
+    de6064Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de 60 a 64 anios masculinos", default=0)
+    de6064Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de 60 a 64 anios femeninos", default=0)
+    de6064Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de 60 a 64 anios totales", default=0)
+    
+    mas65Masc = models.SmallIntegerField(verbose_name="Numero de defunciones de mayores a 65 anios masculinos", default=0)
+    mas65Fem = models.SmallIntegerField(verbose_name="Numero de defunciones de mayores a 65 anios femeninos", default=0)
+    mas65Tot = models.SmallIntegerField(verbose_name="Numero de defunciones de mayores a 65 anios totales", default=0)
+    
+    seIgnoraMasc = models.SmallIntegerField(verbose_name="Numero de defunciones donde se ignora la edad en masculinos", default=0)
+    seIgnoraFem = models.SmallIntegerField(verbose_name="Numero de defunciones donde se ignora la edad en femeninos", default=0)
+    seIgnoraTot = models.SmallIntegerField(verbose_name="Numero de defunciones donde se ignora la edad en totales", default=0)
+    
+    totalMasc = models.SmallIntegerField(verbose_name="Numero de defunciones totales masculinos", default=0)
+    totalFem = models.SmallIntegerField(verbose_name="Numero de defunciones totales femeninos", default=0)
+    totalTot = models.SmallIntegerField(verbose_name="Numero de defunciones totales", default=0)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
+class PoblacionExpuesta(models.Model):
+    menor1Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta menores a 1 anio masculinos", default=0)
+    menor1Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta menores a 1 anio femeninos", default=0)
+    menor1Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta menores a 1 anio totales", default=0)
+    
+    de14Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 1 a 4 anios masculinos", default=0)
+    de14Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 1 a 4 anios femeninos", default=0)
+    de14Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 1 a 4 anios totales", default=0)
+    
+    de59Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 5 a 9 anios masculinos", default=0)
+    de59Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 5 a 9 anios femeninos", default=0)
+    de59Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 5 a 9 anios totales", default=0)
+    
+    de1014Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 10 a 14 anios masculinos", default=0)
+    de1014Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 10 a 14 anios femeninos", default=0)
+    de1014Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 10 a 14 anios totales", default=0)
+    
+    de1519Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 15 a 19 anio masculinos", default=0)
+    de1519Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 15 a 19 anio femeninos", default=0)
+    de1519Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 15 a 19 anio totales", default=0)
+    
+    de2024Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 20 a 24 anios masculinos", default=0)
+    de2024Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 20 a 24 anios femeninos", default=0)
+    de2024Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 20 a 24 anios totales", default=0)
+    
+    de2544Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 25 a 44 anios masculinos", default=0)
+    de2544Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 25 a 44 anios femeninos", default=0)
+    de2544Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 25 a 44 anios totales", default=0)
+    
+    de4549Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 45 a 49 anios masculinos", default=0)
+    de4549Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 45 a 49 anios femeninos", default=0)
+    de4549Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 45 a 49 anios totales", default=0)
+    
+    de5059Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 50 a 59 anios masculinos", default=0)
+    de5059Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 50 a 59 anios femeninos", default=0)
+    de5059Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 50 a 59 anios totales", default=0)
+    
+    de6064Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de 60 a 64 anios masculinos", default=0)
+    de6064Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de 60 a 64 anios femeninos", default=0)
+    de6064Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de 60 a 64 anios totales", default=0)
+    
+    mas65Masc = models.SmallIntegerField(verbose_name="Poblacion expuesta de mayores a 65 anios masculinos", default=0)
+    mas65Fem = models.SmallIntegerField(verbose_name="Poblacion expuesta de mayores a 65 anios femeninos", default=0)
+    mas65Tot = models.SmallIntegerField(verbose_name="Poblacion expuesta de mayores a 65 anios totales", default=0)
+    
+    seIgnoraMasc = models.SmallIntegerField(verbose_name="Poblacion expuesta donde se ignora la edad en masculinos", default=0)
+    seIgnoraFem = models.SmallIntegerField(verbose_name="Poblacion expuesta donde se ignora la edad en femeninos", default=0)
+    seIgnoraTot = models.SmallIntegerField(verbose_name="Poblacion expuesta donde se ignora la edad en totales", default=0)
+    
+    totalMasc = models.SmallIntegerField(verbose_name="Poblacion expuesta totales masculinos", default=0)
+    totalFem = models.SmallIntegerField(verbose_name="Poblacion expuesta totales femeninos", default=0)
+    totalTot = models.SmallIntegerField(verbose_name="Poblacion expuesta totales", default=0)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
+class TasaAtaque(models.Model):
+    menor1Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque menores a 1 anio masculinos", default=0)
+    menor1Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque menores a 1 anio femeninos", default=0)
+    menor1Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque menores a 1 anio totales", default=0)
+    
+    de14Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 1 a 4 anios masculinos", default=0)
+    de14Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 1 a 4 anios femeninos", default=0)
+    de14Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 1 a 4 anios totales", default=0)
+    
+    de59Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 5 a 9 anios masculinos", default=0)
+    de59Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 5 a 9 anios femeninos", default=0)
+    de59Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 5 a 9 anios totales", default=0)
+    
+    de1014Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 10 a 14 anios masculinos", default=0)
+    de1014Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 10 a 14 anios femeninos", default=0)
+    de1014Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 10 a 14 anios totales", default=0)
+    
+    de1519Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 15 a 19 anio masculinos", default=0)
+    de1519Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 15 a 19 anio femeninos", default=0)
+    de1519Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 15 a 19 anio totales", default=0)
+    
+    de2024Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 20 a 24 anios masculinos", default=0)
+    de2024Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 20 a 24 anios femeninos", default=0)
+    de2024Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 20 a 24 anios totales", default=0)
+    
+    de2544Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 25 a 44 anios masculinos", default=0)
+    de2544Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 25 a 44 anios femeninos", default=0)
+    de2544Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 25 a 44 anios totales", default=0)
+    
+    de4549Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 45 a 49 anios masculinos", default=0)
+    de4549Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 45 a 49 anios femeninos", default=0)
+    de4549Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 45 a 49 anios totales", default=0)
+    
+    de5059Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 50 a 59 anios masculinos", default=0)
+    de5059Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 50 a 59 anios femeninos", default=0)
+    de5059Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 50 a 59 anios totales", default=0)
+    
+    de6064Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 60 a 64 anios masculinos", default=0)
+    de6064Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 60 a 64 anios femeninos", default=0)
+    de6064Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de 60 a 64 anios totales", default=0)
+    
+    mas65Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de mayores a 65 anios masculinos", default=0)
+    mas65Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de mayores a 65 anios femeninos", default=0)
+    mas65Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque de mayores a 65 anios totales", default=0)
+    
+    seIgnoraMasc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque donde se ignora la edad en masculinos", default=0)
+    seIgnoraFem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque donde se ignora la edad en femeninos", default=0)
+    seIgnoraTot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque donde se ignora la edad en totales", default=0)
+    
+    totalMasc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque totales masculinos", default=0)
+    totalFem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque totales femeninos", default=0)
+    totalTot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de ataque totales", default=0)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
+class TasaLetalidad(models.Model):
+    menor1Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad menores a 1 anio masculinos", default=0)
+    menor1Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad menores a 1 anio femeninos", default=0)
+    menor1Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad menores a 1 anio totales", default=0)
+    
+    de14Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 1 a 4 anios masculinos", default=0)
+    de14Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 1 a 4 anios femeninos", default=0)
+    de14Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 1 a 4 anios totales", default=0)
+    
+    de59Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 5 a 9 anios masculinos", default=0)
+    de59Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 5 a 9 anios femeninos", default=0)
+    de59Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 5 a 9 anios totales", default=0)
+    
+    de1014Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 10 a 14 anios masculinos", default=0)
+    de1014Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 10 a 14 anios femeninos", default=0)
+    de1014Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 10 a 14 anios totales", default=0)
+    
+    de1519Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 15 a 19 anio masculinos", default=0)
+    de1519Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 15 a 19 anio femeninos", default=0)
+    de1519Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 15 a 19 anio totales", default=0)
+    
+    de2024Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 20 a 24 anios masculinos", default=0)
+    de2024Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 20 a 24 anios femeninos", default=0)
+    de2024Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 20 a 24 anios totales", default=0)
+    
+    de2544Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 25 a 44 anios masculinos", default=0)
+    de2544Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 25 a 44 anios femeninos", default=0)
+    de2544Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 25 a 44 anios totales", default=0)
+    
+    de4549Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 45 a 49 anios masculinos", default=0)
+    de4549Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 45 a 49 anios femeninos", default=0)
+    de4549Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 45 a 49 anios totales", default=0)
+    
+    de5059Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 50 a 59 anios masculinos", default=0)
+    de5059Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 50 a 59 anios femeninos", default=0)
+    de5059Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 50 a 59 anios totales", default=0)
+    
+    de6064Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 60 a 64 anios masculinos", default=0)
+    de6064Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 60 a 64 anios femeninos", default=0)
+    de6064Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de 60 a 64 anios totales", default=0)
+    
+    mas65Masc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de mayores a 65 anios masculinos", default=0)
+    mas65Fem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de mayores a 65 anios femeninos", default=0)
+    mas65Tot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad de mayores a 65 anios totales", default=0)
+    
+    seIgnoraMasc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad donde se ignora la edad en masculinos", default=0)
+    seIgnoraFem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad donde se ignora la edad en femeninos", default=0)
+    seIgnoraTot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad donde se ignora la edad en totales", default=0)
+    
+    totalMasc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad totales masculinos", default=0)
+    totalFem = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad totales femeninos", default=0)
+    totalTot = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Tasa de letalidad totales", default=0)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
+class SignosSintomas(models.Model):
+    menor1Signos = models.TextField(verbose_name="Signos y sintomas menores a 1 anio", null=True, blank=True)
+    menor1Num = models.SmallIntegerField(verbose_name="Casos menores a 1 anio", default=0)
+    menor1Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje 1 anio", default=0)
+    
+    de14Signos = models.TextField(verbose_name="Signos y sintomas de 1 a 4 anios", null=True, blank=True)
+    de14Num = models.SmallIntegerField(verbose_name="Casos de 1 a 4 anios", default=0)
+    de14Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 1 a 4 anios", default=0)
+    
+    de59Signos = models.TextField(verbose_name="Signos y sintomas de 5 a 9 anios", null=True, blank=True)
+    de59Num = models.SmallIntegerField(verbose_name="Casos de 5 a 9 anios", default=0)
+    de59Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 5 a 9 anios", default=0)
+    
+    de1014Signos = models.TextField(verbose_name="Signos y sintomas de 10 a 14 anios", null=True, blank=True)
+    de1014Num = models.SmallIntegerField(verbose_name="Casos de 10 a 14 anios", default=0)
+    de1014Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 10 a 14 anios", default=0)
+    
+    de1519Signos = models.TextField(verbose_name="Signos y sintomas de 15 a 19 anio", null=True, blank=True)
+    de1519Num = models.SmallIntegerField(verbose_name="Casos de 15 a 19 anio", default=0)
+    de1519Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 15 a 19 anio", default=0)
+    
+    de2024Signos = models.TextField(verbose_name="Signos y sintomas de 20 a 24 anios", null=True, blank=True)
+    de2024Num = models.SmallIntegerField(verbose_name="Casos de 20 a 24 anios", default=0)
+    de2024Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 20 a 24 anios", default=0)
+    
+    de2544Signos = models.TextField(verbose_name="Signos y sintomas de 25 a 44 anios", null=True, blank=True)
+    de2544Num = models.SmallIntegerField(verbose_name="Casos de 25 a 44 anios", default=0)
+    de2544Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 25 a 44 anios", default=0)
+    
+    de4549Signos = models.TextField(verbose_name="Signos y sintomas de 45 a 49 anios", null=True, blank=True)
+    de4549Num = models.SmallIntegerField(verbose_name="Casos de 45 a 49 anios", default=0)
+    de4549Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 45 a 49 anios", default=0)
+    
+    de5059Signos = models.TextField(verbose_name="Signos y sintomas de 50 a 59 anios", null=True, blank=True)
+    de5059Num = models.SmallIntegerField(verbose_name="Casos de 50 a 59 anios", default=0)
+    de5059Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 50 a 59 anios", default=0)
+    
+    de6064Signos = models.TextField(verbose_name="Signos y sintomas de 60 a 64 anios", null=True, blank=True)
+    de6064Num = models.SmallIntegerField(verbose_name="Casos de 60 a 64 anios", default=0)
+    de6064Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de 60 a 64 anios", default=0)
+    
+    mas65Signos = models.TextField(verbose_name="Signos y sintomas de mayores a 65 anios", null=True, blank=True)
+    mas65Num = models.SmallIntegerField(verbose_name="Casos de mayores a 65 anios", default=0)
+    mas65Porc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje de mayores a 65 anios", default=0)
+    
+    seIgnoraSignos = models.TextField(verbose_name="Signos y sintomas donde se ignora la edad en", null=True, blank=True)
+    seIgnoraNum = models.SmallIntegerField(verbose_name="Casos donde se ignora la edad en", default=0)
+    seIgnoraPorc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje donde se ignora la edad en", default=0)
+    
+    totalSignos = models.TextField(verbose_name="Signos y sintomas totales", null=True, blank=True)
+    totalNum = models.SmallIntegerField(verbose_name="Casos totales", default=0)
+    totalPorc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name="Porcentaje totales", default=100)
+    
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
+    
+class PuntoGrafico(models.Model):
+    numeroCasos = models.SmallIntegerField(verbose_name="Numero de casos en un punto temporal", default=0)
+    puntoTemporal = models.SmallIntegerField(verbose_name="Punto temporal", default=0)
+    clave = models.CharField(verbose_name="clave", max_length=100)
+    notifBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
 
 class DistribucionGeografica(models.Model):
-    area = models.CharField(verbose_name = "Área, Manzana, Colonia, Localidad, Escuela, Guardería O Vivienda", max_length=50,null=True, blank=True)
-    numeroCasos = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)   
-    numeroDefunciones = models.CharField(verbose_name = "Fecha Notificacion", max_length=50,null=True, blank=True)
+    area = models.CharField(verbose_name = "Área, Manzana, Colonia, Localidad, Escuela, Guardería O Vivienda", max_length=100)
+    numeroCasos = models.SmallIntegerField(verbose_name = "Numero de casos", default=0)
+    numeroCasosPorc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name = "Porcentaje de casos", default=0)
+    numeroDefunciones = models.SmallIntegerField(verbose_name = "Numero de defunciones", default=0)
+    numeroDefuncionesPorc = models.DecimalField(max_digits=8, decimal_places=5, verbose_name = "Porcentaje de defunciones", default=0)
+    croquis = models.CharField(verbose_name="Enlace del croquis", max_length=1000, null=True, blank=True)
     notificacionBrote = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
 
 class Anexo8(models.Model):
