@@ -269,7 +269,31 @@
                url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
            },
            "ordering": true
-       });      
+       });
+        {% comment %} $('#addUnidad_localidad').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+            dropdownParent: $('#addUMedicaModal')
+        });
+        $('#addUnidad_municipio').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+            dropdownParent: $('#addUMedicaModal')
+        });
+        $('#addUnidad_institucion').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+            dropdownParent: $('#addUMedicaModal')
+        });
+        $('#addUnidad_tipologia').select2({
+            includeSelectAllOption: true,
+            closeOnSelect: false,
+            width: '100%',
+            dropdownParent: $('#addUMedicaModal')
+        }); {% endcomment %}
     });
     function editMunicipio(url, clave, nombre, entidad) {
         // Obtener el formulario
@@ -358,6 +382,24 @@
         // Modificar el action del formulario
         form.action = url;
     }
+
+    function editUnidad(url, claveclues, tipologia, establecimiento, institucion, municipio, localidad, jurisdiccion) {
+        // Obtener el formulario
+        const form = document.getElementById('editUnidadForm');
+    
+        // Asignar los valores a los inputs del formulario
+        form.querySelector('#editUnidad_claveclues').value = claveclues;
+        form.querySelector('#editUnidad_tipologia').value = tipologia;
+        form.querySelector('#editUnidad_establecimiento').value = establecimiento;
+        form.querySelector('#editUnidad_institucion').value = institucion;
+        form.querySelector('#editUnidad_municipio').value = municipio;
+        form.querySelector('#editUnidad_localidad').value = localidad;
+        form.querySelector('#editUnidad_jurisdiccion').value = jurisdiccion;
+    
+        // Modificar el action del formulario
+        form.action = url;
+    }
+    
 
     function editLogo(url, id, titulo, logo) {
         // Obtener el formulario

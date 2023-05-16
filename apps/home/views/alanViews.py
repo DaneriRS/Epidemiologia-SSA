@@ -415,3 +415,56 @@ def delInstitucion(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedInstitucion'}))
     except Exception as e:
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedInstitucion'}))
+    
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def addUnidad(request):
+    if request.method == 'POST':
+        form = UnidadForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAddedUnidad'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedUnidad'}))
+        else:
+            claveAct = request.POST['clave']
+            if Unidad.objects.filter(clave=claveAct).exists():
+                return redirect(reverse('vista_tablas', kwargs={'msg':'uniqueAddedUnidad'}))
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAddedUnidad'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def editUnidad(request, pk):
+    if request.method == 'POST':
+        try:
+            entity = Unidad.objects.get(id = pk)
+        except Exception as e:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistUnidad'}))
+        form = UnidadForm(request.POST, instance=entity)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect(reverse('vista_tablas', kwargs={'msg':'exitoAditedUnidad'}))
+            except Exception as e:
+                return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedUnidad'}))
+        else:
+            return redirect(reverse('vista_tablas', kwargs={'msg':'errorAditedUnidad'}))
+    else:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'false'}))
+    
+@login_required(login_url="/login/")
+@roles_required(['Director'], redirect_url='home')
+def delUnidad(request, pk):
+    try:
+        entity = Unidad.objects.get(id = pk)
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorExistUnidad'}))
+    try:
+        entity.delete()
+        return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedUnidad'}))
+    except Exception as e:
+        return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedUnidad'}))

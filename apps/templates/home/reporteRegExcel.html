@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Casos de Hepatitis {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    {% include 'includes/logos.html' %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h2 class="card-title">Casos de Hepatitis</h2>
+                        </div>
+                    </div>
+                        <table class="table table-striped table-hover" id="tabla_casos">
+                            <thead>
+                                <tr>
+                                    <th>Folio del Caso</th>
+                                    <th>Unidad notificante</th>
+                                    <th>Fecha Notificacion</th>
+                                    <th>Fecha Inicio Estudio</th>
+                                    <th>Fecha Fin Estudio</th>
+                                    <th>Diagnóstico Probable</th>
+                                    <th>Diagnóstico Final</th>
+                                    <th>Otro Diagnóstico</th>
+                                    <th>Paciente</th>
+                                    <th>N° Afiliado</th>
+                                    <th>Sexo</th>
+                                    <th>CP</th>
+                                    <th>Fecha Nacimiento</th>
+                                    <th>Fecha inicio de signos</th>
+                                    <th>Signos y sintomas</th>
+                                    <th>Tratamiento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for formulario in query %}
+                                <tr>
+                                    <td>{{ formulario.id }}</td>
+                                    <td>{{ formulario.unidadNot }}</td>
+                                    <td>{{ formulario.fechaNot }}</td>
+                                    <td>{{ formulario.fechaIni }}</td>
+                                    <td>{{ formulario.fechaFin}}</td>
+                                    <td>{{ formulario.DiaProHep }}</td>
+                                    <td>{{ formulario.DiaFin }}</td>
+                                    <td>{{ formulario.otroDia }}</td>
+                                    <td>{{ formulario.paciente.nombre }} {{ formulario.paciente.apellidoPa }} {{ formulario.paciente.apellidoMa }} </td>
+                                    <td>{{ formulario.paciente.numAfiliacion}}</td>
+                                    <td>{{ formulario.paciente.sexo }}</td>
+                                    <td>{{ formulario.paciente.codigoPostal }}</td>
+                                    <td>{{ formulario.paciente.nacimiento }}</td>
+                                    <td>{{ formulario.fechaIn3 }}</td>
+                                    <td>{{ formulario.signoSint3}}</td>
+                                    <td>{{ formulario.tratamiento3 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <div class="card-body px-3">
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('#tabla_casos').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [
+          {
+            "extend": "csv",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+     });
+</script>
+{% endblock javascripts %}

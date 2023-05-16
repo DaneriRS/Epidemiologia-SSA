@@ -1,0 +1,100 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Notificacion de Brote {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    {% include 'includes/logos.html' %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h2 class="card-title">Notificacion de Brote </h2>
+                        </div>
+                    </div>
+                        <table class="table table-striped table-hover" id="tabla_casos">
+                            <thead>
+                                <tr>
+                                    <th>Folio del Caso</th>
+                                    <th>Unidad notificante</th>
+                                    <th>Fecha Notificacion</th>
+                                    <th>Fecha Inicio Estudio</th>
+                                    <th>Diagnóstico Probable</th>
+                                    <th>Diagnóstico Final</th>
+                                    <th>Casos Probables</th>
+                                    <th>Casos Confirmandos</th>
+                                    <th>Hospitalizados</th>
+                                    <th>Antecedentes Epidemiologicos del Brote</th>
+                                    <th>Probales Fuentes del Brote</th>
+                                    <th>Probables Mecanismos de Transmicion</th>
+                                    <th>Acciones de prevención y control realizadas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for formulario in query %}
+                                <tr>
+                                    <td>{{ formulario.id }}</td>
+                                    <td>{{ formulario.unidadNot }}</td>
+                                    <td>{{ formulario.fechaNot }}</td>
+                                    <td>{{ formulario.fechaEstudio }}</td>
+                                    <td>{{ formulario.DiaProHep }}</td>
+                                    <td>{{ formulario.DiaFin }}</td>
+                                    <td>{{ formulario.casosProbables }}</td>
+                                    <td>{{ formulario.casosConfirmados}}</td>
+                                    <td>{{ formulario.hospitalizados }}</td>
+                                    <td>{{ formulario.anteEpiBrote}}</td>
+                                    <td>{{ formulario.probFuenBrote }}</td>
+                                    <td>{{ formulario.probMecTransmision }}</td>
+                                    <td>{{ formulario.accionesPrevControl}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <div class="card-body px-3">
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('#tabla_casos').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [
+          {
+            "extend": "csv",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+     });
+</script>
+{% endblock javascripts %}

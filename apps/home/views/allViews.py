@@ -73,6 +73,8 @@ def vista_tablas(request, msg):
     formEditJurisdiccion = JurisdiccionForm(auto_id="editJurisdiccion_%s")
     formAddInstitucion = InstitucionForm(auto_id="addInstitucion_%s")
     formEditInstitucion = InstitucionForm(auto_id="editInstitucion_%s")
+    formAddUnidad = UnidadForm(auto_id="addUnidad_%s")
+    formEditUnidad = UnidadForm(auto_id="editUnidad_%s")
     
     formAddEntidad = EntidadForm(auto_id="addEntidad_%s")
     formEditEntidad = EntidadForm(auto_id="editEntidad_%s")
@@ -156,7 +158,7 @@ def vista_tablas(request, msg):
         presionar = True
         btnPresionar = 'Establecimiento'
     elif msg == 'exitoDelEstablecimiento':
-        mensaje = 'Establecimiento Eliminadao con exito!'
+        mensaje = 'Establecimiento Eliminado con exito!'
     elif msg == 'exitoDelEstablecimiento':
         mensaje = '¡ERROR Establecimiento NO Eliminado!'
         msgType = 'danger'
@@ -165,9 +167,15 @@ def vista_tablas(request, msg):
     elif msg == 'Exito Registro Excel':
         mensaje = 'Registros Realizados con Exito'
         msgType = 'success'
-    elif msg == 'Error Registro Excel':
-        mensaje = '¡ERROR! Registros no Realizados'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif 'Error Registro Excel' in msg:
+        mensaje_parts = msg.split(" - ")
+        # f"{mensaje_parts[0]} - {mensaje_parts[1]} - {mensaje_parts[2]}"
+        mensaje = f"¡ERROR! {mensaje_parts[0]} - {mensaje_parts[1]} - {mensaje_parts[2]}"
         msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
     elif msg == 'errorAddedMunicipio':
         mensaje = '¡ERROR! Municipio no creado'
         msgType = 'danger'
@@ -368,6 +376,46 @@ def vista_tablas(request, msg):
         msgType = 'danger'
         presionar = True
         btnPresionar = 'Institucion'
+    elif msg == 'errorAddedUnidad':
+        mensaje = '¡ERROR! Unidad no creado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoAddedUnidad':
+        mensaje = '¡Exito! Unidad creado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorExistUnidad':
+        mensaje = '¡ERROR! Unidad no existe'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoAditedUnidad':
+        mensaje = '¡Exito! Unidad editado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorAditedUnidad':
+        mensaje = '¡ERROR! Unidad no editado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'exitoDeletedUnidad':
+        mensaje = '¡Exito! Unidad eliminado'
+        msgType = 'success'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'errorDeletedUnidad':
+        mensaje = '¡ERROR! Unidad no eliminado'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
+    elif msg == 'uniqueAddedUnidad':
+        mensaje = '¡ERROR La clave de Unidad ya existe!'
+        msgType = 'danger'
+        presionar = True
+        btnPresionar = 'Unidades'
         
     elif msg == 'exitoEditLogo':
         mensaje = 'Logo Editado con exito!'
@@ -415,6 +463,8 @@ def vista_tablas(request, msg):
         'formEditTipologia' : formEditTipologia,
         'formAddInstitucion' : formAddInstitucion,
         'formEditInstitucion' : formEditInstitucion,
+        'formAddUnidad': formAddUnidad,
+        'formEditUnidad': formEditUnidad,
         'Logos' : Logo,
         'formEditLogos' : formEditLogos,
         'presionar' : presionar,

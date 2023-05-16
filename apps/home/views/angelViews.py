@@ -16,11 +16,18 @@ def roles_required(roles, redirect_url=None):
     return decorator
 
 FormSET1=formset_factory(ContactoForm4, extra=2)
+FormSET12=formset_factory(ContactoForm7, extra=2)
 FORMS = [
             ("1", ContactForm1),
             ("2", ContactForm2),
             ("3", ContactForm3),
-            ("4", FormSET1)
+            ("4", FormSET1),
+            ("5", ContactoForm6),
+            ("6", FormSET12),
+            ("7", ContactoForm8),
+            ("8", ContactoForm9),
+            ("9", ContactoForm10),
+            ("10", ContactoForm11),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FORMS2 = [
@@ -62,16 +69,29 @@ class RegistroEstudioView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
+        
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        initial = self.initial_dict.get(step, {})
+        if step == '1':
+            # Set initial data for step 2 form here
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad
+            
+        return initial
 
     def done(self, form_list, **kwargs):
         registroDataFormSet1=[]
+        registroDataFormSet12=[]
         registroData={}
         for i,form in enumerate(form_list):
-            if i != 3:
+            if i != 3 and i != 5:
                 registroData.update(form.cleaned_data)
-            else:
+            elif i == 3:
                 for formset in form:
                     registroDataFormSet1.append(formset.cleaned_data)
+            elif i==5:
+                for formset in form:
+                    registroDataFormSet12.append(formset.cleaned_data)
             
         rd = RegistroEstudio(**registroData)
         rd.save()
@@ -85,6 +105,17 @@ class RegistroEstudioView(CookieWizardView):
                 registroEstudio=rd
             )
             est.save()
+
+        for item in registroDataFormSet12:
+            cont=Contacto(
+                nombre=item['nombre'],
+                domicilio=item['domicilio'],
+                edad=item['edad'],
+                sexo=item['sexo'],
+                contacto=item['contacto'],
+                caso=item['caso']
+            )
+            cont.save()
         return redirect('listaFormularios')
 
 class RegistroEstudioUpdateView(CookieWizardView):
@@ -256,21 +287,45 @@ def listaNotificacionBrote(request):
         return redirect ('home')
 
 def nuevoPaciente(request):
+    msg=''
+    msgType=''
     if request.method == 'POST':
         formA = registroPaciente(request.POST)
         form = registroPaciente()
+        print(request.POST.get('numAfiliacion'))
         if formA.is_valid():
+            
             try:
                 formA.save()
+                msg='Paciente Registrado con Exito'
+                msgType='success'
                 return render(request, 'home/nuevoPaciente.html', {
-                'form': form,
-                'msg' : "1"
+                    'form': form,
+                    'msg' : msg,
+                    'msgType' : msgType
                 })
             except:
+                msg='Error al registrar al paciente'
+                msgType='danger'
                 return render(request, 'home/nuevoPaciente.html', {
-                'form': form,
-                'msg' : "0"
+                    'form': form,
+                    'msg' : msg,
+                    'msgType' : msgType
                 })
+        else:
+            paciente_exist= Paciente.objects.filter(numAfiliacion=request.POST.get('numAfiliacion')).exists()
+            if paciente_exist:
+                msg='Ya existe el paciente con el numero de afiliacion: '+request.POST.get('numAfiliacion')
+                msgType='danger'
+            else:
+                msg='Error al registrar al paciente'
+                msgType='danger'
+
+            return render(request, 'home/nuevoPaciente.html', {
+                'form': form,
+                'msg' : msg,
+                'msgType' : msgType
+            })
     else:
         form = registroPaciente()
     
