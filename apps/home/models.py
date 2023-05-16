@@ -259,14 +259,14 @@ class RegistroEstudio(models.Model):
     agua = models.CharField(verbose_name="Agua", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     fomites = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     animales = models.CharField(verbose_name="Animales", max_length=20, choices=OTRA_PERSONA_OPCIONES)
-    otrosFuentes = models.CharField(verbose_name="Otras fuentes", null=True, blank=True)
+    otrosFuentes = models.TextField(verbose_name="Otras fuentes", null=True, blank=True)
     
     personaPersona = models.CharField(verbose_name="Persona a persona", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     aerea = models.CharField(verbose_name="Aerea", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     digestiva = models.CharField(verbose_name="Digestiva", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     fomitesMec = models.CharField(verbose_name="Fomites", max_length=20, choices=OTRA_PERSONA_OPCIONES)
     vectores = models.CharField(verbose_name="Vectores", max_length=20, choices=OTRA_PERSONA_OPCIONES)
-    otrosMecanismos = models.CharField(verbose_name="Otras mecanismos", null=True, blank=True)
+    otrosMecanismos = models.TextField(verbose_name="Otras mecanismos", null=True, blank=True)
     
 
 class Estudio(models.Model):
