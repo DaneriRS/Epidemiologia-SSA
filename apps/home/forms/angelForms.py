@@ -46,17 +46,16 @@ class registroPaciente(ModelForm):
             })
 
 
+
 class ContactForm1(forms.Form):
     unidadNot = forms.ModelChoiceField(
+        label="Unidad notificante:",
         queryset=Unidad.objects.all(),
-        label='Unidad notificante:',
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'readonly': True
+                'class': 'form-control', 'readonly':True
             }
-        ),
-        required=True
+        )
     )
     fechaNot = forms.DateField(
         label='Fecha de creacion',
@@ -113,7 +112,6 @@ class ContactForm1(forms.Form):
         )
     )
 
-
 class ContactForm2(forms.Form):
     paciente = forms.ModelChoiceField(
         label="Num, de afiliacion o expediente: ",
@@ -124,7 +122,6 @@ class ContactForm2(forms.Form):
             }
         )
     )
-
 
 class ContactForm3(forms.Form):
     fechaIn3 = forms.DateField(
@@ -154,7 +151,6 @@ class ContactForm3(forms.Form):
         )
     )
 
-
 class ContactoForm4(forms.Form):
     nombre = forms.CharField(
         max_length=30,
@@ -165,22 +161,20 @@ class ContactoForm4(forms.Form):
             }
         )
     )
-    tipo = forms.CharField(
-        max_length=30,
+    tipo = forms.ChoiceField(
+        choices=TIPO_ESTUDIOS_CHOICES,
         label="Tipo",
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
+                'class': 'form-control selectpicker',
+                }
+        ),
     )
-    fecha = forms.CharField(
+    fecha = forms.DateField(
         label='Fecha: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerfechaEstudio'
             }
         )
     )
@@ -194,7 +188,6 @@ class ContactoForm4(forms.Form):
         ),
         required=False
     )
-
 
 class ContactoForm5(forms.Form):
     id = forms.CharField(
@@ -217,22 +210,20 @@ class ContactoForm5(forms.Form):
             }
         )
     )
-    tipo = forms.CharField(
-        max_length=30,
+    tipo = forms.ChoiceField(
+        choices=TIPO_ESTUDIOS_CHOICES,
         label="Tipo",
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
+                'class': 'form-control selectpicker',
+                }
+        ),
     )
-    fecha = forms.CharField(
+    fecha = forms.DateField(
         label='Fecha: ',
         widget=forms.DateInput(
-            format='%YYYY-%MM-%DD',
             attrs={
                 'class': 'form-control', 'type': 'date',
-                'data-target': '#datetimepickerfechaEstudio'
             }
         )
     )
@@ -246,7 +237,6 @@ class ContactoForm5(forms.Form):
         ),
         required=False
     )
-
 
 class ContactoForm6(forms.Form):
     procedencia = forms.ChoiceField(
@@ -298,17 +288,17 @@ class ContactoForm6(forms.Form):
         required=True
     )
     otraPersona = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+        choices=OTRA_PERSONA_OPCIONES,
         label='Otra persona: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
-                }
+            }
         ),
         required=True
     )
     alimentos = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+        choices=OTRA_PERSONA_OPCIONES,
         label='Alimentos: ',
         widget=forms.Select(
             attrs={
@@ -319,45 +309,383 @@ class ContactoForm6(forms.Form):
         required=True
     )
     agua = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+        choices=OTRA_PERSONA_OPCIONES,
         label='Agua: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
-                }
+            }
         ),
         required=True
     )
     fomites = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+        choices=OTRA_PERSONA_OPCIONES,
         label='Fomites: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
-                }
+            }
         ),
         required=True
     )
     animales = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+        choices=OTRA_PERSONA_OPCIONES,
         label='Animales: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
-                }
+            }
         ),
         required=True
     )
-    otrosFuentes = forms.ChoiceField(
-        choices=PROCEDENCIA_OPCIONES,
+    otrosFuentes = forms.CharField(
+        max_length=200,
         label='Otras fuentes: ',
-        widget=forms.Select(
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control selectpicker',
-                }
+                'class': 'form-control ',
+            }
         ),
         required=False
     )
+    personaPersona = forms.ChoiceField(
+        choices=OTRA_PERSONA_OPCIONES,
+        label='Persona a persona: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    aerea = forms.ChoiceField(
+        choices=OTRA_PERSONA_OPCIONES,
+        label='Aerea: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    digestiva = forms.ChoiceField(
+        choices=OTRA_PERSONA_OPCIONES,
+        label='Digestiva: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    fomitesMec = forms.ChoiceField(
+        choices=OTRA_PERSONA_OPCIONES,
+        label='Fomites: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    vectores = forms.ChoiceField(
+        choices=OTRA_PERSONA_OPCIONES,
+        label='Vectores: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    otrosMecanismos = forms.CharField(
+        max_length=200,
+        label='Otras mecanismos: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=False
+    )
+
+class ContactoForm7(forms.Form):
+    nombre = forms.CharField(
+        max_length=50,
+        label="Nombre Completo:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    domicilio = forms.CharField(
+        max_length=50,
+        label="Domicilio:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    edad = forms.CharField(
+        max_length=20,
+        label="Edad:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    sexo = forms.ChoiceField(
+        choices=GENEROS,
+        label='Sexo: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    contacto = forms.ChoiceField(
+        choices=CONTACTO_CHOICES,
+        label='Contacto: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    caso = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Caso: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+
+class ContactoForm8(forms.Form):
+    accionesMedidas = forms.CharField(
+        max_length=300,
+        label='Acciones y medidas de control: ',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+
+class ContactoForm9(forms.Form):
+    reestablecer = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='¿Se restableció integramente?: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    secuelas = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='¿Quedó con secuelas?: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    portador = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='¿Quedó como portador?: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    perdioCaso = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='¿Se perdió el caso?: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    fallecio = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='¿Falleció?: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    fechaDefuncion = forms.DateField(
+        label='Fecha de la defunción:',
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        ),
+        required=False
+    )
+
+class ContactoForm10(forms.Form):
+    platicas = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Platicas de fomento para la salud: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numPlaticas = forms.CharField(
+        max_length=300,
+        label='Numero de platicas: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    vacunacion = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Vacunación: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numVacunacion = forms.CharField(
+        max_length=300,
+        label='Numero de vacunacion: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    tratamientosInd = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Tratamientos individuales: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numTratamientosInd = forms.CharField(
+        max_length=300,
+        label='Numero de tratamientos individuales: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    tratamientosFam = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Tratamientos familiares: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numTratamientosFam = forms.CharField(
+        max_length=300,
+        label='Numero de tratamientos familiares: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    cloracion = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Cloración: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numCloracion = forms.CharField(
+        max_length=300,
+        label='Numero cloracion: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    letrinizacion = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Letrinización: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    numLetrinizacion = forms.CharField(
+        max_length=300,
+        label='Numero letrinizacion: ',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+    otrasActividades = forms.CharField(
+        max_length=300,
+        label='Otras actividades: ',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+
+class ContactoForm11(forms.Form):
+    comentariosConclusiones = forms.CharField(
+        max_length=300,
+        label='Comentarios y conclusiones: ',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=True
+    )
+
+
 
 
 class NotificacionBrote1(forms.Form):
@@ -578,6 +906,8 @@ class NotificacionBrote8(forms.Form):
             }
         )
     )
+
+
 
 class Anexo8P1(forms.Form):
     nombreFallecido=forms.ModelChoiceField(

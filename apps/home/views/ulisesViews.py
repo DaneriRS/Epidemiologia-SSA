@@ -20,52 +20,74 @@ def roles_required(roles, redirect_url=None):
 def import_excel(request):
     form=ExcelForm()
     form2=IndividualForm()
+    errorRegistro=''
+    msg=''
+    msgType=''
     if request.method == 'POST' and "Excel" in request.POST:
         excel_file = request.FILES['Subir_Excel']
         df = pd.read_excel(excel_file)
-
+        
         try:
             # Itera a través de cada fila del DataFrame
             for index, row in df.iterrows():
                 # Crea una instancia del modelo con los datos de la fila
-                obj = User(
-                    username=row['username'],
-                    first_name=row['nombre'],
-                    last_name=row['apellidos'],
-                    email=row['correo'],
-                    password=make_password(row['password']),
-                    # Continúa agregando todos los campos del modelo que quieras importar
-                )
-                # Guarda la instancia del modelo en la base de datos
-                obj.save()
-            print('todo bien')
+                user_exists = User.objects.filter(username=row['username']).exists()
+                print(user_exists)
+                if (user_exists):
+                    errorRegistro = errorRegistro + "<br>El usuario " + row['username'] + " - "+ row['nombre'] + " " + row['apellidos'] + " YA EXISTE "
+                else:
+                    obj = User(
+                        username=row['username'],
+                        first_name=row['nombre'],
+                        last_name=row['apellidos'],
+                        email=row['correo'],
+                        password=make_password(row['password']),
+                        # Continúa agregando todos los campos del modelo que quieras importar
+                    )
+                    # Guarda la instancia del modelo en la base de datos
+                    obj.save()
+            if(errorRegistro==''):
+                msg='Usuarios registrados correctamente'
+                msgType='success'
+            else:
+                msg=errorRegistro
+                msgType='danger'
+
             return render(request, 'home/registrar_excel.html',{
                 'form': form,
-                'form2': form2
+                'form2': form2,
+                'msg': msg,
+                'msgType': msgType
             })
-        except:
-            print('error')
+        except Exception as e:
+            msg="Error " + str(e)
+            msgType='danger'
             return render(request, 'home/registrar_excel.html',{
                 'form': form,
-                'form2': form2
+                'form2': form2,
+                'msg': msg,
+                'msgType': msgType
             })
     if request.method == 'POST' and "Individual" in request.POST:
-        obj = User(
-            username=request.POST['Usuario'],
-            first_name=request.POST['Nombre'],
-            last_name=request.POST['Apellidos'],
-            email=request.POST['Correo'],
-            password=make_password(request.POST['Contraseña']),
-        )
-        obj.save()
+        form2 = IndividualForm(request.POST)
+        if form2.is_valid():
+            msg='Usuario registrado correctamente'
+            msgType='success'
+            form2.save()
+        else:
+            msg='No se registro el Usuario'
+            msgType='danger'
+        
         return render(request, 'home/registrar_excel.html',{
             'form': form,
-            'form2': form2
+            'form2': form2,
+            'msg': msg,
+            'msgType': msgType
         })
     else:
         return render(request, 'home/registrar_excel.html',{
             'form': form,
-            'form2': form2
+            'form2': form2,
         })
 
 @login_required
