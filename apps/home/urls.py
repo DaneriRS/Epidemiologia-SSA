@@ -95,7 +95,7 @@ urlpatterns = [
     path('anexo8/', allViews.Anexo8View.as_view() , name="anexo8"),
 
     path('reporte/', allViews.ReporteEstudioView.as_view() , name="reporte"),
-    path('graficas/', allViews.GraficasView.as_view() , name="graficas"),
+    path('Indicadores/', allViews.GraficasView.as_view() , name="graficas"),
     
     #Reportes
     path('Reporte/Registro/', allViews.ReporteRegExcel, name = 'reporteRegExcel'),

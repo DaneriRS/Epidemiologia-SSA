@@ -1,161 +1,181 @@
 {% load static %}
 {% block content %}
-
 <div class="content">
-    <div class="col-12">
-        <div class="card card-chart">
-            <div class="card-header ">
-                <div class="row">
-                    <div class="col-sm-6 text-left">
-                        <h5 class="card-category">Total Casos</h5>
-                        <h2 class="card-title">Hepatits</h2>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-chart">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h5 class="card-category">Total Casos</h5>
+                            <h2 class="card-title">Hepatits</h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                                    <input type="radio" name="options" checked>
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Positivos</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-single-02"></i>
+                                    </span>
+                                </label>
+                                <label class="btn btn-sm btn-primary btn-simple" id="1">
+                                    <input type="radio" class="d-none d-sm-none" name="options">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Negativos</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-gift-2"></i>
+                                    </span>
+                                </label>
+                                <label class="btn btn-sm btn-primary btn-simple" id="2">
+                                    <input type="radio" class="d-none" name="options">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sospechosos</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-tap-02"></i>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="chartBig1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                            <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                                <input type="radio" name="options" checked>
-                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Positivos</span>
-                                <span class="d-block d-sm-none">
-                                    <i class="tim-icons icon-single-02"></i>
-                                </span>
-                            </label>
-                            <label class="btn btn-sm btn-primary btn-simple" id="1">
-                                <input type="radio" class="d-none d-sm-none" name="options">
-                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Negativos</span>
-                                <span class="d-block d-sm-none">
-                                    <i class="tim-icons icon-gift-2"></i>
-                                </span>
-                            </label>
-                            <label class="btn btn-sm btn-primary btn-simple" id="2">
-                                <input type="radio" class="d-none" name="options">
-                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sospechosos</span>
-                                <span class="d-block d-sm-none">
-                                    <i class="tim-icons icon-tap-02"></i>
-                                </span>
-                            </label>
-                        </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="card card-chart ">
+                <div class="card-header">
+                    <h5 class="card-category">Casos confirmados por institución </h5>
+                </div>
+                <div class="card-body">
+                    <div id="insti"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card card-chart ">
+                <div class="card-header">
+                    <h5 class="card-category">Casos confirmados por grupo de edad </h5>
+                </div>
+                <div class="card-body">
+                    <div id="edad"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 ">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Casos confirmados por Jurisdicción de residencia </h5>
+                </div>
+                <div class="card-body">
+                    <div id="juris"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <h2 class="card-header">Morbilidad</h2>
+        </div>
+        <div class="col-lg-6">
+            <div class="card card-chart ">
+                <div class="card-header">
+                    <h5 class="card-category">Defunciones por institución</h5>
+                    <!--<h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i></h3>-->
+                </div>
+                <div class="card-body">
+                    <div id="defInsti"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card card-chart ">
+                <div class="card-header">
+                    <h5 class="card-category">Defunciones por grupo de edad</h5>
+                    <!--<h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> </h3>-->
+                </div>
+                <div class="card-body">
+                    <div id="defEdad"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment "" %} {% endcomment %}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Total Jurisdicción</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> {{Casos}}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="chartLinePurple"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="chart-area">
-                    <canvas id="chartBig1"></canvas>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Daily Sales</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="CountryChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                    <div class="col-lg-6 col-md-12   ">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h5 class="card-title">Casos confirmados por institución </h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="insti"></div>
-                            </div>
-                        </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Completed Tasks</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="chartLineGreen"></canvas>
                     </div>
-                    <div class="col-lg-6 col-md-12   ">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h5 class="card-title">Casos confirmados por grupo de edad </h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="edad"></div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="row">
-                    <div class="col-lg-12 ">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h5 class="card-title">Casos confirmados por Jurisdicción de residencia </h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="juris"></div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h5 class="card-category">Total Jurisdicción</h5>
-                                <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> {{Casos}}</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="chartLinePurple"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h5 class="card-category">Daily Sales</h5>
-                                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="CountryChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h5 class="card-category">Completed Tasks</h5>
-                                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="chartLineGreen"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-                
-            <div class="row">
-            <div class="col-sm-6 text-left">
-                        <h5 class="card-category">Morbilidad</h5>
-                    </div>
-                <div class="col-lg-4 col-md-12   ">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h5 class="card-title">Defunciones por institución </h5>
-                            </div>
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12   ">
-                        <div class="card ">
-                            <div class="card-header">
-                                <h5 class="card-title">Defunciones por grupo de edad </h5>
-                            </div>
-                            <div class="card-body">
-                            </div>
-                        </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="{% static 'assets/js/graficas.js' %}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script src="https://code.highcharts.com/modules/treemap.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <script >
 
 // Data retrieved from https://netmarketshare.com/
+
+// Age categories
+var gruposEdad = [
+    '0-09 Años', '10-19 Años', '20-29 Años', '25-29 Años', '30-39 Años','40-49 Años',
+    '50-59 Años', '60-69 Años', '70-79 Años', '80+ Años',
+];
 // Build the chart
 Highcharts.chart('insti', {
     chart: {
@@ -180,13 +200,14 @@ Highcharts.chart('insti', {
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: false
+                enabled: true,
+                format: '<b>{point.percentage:.1f} %</b>'
             },
             showInLegend: true
         }
     },
     series: [{
-        name: 'Porcentaje',
+        name: 'Positivos',
         colorByPoint: true,
         data: [{
             name: 'SSA',
@@ -194,92 +215,103 @@ Highcharts.chart('insti', {
             sliced: true,
             selected: true
         },  {
+            name: 'IMSS',
+            y: 4.63
+        },  {
             name: 'ISSSTE',
             y: 12.82
         },  {
-            name: 'IMSS',
+            name: 'IMSS-BIENESTAR',
             y: 4.63
+        }, {
+            name: 'PRIVADA',
+            y: 1.28
         }, {
             name: 'SEMAR',
             y: 2.44
         }, {
             name: 'SEDENA',
             y: 2.02
-        }, {
-            name: 'Other',
-            y: 1.28
         }]
     }]
 });
 
-// Age categories
-var categories = [
-    '0-9', '10-19', '20-29', '25-29', '30-39','40-49',
-    '50-59', '60-69', '70-79', '80+'
-];
+
 
 Highcharts.chart('edad', {
-    chart: {
-        type: 'bar'
-    },
-    title: {
-        text: null,
+  chart: {
+    type: 'bar'
+  },
+  title: {
+    text: null,
+  },
+  accessibility: {
+    point: {
+      valueDescriptionFormat: '{index}. Edad {xDescription}, {value}%.'
+    }
+  },
+  xAxis: [{
+    categories: gruposEdad,
+    labels: {
+      step: 1
     },
     accessibility: {
-        point: {
-            valueDescriptionFormat: '{index}. Age {xDescription}, {value}%.'
-        }
+      description: 'Edad (hombre)'
     },
-    xAxis: [{
-        categories: categories,
-        reversed: false,
-        labels: {
-            step: 1
-        },
-        accessibility: {
-            description: 'Age (hombre)'
-        }
-    }, { // mirror axis on right side
-        opposite: true,
-        reversed: false,
-        categories: categories,
-        linkedTo: 0,
-        labels: {
-            step: 1
-        },
-        accessibility: {
-            description: 'Age (mujer)'
-        }
-    }],
-    
-
-    plotOptions: {
-        series: {
-            stacking: 'normal',
-            borderRadius: '50%'
-        }
+    title: {
+      text: 'Grupo de edad'
     },
-
-    tooltip: {
-        formatter: function () {
-            return '<b>' + this.series.name + ', Edad ' + this.point.category + '</b><br/>' +
-                'Porcentaje: ' + Highcharts.numberFormat(Math.abs(this.point.y), 1) + '%';
-        }
+  }, { // mirror axis on right side
+    opposite: true,
+    reversed: false,
+    labels: {
+      step: 1
     },
+    accessibility: {
+      description: 'Edad (mujer)'
+    }
+  }],
+  yAxis: {
+    title: {
+      text: 'Confirmados'
+    },
+    labels: {
+      formatter: function() {
+        return Math.abs(this.value) + '%';
+      }
+    },
+    accessibility: {
+      description: 'Confirmados',
+      rangeDescription: 'Range: 0 to 5%'
+    }
+  },
 
-    series: [{
-        name: 'Hombre',
-        data: [
-            -8.98, -7.52, -6.65, -5.72, -4.85,
-            -3.71, -2.76, -2.07, -1.70, -1.47,
-        ]
-    }, {
-        name: 'Mujer',
-        data: [
-            8.84, 7.42, 6.57, 5.68, 4.83,
-            3.74, 2.80, 2.14, 1.79, 1.59,
-        ]
-    }]
+  plotOptions: {
+    series: {
+      stacking: 'normal',
+      borderRadius: '50%'
+    }
+  },
+
+  tooltip: {
+    formatter: function() {
+      return '<b>' + this.series.name + ', : ' + '#' + '</b><br/>' +
+        'Porcentaje: ' + Highcharts.numberFormat(Math.abs(this.point.y), 1) + '%';
+    }
+  },
+  series: [{
+    name: 'Hombre',
+    data: [
+      -8.98, -7.52, -6.65, -5.72, -4.85,
+      -3.71, -2.76, -2.07, -1.70, -1.47,
+    ]
+  }, {
+    name: 'Mujer',
+    data: [
+      8.84, 7.42, 6.57, 5.68, 4.83,
+      3.74, 2.80, 2.14, 1.79, 1.59,
+    ]
+  }]
 });
 
 Highcharts.chart('juris', {
@@ -326,8 +358,146 @@ Highcharts.chart('juris', {
         }]
     }],
     title: {
-        text: 'Highcharts Treemap'
+        text: null
     }
+});
+
+
+Highcharts.chart('defInsti', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: null,
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.percentage:.1f} %</b>',
+            },
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Defunciones',
+        colorByPoint: true,
+        data: [{
+            name: 'SSA',
+            y: 74.77,
+            sliced: true,
+            selected: true
+        },  {
+            name: 'IMSS',
+            y: 4.63
+        },  {
+            name: 'ISSSTE',
+            y: 12.82
+        },  {
+            name: 'IMSS-BIENESTAR',
+            y: 6.63
+        }, {
+            name: 'PRIVADA',
+            y: 0.28
+        }, {
+            name: 'SEMAR',
+            y: 1.44
+        }, {
+            name: 'SEDENA',
+            y: 0.82
+        }]
+    }]
+});
+
+
+
+Highcharts.chart('defEdad', {
+  chart: {
+    type: 'bar'
+  },
+  title: {
+    text: null,
+  },
+  accessibility: {
+    point: {
+      valueDescriptionFormat: '{index}. Edad {xDescription}, {value}%.'
+    }
+  },
+  xAxis: [{
+    categories: gruposEdad,
+    labels: {
+      step: 1
+    },
+    accessibility: {
+      description: 'Edad (hombre)'
+    },
+    title: {
+      text: 'Grupo de edad'
+    },
+  }, { // mirror axis on right side
+    opposite: true,
+    reversed: false,
+    labels: {
+      step: 1
+    },
+    accessibility: {
+      description: 'Edad (mujer)'
+    }
+  }],
+  yAxis: {
+    title: {
+      text: 'Confirmados'
+    },
+    labels: {
+      formatter: function() {
+        return Math.abs(this.value) + '%';
+      }
+    },
+    accessibility: {
+      description: 'Confirmados',
+      rangeDescription: 'Range: 0 to 5%'
+    }
+  },
+
+  plotOptions: {
+    series: {
+      stacking: 'normal',
+      borderRadius: '50%'
+    }
+  },
+
+  tooltip: {
+    formatter: function() {
+      return '<b>' + this.series.name + ', : ' + '#' + '</b><br/>' +
+        'Porcentaje: ' + Highcharts.numberFormat(Math.abs(this.point.y), 1) + '%';
+    }
+  },
+  series: [{
+    name: 'Hombre',
+    data: [
+      -8.98, -7.52, -6.65, -5.72, -4.85,
+      -3.71, -2.76, -2.07, -1.70, -1.47,
+    ]
+  }, {
+    name: 'Mujer',
+    data: [
+      8.84, 7.42, 6.57, 5.68, 4.83,
+      3.74, 2.80, 2.14, 1.79, 1.59,
+    ]
+  }]
 });
 
 </script>

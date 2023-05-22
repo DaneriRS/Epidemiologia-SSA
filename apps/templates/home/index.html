@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Dashboard {% endblock %} 
+{% block title %} Inicio {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -26,15 +26,16 @@
         </div>
 
         <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                {% include 'home/graficas.html' %}
-                            </div>
-                        </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {% include 'home/graficas.html' %}
                     </div>
                 </div>
-        {% comment %} <div class="row">
+            </div>
+        </div>
+        {% comment %}
+        <div class="row">
             <div class="col-12">
                 <div class="card card-chart">
                     <div class="card-header ">
