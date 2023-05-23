@@ -68,23 +68,22 @@ HEPATITIS_CHOICES = (
 )
 
 ESCOLARIDAD_CHOICES = (
-    ('1', 'Ninguna'),
-    ('2', 'Preescolar'),
-    ('3', 'Primaria Incompleta'),
-    ('4', 'Primaria Completa'),
-    ('5', 'Secundaria Incompleta'),
-    ('6', 'Secundaria Completa'),
-    ('7', 'Preparatoria Incompleta'),
-    ('8', 'Preparatoria Completa'),
-    ('9', 'Profesional'),
-    ('10', 'Posgrado'),
-    ('11', 'Se ignora'),
-
+    ('NINGUNA', 'NINGUNA'),
+    ('PRIMARIA INCOMPLETA', 'PRIMARIA INCOMPLETA'),
+    ('SECUNDARIA INCOMPLETA', 'SECUNDARIA INCOMPLETA'),
+    ('BACHILLERATO O PREPARATORIA INCOMPLETA', 'BACHILLERATO O PREPARATORIA INCOMPLETA'),
+    ('PROFESIONAL', 'PROFESIONAL'),
+    ('SE IGNORA', 'SE IGNORA'),
+    ('PRE-ESCOLAR', 'PRE-ESCOLAR'),
+    ('PRIMARIA COMPLETA', 'PRIMARIA COMPLETA'),
+    ('SECUNDARIA COMPLETA', 'SECUNDARIA COMPLETA'),
+    ('BACHILLERATO O PREPARATORIA COMPLETA', 'BACHILLERATO O PREPARATORIA COMPLETA'),
+    ('POSGRADO', 'POSGRADO'),
 )
 
 RATIFICA_CHOICES = (
-    ('1', 'Ratifica'),
-    ('2', 'Rectifica'),
+    ('Ratifica', 'Ratifica'),
+    ('Rectifica', 'Rectifica'),
 )
 
 PROCEDENCIA_OPCIONES = [
@@ -114,7 +113,26 @@ CONTACTO_CHOICES = (
     ('I', 'Intradomiciliario'),
     ('E', 'Extradomiciliario'),
 )
-
+AFILIACION_SERVICIOS_OPCIONES = [
+    ('NINGUNA', 'NINGUNA'),
+    ('ISSSTE', 'ISSSTE'),
+    ('SEDENA', 'SEDENA'),
+    ('OTRA', 'OTRA'),
+    ('SE IGNORA', 'SE IGNORA'),
+    ('IMSS', 'IMSS'),
+    ('PEMEX', 'PEMEX'),
+    ('SEMAR', 'SEMAR'),
+    ('IMSS BIENESTAR', 'IMSS BIENESTAR'),
+]
+CERTIFICADA_POR_OPCIONES = [
+    ('MEDICO TRATANTE', 'MEDICO TRATANTE'),
+    ('MEDICO LEGISTA', 'MEDICO LEGISTA'),
+    ('OTRO MEDICO', 'OTRO MEDICO'),
+    ('PERSONAL AUTORIZADO POR SS', 'PERSONAL AUTORIZADO POR SS'),
+    ('AUTORIDAD CIVIL', 'AUTORIDAD CIVIL'),
+    ('OTRO', 'OTRO'),
+    ('SE IGNORA', 'SE IGNORA'),
+]
 class CustomUserManager(models.Manager):
     def imprimir(self):
         return self.email
@@ -255,9 +273,9 @@ class RegistroEstudio(models.Model):
     otroDia = models.CharField(verbose_name = "Otro Diagnóstico", max_length=50, null=True, blank=True)
     
     paciente = models.ForeignKey(Paciente, verbose_name="Paciente", on_delete=models.SET_NULL, null=True, blank=True)
-    edadAnio = models.PositiveIntegerField(verbose_name="Edad (años)", null=True, blank=True)
-    edadMes = models.PositiveIntegerField(verbose_name="Edad (meses)", null=True, blank=True)
-    edadDia = models.PositiveIntegerField(verbose_name="Edad (días)", null=True, blank=True)
+    edadAnio = models.SmallIntegerField(verbose_name="Edad (años)", null=True, blank=True)
+    edadMes = models.SmallIntegerField(verbose_name="Edad (meses)", null=True, blank=True)
+    edadDia = models.SmallIntegerField(verbose_name="Edad (días)", null=True, blank=True)
     
     
     
@@ -727,30 +745,78 @@ class DistribucionGeografica(models.Model):
 
 class Anexo8(models.Model):
     nombreFallecido = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE)
+    edadAnio = models.SmallIntegerField(verbose_name="Edad en Anio")
+    edadMes = models.SmallIntegerField(verbose_name="Edad en Mes")
+    edadDia = models.SmallIntegerField(verbose_name="Edad en Dia")
+    edadHora = models.SmallIntegerField(verbose_name="Edad en Hora", null=True, blank=True)
+    edadMin = models.SmallIntegerField(verbose_name="Edad en Minuto", null=True, blank=True)
+    # institucion = models.ForeignKey(Institucion, on_delete=models.CASCADE) Trata de lo mismo pero se manejan otras opciones de acuerdo al INEGI 
+    afiliacionServicios = models.CharField(verbose_name="Afiliacion de Servicios Medicos", max_length=20, choices=AFILIACION_SERVICIOS_OPCIONES)
     fechaDefuncion = models.DateField(verbose_name = "Fecha de defunción", null=True, blank=True)
-    escolaridad = models.CharField(verbose_name='Escolaridad', max_length=10, choices=ESCOLARIDAD_CHOICES, null=True, blank=True)
-    ocupacion = models.CharField(verbose_name='Ocupación', max_length=30, null=True, blank=True)
-    lugardeResidenciaMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE)
-    lugardeResidenciaEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE)
-    lugarDefMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE, related_name='municipioDef')
-    lugarDefEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE, related_name='entidadDef')
-    nombreCertificante = models.CharField(verbose_name="Nombre del Certificante", max_length=20)
+    escolaridad = models.CharField(verbose_name='Escolaridad', max_length=50, choices=ESCOLARIDAD_CHOICES)
+    ocupacion = models.CharField(verbose_name='Ocupación', max_length=50)
+    certificadaPor = models.CharField(verbose_name='Certificada por', max_length=50, choices=CERTIFICADA_POR_OPCIONES)
+    lugardeResidenciaMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE, verbose_name="Lugar de residencia habitual, Municipio")
+    lugardeResidenciaEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE, verbose_name="Lugar de residencia habitual, Entidad")
+    lugarDefMuni = models.ForeignKey(Municipio, on_delete=models.CASCADE, related_name='municipioDef', verbose_name="Lugar donde ocurrio la defuncion, Municipio")
+    lugarDefEnti = models.ForeignKey(Entidad, on_delete=models.CASCADE, related_name='entidadDef', verbose_name="Lugar donde ocurrio la defuncion, Entidad")
+    nombreCertificante = models.CharField(verbose_name="Nombre del Certificante", max_length=30)
 
-    causasDef = models.CharField(verbose_name="Causas de defunción", max_length=200)
-    causasDef2 = models.CharField(verbose_name="Causas de defunción2", max_length=100)
+    causasDefI = models.CharField(verbose_name="Causas de defunción I (1)", max_length=100)
+    causaDefInterI = models.CharField(verbose_name="Causas de defunción I (1) Intervalo", max_length=100)
+    causaDefCodigoCieI = models.CharField(verbose_name="Causas de defunción I (1) Codigo CIE", max_length=4)
+    causaBasicaI = models.CharField(verbose_name="Causas de defunción I (1) Causa Basica", max_length=100)
+    causasDefI2 = models.CharField(verbose_name="Causas de defunción I (2)", max_length=100)
+    causaDefInterI2 = models.CharField(verbose_name="Causas de defunción I (2) Intervalo", max_length=100)
+    causaDefCodigoCieI2 = models.CharField(verbose_name="Causas de defunción I (2) Codigo CIE", max_length=4)
+    causasDefI3 = models.CharField(verbose_name="Causas de defunción I (3)", max_length=100)
+    causaDefInterI3 = models.CharField(verbose_name="Causas de defunción I (3) Intervalo", max_length=100)
+    causaDefCodigoCieI3 = models.CharField(verbose_name="Causas de defunción I (3) Codigo CIE", max_length=4)
+    causasDefI4 = models.CharField(verbose_name="Causas de defunción I (4)", max_length=100)
+    causaDefInterI4 = models.CharField(verbose_name="Causas de defunción I (4) Intervalo", max_length=100)
+    causaDefCodigoCieI4 = models.CharField(verbose_name="Causas de defunción I (4) Codigo CIE", max_length=4)
+    causasDefII1 = models.CharField(verbose_name="Causas de defunción II (1)", max_length=100)
+    causaDefInterII1 = models.CharField(verbose_name="Causas de defunción II (1) Intervalo", max_length=100)
+    causaDefCodigoCieII1 = models.CharField(verbose_name="Causas de defunción II (1) Codigo CIE", max_length=4)
+    causasDefII2 = models.CharField(verbose_name="Causas de defunción II (2)", max_length=100)
+    causaDefInterII2 = models.CharField(verbose_name="Causas de defunción II (2) Intervalo", max_length=100)
+    causaDefCodigoCieII2 = models.CharField(verbose_name="Causas de defunción II (2) Codigo CIE", max_length=4)
     causaVigEpi = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
+    causaVigEpiCodigoCie = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica, Codigo CIE", max_length=4)
 
-    ratifica = models.CharField(verbose_name="Ratifica", max_length=100, choices=RATIFICA_CHOICES, null=True, blank=True)
-    causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
-    causasDef3 = models.CharField(verbose_name="Causas de defunción3", max_length=200)
-    causasDef4 = models.CharField(verbose_name="Causas de defunción4", max_length=100)
+    ratifica = models.CharField(verbose_name="Ratifica", max_length=20, choices=RATIFICA_CHOICES)
+    causasDef2I = models.CharField(verbose_name="Causas de defunción 2 I (1)", max_length=100, blank=True, null=True)
+    causaDefInter2I = models.CharField(verbose_name="Causas de defunción 2 I (1) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCi22I = models.CharField(verbose_name="Causas de defunción 2 I (1) Codigo CIE", max_length=4, blank=True, null=True)
+    causaBasica2I = models.CharField(verbose_name="Causas de defunción 2 I (1) Causa Basica", max_length=100, blank=True, null=True)
+    causasDef2I2 = models.CharField(verbose_name="Causas de defunción 2 I (2)", max_length=100, blank=True, null=True)
+    causaDefInter2I2 = models.CharField(verbose_name="Causas de defunción 2 I (2) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCie2I2 = models.CharField(verbose_name="Causas de defunción 2 I (2) Codigo CIE", max_length=4, blank=True, null=True)
+    causasDef2I3 = models.CharField(verbose_name="Causas de defunción 2 I (3)", max_length=100, blank=True, null=True)
+    causaDefInter2I3 = models.CharField(verbose_name="Causas de defunción 2 I (3) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCie2I3 = models.CharField(verbose_name="Causas de defunción 2 I (3) Codigo CIE", max_length=4, blank=True, null=True)
+    causasDef2I4 = models.CharField(verbose_name="Causas de defunción 2 I (4)", max_length=100, blank=True, null=True)
+    causaDefInter2I4 = models.CharField(verbose_name="Causas de defunción 2 I (4) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCie2I4 = models.CharField(verbose_name="Causas de defunción 2 I (4) Codigo CIE", max_length=4, blank=True, null=True)
+    causasDef2II1 = models.CharField(verbose_name="Causas de defunción 2 II (1)", max_length=100, blank=True, null=True)
+    causaDefInter2II1 = models.CharField(verbose_name="Causas de defunción 2 II (1) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCie2II1 = models.CharField(verbose_name="Causas de defunción 2 II (1) Codigo CIE", max_length=4, blank=True, null=True)
+    causasDef2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2)", max_length=100, blank=True, null=True)
+    causaDefInter2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2) Intervalo", max_length=100, blank=True, null=True)
+    causaDefCodigoCie2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2) Codigo CIE", max_length=4, blank=True, null=True)
+    causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2", max_length=100, blank=True, null=True)
+    causaVigEpiCodigoCie2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2, Codigo CIE", max_length=4, blank=True, null=True)
+    # causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
+    # causasDef3 = models.CharField(verbose_name="Causas de defunción3", max_length=200)
+    # causasDef4 = models.CharField(verbose_name="Causas de defunción4", max_length=100)
     fechaRecoleccion = models.DateField(verbose_name = "Fecha de recolección", null=True, blank=True)
     fechaInicio = models.DateField(verbose_name = "Fecha de inicio", null=True, blank=True)
     fechaConclusion = models.DateField(verbose_name = "Fecha de conclusión", null=True, blank=True)
     reporteInegi = models.DateField(verbose_name = "Fecha de reporte a INEGI", null=True, blank=True)
-    observaciones = models.CharField(verbose_name="Observaciones", max_length=200, null=True, blank=True)
-    nombreResponsableInv = models.CharField(verbose_name="Nombre del responsable de la investigación", max_length=50, null=True, blank=True)
+    observaciones = models.TextField(verbose_name="Observaciones")
+    nombreResponsableInv = models.CharField(verbose_name="Nombre del responsable de la investigación", max_length=50)
+    apellidoPaResponsableInv = models.CharField(verbose_name="Apellido paterno del responsable de la investigación", max_length=50)
+    apellidoMaResponsableInv = models.CharField(verbose_name="Apellido materno del responsable de la investigación", max_length=50)
     cargo = models.CharField(verbose_name="Cargo", max_length=50, null=True, blank=True)
     firma = models.CharField(verbose_name="Firma", max_length=50, null=True, blank=True)
 
