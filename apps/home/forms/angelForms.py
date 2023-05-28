@@ -472,12 +472,12 @@ class ContactoForm7(forms.Form):
     )
     
 class ContactoFormEdit(forms.Form):
-    rel = forms.CharField(
-        label="insano",
+    id = forms.CharField(
+        label="id",
         widget=forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control',
-                # 'readOnly': 'true'
+                'hidden': 'True'
             }
         ),
         required=False,

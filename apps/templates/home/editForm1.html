@@ -368,13 +368,7 @@
                     {{ wizard.form.management_form}} 
                     {% for form in wizard.form.forms %}
                         <div class="form-row">
-                            <div class="form-group col-md-3">
-                                {{form.rel.label}}
-                                {% if form.rel.field.required %}
-                                    <span class="text-danger">*</span>
-                                {% endif %}
-                                {{form.rel}}
-                            </div>
+                            {{form.id}}
                             <div class="form-group col-md-3">
                                 {{form.nombre.label}}
                                 {% if form.nombre.field.required %}

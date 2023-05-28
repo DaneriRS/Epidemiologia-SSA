@@ -156,18 +156,15 @@ class RegistroEstudioUpdateView(CookieWizardView):
                 estudios=Estudio.objects.filter(registroEstudio_id=project.id)
                 for estudio in estudios:
                     project_d = model_to_dict(estudio)
-                    print (model_to_dict(estudio))
-                    print (project_d)
                     project_d['id'] = estudio.id
-                    print (project_d)
                     project_dict.append(project_d)
                 return project_dict
             elif step == "6":
                 project_dict=[]
-                # contactos=Contacto.objects.filter(registroEstudio_id=project.id)
                 contactos = Contacto.objects.filter(registroEstudio_id=project.id)
                 for contacto in contactos:
                     project_d = model_to_dict(contacto)
+                    project_d['id'] = contacto.id
                     project_dict.append(project_d)
                 return project_dict
             else:
@@ -194,23 +191,29 @@ class RegistroEstudioUpdateView(CookieWizardView):
         re=RegistroEstudio.objects.filter(id=id)
         re.update(**registroData)
 
-        # for item in registroDataFormSet1:
-        #     est=Estudio.objects.get(id=item['id'])
-        #     est.nombre=item['nombre']
-        #     est.tipo=item['tipo']
-        #     est.fecha=item['fecha']
-        #     est.resultado=item['resultado']
-        #     est.save()
+        for item in registroDataFormSet1:
+            est=Estudio.objects.get(id=item['id'])
+            est.nombre=item['nombre']
+            est.tipo=item['tipo']
+            est.fecha=item['fecha']
+            est.resultado=item['resultado']
+            est.save()
         
         for item in registroDataFormSet2:
-            est=Contacto.objects.get(idContacto=item['idContacto'])
-            est.nombre=item['nombre'],
-            est.domicilio=item['domicilio'],
-            est.edad=item['edad'],
-            est.sexo=item['sexo'],
-            est.contacto=item['contacto'],
-            est.caso=item['caso']
-            est.save()
+            nombre=item['nombre']
+            domicilio=item['domicilio']
+            edad=item['edad']
+            sexo=item['sexo']
+            contacto=item['contacto']
+            caso=item['caso']
+            cont=Contacto.objects.get(id=item['id'])
+            cont.nombre=nombre
+            cont.domicilio=domicilio
+            cont.edad=edad
+            cont.sexo=sexo
+            cont.contacto=contacto
+            cont.caso=caso
+            cont.save()
 
         return redirect('listaFormularios')
 
