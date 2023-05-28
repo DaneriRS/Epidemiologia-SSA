@@ -30,11 +30,18 @@ FORMS = [
             ("10", ContactoForm11),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
+FormSET21=formset_factory(ContactoFormEdit, extra=0)
 FORMS2 = [
             ("1", ContactForm1),
             ("2", ContactForm2),
             ("3", ContactForm3),
-            ("4", FormSET2)
+            ("4", FormSET2),
+            ("5", ContactoForm6),
+            ("6", FormSET21),
+            ("7", ContactoForm8),
+            ("8", ContactoForm9),
+            ("9", ContactoForm10),
+            ("10", ContactoForm11),
         ]
 FormSET3=formset_factory(NotificacionBrote5, extra=1)
 FORMS3 =[
@@ -42,7 +49,8 @@ FORMS3 =[
             ("2", NotificacionBrote2),
             ("3", FormSET3),
             ("4", NotificacionBrote6),
-            ("5", NotificacionBrote7)
+            ("5", NotificacionBrote7),
+            ("6", NotificacionBrote3)
         ]
 FormSET4=formset_factory(NotificacionBrote8, extra=0)
 FORMS4 =[
@@ -75,7 +83,7 @@ class RegistroEstudioView(CookieWizardView):
         initial = self.initial_dict.get(step, {})
         if step == '1':
             # Set initial data for step 2 form here
-            initial['unidadNot'] = self.request.user.informacionusuario.unidad
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad.id
             
         return initial
 
@@ -106,6 +114,7 @@ class RegistroEstudioView(CookieWizardView):
             )
             est.save()
 
+        cantidad = 0
         for item in registroDataFormSet12:
             cont=Contacto(
                 nombre=item['nombre'],
@@ -113,9 +122,14 @@ class RegistroEstudioView(CookieWizardView):
                 edad=item['edad'],
                 sexo=item['sexo'],
                 contacto=item['contacto'],
-                caso=item['caso']
+                caso=item['caso'],
+                registroEstudio=rd
             )
             cont.save()
+            if cont.caso == 'Si':
+                cantidad += 1
+        if cantidad >= 2:
+            return redirect('notificacionBrote')
         return redirect('listaFormularios')
 
 class RegistroEstudioUpdateView(CookieWizardView):
@@ -136,6 +150,13 @@ class RegistroEstudioUpdateView(CookieWizardView):
                     project_d = model_to_dict(estudio)
                     project_dict.append(project_d)
                 return project_dict
+            elif step == "6":
+                project_dict=[]
+                contactos=Contacto.objects.filter(registroEstudio_id=project.id)
+                for contacto in contactos:
+                    project_d = model_to_dict(contacto)
+                    project_dict.append(project_d)
+                return project_dict
             else:
                 project_dict = model_to_dict(project)
                 return project_dict
@@ -144,14 +165,18 @@ class RegistroEstudioUpdateView(CookieWizardView):
         id = self.kwargs['id']
 
         registroDataFormSet1=[]
+        registroDataFormSet2=[]
         registroData={}
 
         for i,form in enumerate(form_list):
-            if i != 3:
+            if i != 3 and i != 5:
                 registroData.update(form.cleaned_data)
-            else:
+            elif i == 3:
                 for formset in form:
                     registroDataFormSet1.append(formset.cleaned_data)
+            elif i == 5:
+                for formset in form:
+                    registroDataFormSet2.append(formset.cleaned_data)
 
         re=RegistroEstudio.objects.filter(id=id)
         re.update(**registroData)
@@ -162,6 +187,16 @@ class RegistroEstudioUpdateView(CookieWizardView):
             est.tipo=item['tipo']
             est.fecha=item['fecha']
             est.resultado=item['resultado']
+            est.save()
+        
+        for item in registroDataFormSet2:
+            est=Contacto.objects.get(id=item['id'])
+            est.nombre=item['nombre'],
+            est.domicilio=item['domicilio'],
+            est.edad=item['edad'],
+            est.sexo=item['sexo'],
+            est.contacto=item['contacto'],
+            est.caso=item['caso']
             est.save()
 
         return redirect('listaFormularios')

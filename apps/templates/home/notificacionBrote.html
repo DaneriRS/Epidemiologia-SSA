@@ -198,6 +198,709 @@
                     {% endif %}
                     {{wizard.form.accionesPrevControl}}
                     <br>
+                {% elif wizard.steps.step1 == 6 %}
+                    {% comment %} Numero de Casos {% endcomment %}
+                    <div class="text-left">
+                        <h2 class="card-title">III - DISTRIBUCIÓN POR PERSONA</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">GRUPO DE EDAD</h4>
+                        </div>
+                        <div class="form-group col-md-9 text-center">
+                            <h4 class="card-title">NÚMERO DE CASOS</h4>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">1</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1MascNumerosCasos.label}}
+                            {% if wizard.form.menor1MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1FemNumerosCasos.label}}
+                            {% if wizard.form.menor1FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1TotNumerosCasos.label}}
+                            {% if wizard.form.menor1TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">1 - 4</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14MascNumerosCasos.label}}
+                            {% if wizard.form.de14MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14FemNumerosCasos.label}}
+                            {% if wizard.form.de14FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14TotNumerosCasos.label}}
+                            {% if wizard.form.de14TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">5 - 9</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59MascNumerosCasos.label}}
+                            {% if wizard.form.de59MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59FemNumerosCasos.label}}
+                            {% if wizard.form.de59FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59TotNumerosCasos.label}}
+                            {% if wizard.form.de59TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">10 - 14</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014MascNumerosCasos.label}}
+                            {% if wizard.form.de1014MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014FemNumerosCasos.label}}
+                            {% if wizard.form.de1014FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014TotNumerosCasos.label}}
+                            {% if wizard.form.de1014TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">15 - 19</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519MascNumerosCasos.label}}
+                            {% if wizard.form.de1519MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519FemNumerosCasos.label}}
+                            {% if wizard.form.de1519FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519TotNumerosCasos.label}}
+                            {% if wizard.form.de1519TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">20 - 24</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024MascNumerosCasos.label}}
+                            {% if wizard.form.de2024MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024FemNumerosCasos.label}}
+                            {% if wizard.form.de2024FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024TotNumerosCasos.label}}
+                            {% if wizard.form.de2024TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">25 - 44</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544MascNumerosCasos.label}}
+                            {% if wizard.form.de2544MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544FemNumerosCasos.label}}
+                            {% if wizard.form.de2544FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544TotNumerosCasos.label}}
+                            {% if wizard.form.de2544TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">45 - 49</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549MascNumerosCasos.label}}
+                            {% if wizard.form.de4549MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549FemNumerosCasos.label}}
+                            {% if wizard.form.de4549FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549TotNumerosCasos.label}}
+                            {% if wizard.form.de4549TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">50 - 59</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059MascNumerosCasos.label}}
+                            {% if wizard.form.de5059MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059FemNumerosCasos.label}}
+                            {% if wizard.form.de5059FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059TotNumerosCasos.label}}
+                            {% if wizard.form.de5059TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">60 - 64</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064MascNumerosCasos.label}}
+                            {% if wizard.form.de6064MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064FemNumerosCasos.label}}
+                            {% if wizard.form.de6064FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064TotNumerosCasos.label}}
+                            {% if wizard.form.de6064TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">65</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65MascNumerosCasos.label}}
+                            {% if wizard.form.mas65MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65FemNumerosCasos.label}}
+                            {% if wizard.form.mas65FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65TotNumerosCasos.label}}
+                            {% if wizard.form.mas65TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">SE IGNORA</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraMascNumerosCasos.label}}
+                            {% if wizard.form.seIgnoraMascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraMascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraFemNumerosCasos.label}}
+                            {% if wizard.form.seIgnoraFemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraFemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraTotNumerosCasos.label}}
+                            {% if wizard.form.seIgnoraTotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraTotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">TOTAL</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalMascNumerosCasos.label}}
+                            {% if wizard.form.totalMascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalMascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalFemNumerosCasos.label}}
+                            {% if wizard.form.totalFemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalFemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalTotNumerosCasos.label}}
+                            {% if wizard.form.totalTotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalTotNumerosCasos}}
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    {% comment %} Numero de Defunciones {% endcomment %}
+
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">GRUPO DE EDAD</h4>
+                        </div>
+                        <div class="form-group col-md-9 text-center">
+                            <h4 class="card-title">NÚMERO DE DEFUNCIONES</h4>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">1</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1MascNumerosCasos.label}}
+                            {% if wizard.form.menor1MascNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1MascNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1FemNumerosCasos.label}}
+                            {% if wizard.form.menor1FemNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1FemNumerosCasos}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.menor1TotNumerosCasos.label}}
+                            {% if wizard.form.menor1TotNumerosCasos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.menor1TotNumerosCasos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">1 - 4</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14MascNumerosDefunciones.label}}
+                            {% if wizard.form.de14MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14FemNumerosDefunciones.label}}
+                            {% if wizard.form.de14FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de14TotNumerosDefunciones.label}}
+                            {% if wizard.form.de14TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de14TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">5 - 9</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59MascNumerosDefunciones.label}}
+                            {% if wizard.form.de59MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59FemNumerosDefunciones.label}}
+                            {% if wizard.form.de59FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de59TotNumerosDefunciones.label}}
+                            {% if wizard.form.de59TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de59TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">10 - 14</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014MascNumerosDefunciones.label}}
+                            {% if wizard.form.de1014MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014FemNumerosDefunciones.label}}
+                            {% if wizard.form.de1014FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1014TotNumerosDefunciones.label}}
+                            {% if wizard.form.de1014TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1014TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">15 - 19</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519MascNumerosDefunciones.label}}
+                            {% if wizard.form.de1519MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519FemNumerosDefunciones.label}}
+                            {% if wizard.form.de1519FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de1519TotNumerosDefunciones.label}}
+                            {% if wizard.form.de1519TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de1519TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">20 - 24</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024MascNumerosDefunciones.label}}
+                            {% if wizard.form.de2024MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024FemNumerosDefunciones.label}}
+                            {% if wizard.form.de2024FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2024TotNumerosDefunciones.label}}
+                            {% if wizard.form.de2024TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2024TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">25 - 44</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544MascNumerosDefunciones.label}}
+                            {% if wizard.form.de2544MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544FemNumerosDefunciones.label}}
+                            {% if wizard.form.de2544FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de2544TotNumerosDefunciones.label}}
+                            {% if wizard.form.de2544TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de2544TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">45 - 49</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549MascNumerosDefunciones.label}}
+                            {% if wizard.form.de4549MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549FemNumerosDefunciones.label}}
+                            {% if wizard.form.de4549FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de4549TotNumerosDefunciones.label}}
+                            {% if wizard.form.de4549TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de4549TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">50 - 59</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059MascNumerosDefunciones.label}}
+                            {% if wizard.form.de5059MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059FemNumerosDefunciones.label}}
+                            {% if wizard.form.de5059FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de5059TotNumerosDefunciones.label}}
+                            {% if wizard.form.de5059TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de5059TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">60 - 64</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064MascNumerosDefunciones.label}}
+                            {% if wizard.form.de6064MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064FemNumerosDefunciones.label}}
+                            {% if wizard.form.de6064FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.de6064TotNumerosDefunciones.label}}
+                            {% if wizard.form.de6064TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.de6064TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">65</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65MascNumerosDefunciones.label}}
+                            {% if wizard.form.mas65MascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65MascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65FemNumerosDefunciones.label}}
+                            {% if wizard.form.mas65FemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65FemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.mas65TotNumerosDefunciones.label}}
+                            {% if wizard.form.mas65TotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.mas65TotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">SE IGNORA</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraMascNumerosDefunciones.label}}
+                            {% if wizard.form.seIgnoraMascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraMascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraFemNumerosDefunciones.label}}
+                            {% if wizard.form.seIgnoraFemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraFemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.seIgnoraTotNumerosDefunciones.label}}
+                            {% if wizard.form.seIgnoraTotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.seIgnoraTotNumerosDefunciones}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2 text-center">
+                            <h4 class="card-title">TOTAL</h4>
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalMascNumerosDefunciones.label}}
+                            {% if wizard.form.totalMascNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalMascNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalFemNumerosDefunciones.label}}
+                            {% if wizard.form.totalFemNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalFemNumerosDefunciones}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.totalTotNumerosDefunciones.label}}
+                            {% if wizard.form.totalTotNumerosDefunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.totalTotNumerosDefunciones}}
+                        </div>
+                    </div>
+
                 {% endif %}
                 <div class="" style="text-align: center">
                     {% if wizard.steps.prev %}

@@ -67,6 +67,15 @@ HEPATITIS_CHOICES = (
     ('E', 'Hepatitis E'),
 )
 
+HEPATITIS_CHOICES2 = (
+    ('', '--------------------'),
+    ('A', 'Hepatitis A'),
+    ('B', 'Hepatitis B'),
+    ('C', 'Hepatitis C'),
+    ('D', 'Hepatitis D'),
+    ('E', 'Hepatitis E'),
+)
+
 ESCOLARIDAD_CHOICES = (
     ('NINGUNA', 'NINGUNA'),
     ('PRIMARIA INCOMPLETA', 'PRIMARIA INCOMPLETA'),
@@ -96,6 +105,11 @@ OTRA_PERSONA_OPCIONES = [
     ('Ninguna', 'Ninguna')
 ]
 SI_NO_OPCIONES = [
+    ('Si', 'Si'),
+    ('No', 'No')
+]
+SI_NO_OPCIONES2 = [
+    ('', '--------------'),
     ('Si', 'Si'),
     ('No', 'No')
 ]
@@ -233,7 +247,7 @@ class Unidad(models.Model):
     jurisdiccion = models.ForeignKey(Jurisdiccion, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.claveclues
+        return self.claveclues + ' - ' + str(self.jurisdiccion) + ' - ' + str(self.municipio)
 
 class InformacionUsuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,verbose_name = "Usuario")
@@ -251,7 +265,7 @@ class Paciente(models.Model):
     nacimiento = models.DateField(verbose_name = "Fecha de nacimiento")
     calle = models.CharField(verbose_name = "Calle", max_length = 50)
     numInt = models.CharField(verbose_name = "Numero interior", max_length = 50)
-    numExt = models.CharField(verbose_name = "Numero exterior", max_length = 50)
+    numExt = models.CharField(verbose_name = "Numero exterior", max_length = 50, null=True, blank=True)
     localidad = models.ForeignKey(Localidad, on_delete=models.CASCADE)
     municipio = models.ForeignKey(Municipio, on_delete=models.CASCADE)
     entidad = models.ForeignKey(Entidad, on_delete=models.CASCADE)
@@ -308,11 +322,11 @@ class RegistroEstudio(models.Model):
     
     accionesMedidas = models.TextField(verbose_name="Acciones y medidas de control")
     
-    reestablecer = models.CharField(verbose_name="Se reestablecio integrante?", max_length=2, choices=SI_NO_OPCIONES)
-    secuelas = models.CharField(verbose_name="Quedo secuelas?", max_length=2, choices=SI_NO_OPCIONES)
-    portador = models.CharField(verbose_name="Quedo como portador?", max_length=2, choices=SI_NO_OPCIONES)
-    perdioCaso = models.CharField(verbose_name="Se perdio el caso?", max_length=2, choices=SI_NO_OPCIONES)
-    fallecio = models.CharField(verbose_name="Fallecio?", max_length=2, choices=SI_NO_OPCIONES)
+    reestablecer = models.CharField(verbose_name="Se reestablecio integrante?", max_length=2, choices=SI_NO_OPCIONES, null=True, blank=True)
+    secuelas = models.CharField(verbose_name="Quedo secuelas?", max_length=2, choices=SI_NO_OPCIONES, null=True, blank=True)
+    portador = models.CharField(verbose_name="Quedo como portador?", max_length=2, choices=SI_NO_OPCIONES, null=True, blank=True)
+    perdioCaso = models.CharField(verbose_name="Se perdio el caso?", max_length=2, choices=SI_NO_OPCIONES, null=True, blank=True)
+    fallecio = models.CharField(verbose_name="Fallecio?", max_length=2, choices=SI_NO_OPCIONES, null=True, blank=True)
     fechaDefuncion = models.DateField(verbose_name = "Salida de procedencia", null=True, blank=True)
     
     platicas = models.CharField(verbose_name="Platicas de fomentos para la salud", max_length=2, choices=SI_NO_OPCIONES)
@@ -452,7 +466,6 @@ class NumerosCasos(models.Model):
     
     notifBroteNumerosCasos = models.ForeignKey(NotificacionBrote, on_delete=models.CASCADE)
     
-
 class NumerosDefunciones(models.Model):
     menor1MascNumerosDefunciones = models.SmallIntegerField(verbose_name="Numero de defunciones menores a 1 anio masculinos", default=0)
     menor1FemNumerosDefunciones = models.SmallIntegerField(verbose_name="Numero de defunciones menores a 1 anio femeninos", default=0)
