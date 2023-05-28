@@ -359,6 +359,7 @@ class Estudio(models.Model):
     registroEstudio = models.ForeignKey(RegistroEstudio, on_delete=models.CASCADE)
     
 class Contacto(models.Model):
+    id = models.AutoField(primary_key=True)
     nombre = models.CharField(verbose_name = "Nombre", max_length=100)
     domicilio = models.CharField(verbose_name = "Domicilio", max_length=100)
     edad = models.SmallIntegerField(verbose_name = "Edad")

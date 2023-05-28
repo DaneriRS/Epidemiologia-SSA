@@ -6,6 +6,8 @@ from apps.home.forms.allForms import *
 from formtools.wizard.views import *
 from django.contrib.auth.decorators import user_passes_test
 from django.forms.models import model_to_dict
+from django.core.serializers import serialize
+from django.db.models import F
 
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
@@ -30,7 +32,7 @@ FORMS = [
             ("10", ContactoForm11),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
-FormSET21=formset_factory(ContactoFormEdit, extra=0)
+FormSET21 = formset_factory(ContactoFormEdit, extra=0)
 FORMS2 = [
             ("1", ContactForm1),
             ("2", ContactForm2),
@@ -148,11 +150,16 @@ class RegistroEstudioUpdateView(CookieWizardView):
                 estudios=Estudio.objects.filter(registroEstudio_id=project.id)
                 for estudio in estudios:
                     project_d = model_to_dict(estudio)
+                    print (model_to_dict(estudio))
+                    print (project_d)
+                    project_d['id'] = estudio.id
+                    print (project_d)
                     project_dict.append(project_d)
                 return project_dict
             elif step == "6":
                 project_dict=[]
-                contactos=Contacto.objects.filter(registroEstudio_id=project.id)
+                # contactos=Contacto.objects.filter(registroEstudio_id=project.id)
+                contactos = Contacto.objects.filter(registroEstudio_id=project.id)
                 for contacto in contactos:
                     project_d = model_to_dict(contacto)
                     project_dict.append(project_d)
@@ -181,16 +188,16 @@ class RegistroEstudioUpdateView(CookieWizardView):
         re=RegistroEstudio.objects.filter(id=id)
         re.update(**registroData)
 
-        for item in registroDataFormSet1:
-            est=Estudio.objects.get(id=item['id'])
-            est.nombre=item['nombre']
-            est.tipo=item['tipo']
-            est.fecha=item['fecha']
-            est.resultado=item['resultado']
-            est.save()
+        # for item in registroDataFormSet1:
+        #     est=Estudio.objects.get(id=item['id'])
+        #     est.nombre=item['nombre']
+        #     est.tipo=item['tipo']
+        #     est.fecha=item['fecha']
+        #     est.resultado=item['resultado']
+        #     est.save()
         
         for item in registroDataFormSet2:
-            est=Contacto.objects.get(id=item['id'])
+            est=Contacto.objects.get(idContacto=item['idContacto'])
             est.nombre=item['nombre'],
             est.domicilio=item['domicilio'],
             est.edad=item['edad'],

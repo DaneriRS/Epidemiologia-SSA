@@ -341,16 +341,16 @@
                             document.getElementById("id_5-llegadaProc").value = "";
                             document.getElementById("id_5-salidaProc").value = "";
                             
-                            document.getElementById("id_5-municipioProc").disabled = true;
-                            document.getElementById("id_5-localidadProc").disabled = true;
-                            document.getElementById("id_5-llegadaProc").disabled = true;
-                            document.getElementById("id_5-salidaProc").disabled = true;
+                            document.getElementById("id_5-municipioProc").readOnly = true;
+                            document.getElementById("id_5-localidadProc").readOnly = true;
+                            document.getElementById("id_5-llegadaProc").readOnly = true;
+                            document.getElementById("id_5-salidaProc").readOnly = true;
                           } else if (procedencia === "Importado") {
                             // Habilitar los siguientes campos
-                            document.getElementById("id_5-municipioProc").disabled = false;
-                            document.getElementById("id_5-localidadProc").disabled = false;
-                            document.getElementById("id_5-llegadaProc").disabled = false;
-                            document.getElementById("id_5-salidaProc").disabled = false;
+                            document.getElementById("id_5-municipioProc").readOnly = false;
+                            document.getElementById("id_5-localidadProc").readOnly = false;
+                            document.getElementById("id_5-llegadaProc").readOnly = false;
+                            document.getElementById("id_5-salidaProc").readOnly = false;
 
                             // Requerimos los siguientes campos
                             document.getElementById("id_5-municipioProc").required = true;
@@ -514,13 +514,13 @@
                           
                           if (fallece === "Si") {
                             // Habilitar los siguientes campos
-                            document.getElementById("id_8-fechaDefuncion").disabled = false;
+                            document.getElementById("id_8-fechaDefuncion").readOnly = false;
                             document.getElementById("id_8-fechaDefuncion").required = true;
                           } else  {
                             // Limpiar y deshabilitar los siguientes campos
                             document.getElementById("id_8-fechaDefuncion").value = "";
                             
-                            document.getElementById("id_8-fechaDefuncion").disabled = true;
+                            document.getElementById("id_8-fechaDefuncion").readOnly = true;
                             document.getElementById("id_8-fechaDefuncion").required = false;
                           }
                         }
@@ -652,13 +652,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numPlaticas").disabled = false;
+                                document.getElementById("id_9-numPlaticas").readOnly = false;
                                 document.getElementById("id_9-numPlaticas").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numPlaticas").value = "";
+                                document.getElementById("id_9-numPlaticas").value = 0;
                                 
-                                document.getElementById("id_9-numPlaticas").disabled = true;
+                                document.getElementById("id_9-numPlaticas").readOnly = true;
                                 document.getElementById("id_9-numPlaticas").required = false;
                             }
                         }
@@ -667,13 +667,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numVacunacion").disabled = false;
+                                document.getElementById("id_9-numVacunacion").readOnly = false;
                                 document.getElementById("id_9-numVacunacion").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numVacunacion").value = "";
+                                document.getElementById("id_9-numVacunacion").value = 0;
                                 
-                                document.getElementById("id_9-numVacunacion").disabled = true;
+                                document.getElementById("id_9-numVacunacion").readOnly = true;
                                 document.getElementById("id_9-numVacunacion").required = false;
                             }
                         }
@@ -682,13 +682,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosInd").disabled = false;
+                                document.getElementById("id_9-numTratamientosInd").readOnly = false;
                                 document.getElementById("id_9-numTratamientosInd").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosInd").value = "";
+                                document.getElementById("id_9-numTratamientosInd").value = 0;
                                 
-                                document.getElementById("id_9-numTratamientosInd").disabled = true;
+                                document.getElementById("id_9-numTratamientosInd").readOnly = true;
                                 document.getElementById("id_9-numTratamientosInd").required = false;
                             }
                         }
@@ -697,13 +697,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosFam").disabled = false;
+                                document.getElementById("id_9-numTratamientosFam").readOnly = false;
                                 document.getElementById("id_9-numTratamientosFam").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosFam").value = "";
+                                document.getElementById("id_9-numTratamientosFam").value = 0;
                                 
-                                document.getElementById("id_9-numTratamientosFam").disabled = true;
+                                document.getElementById("id_9-numTratamientosFam").readOnly = true;
                                 document.getElementById("id_9-numTratamientosFam").required = false;
                             }
                         }
@@ -712,13 +712,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numCloracion").disabled = false;
+                                document.getElementById("id_9-numCloracion").readOnly = false;
                                 document.getElementById("id_9-numCloracion").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numCloracion").value = "";
+                                document.getElementById("id_9-numCloracion").value = 0;
                                 
-                                document.getElementById("id_9-numCloracion").disabled = true;
+                                document.getElementById("id_9-numCloracion").readOnly = true;
                                 document.getElementById("id_9-numCloracion").required = false;
                             }
                         }
@@ -727,13 +727,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numLetrinizacion").disabled = false;
+                                document.getElementById("id_9-numLetrinizacion").readOnly = false;
                                 document.getElementById("id_9-numLetrinizacion").required = true;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
-                                document.getElementById("id_9-numLetrinizacion").value = "";
+                                document.getElementById("id_9-numLetrinizacion").value = 0;
                                 
-                                document.getElementById("id_9-numLetrinizacion").disabled = true;
+                                document.getElementById("id_9-numLetrinizacion").readOnly = true;
                                 document.getElementById("id_9-numLetrinizacion").required = false;
                             }
                         }

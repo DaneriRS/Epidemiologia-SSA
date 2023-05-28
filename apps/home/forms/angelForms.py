@@ -192,8 +192,7 @@ class ContactoForm4(forms.Form):
     )
 
 class ContactoForm5(forms.Form):
-    id = forms.CharField(
-        max_length=30,
+    id = forms.IntegerField(
         label="Id",
         widget=forms.TextInput(
             attrs={
@@ -473,13 +472,12 @@ class ContactoForm7(forms.Form):
     )
     
 class ContactoFormEdit(forms.Form):
-    id = forms.CharField(
-        max_length=30,
-        label="Id",
+    rel = forms.CharField(
+        label="insano",
         widget=forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control',
-                'hidden': 'true'
+                # 'readOnly': 'true'
             }
         ),
         required=False,
