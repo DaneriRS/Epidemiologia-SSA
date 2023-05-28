@@ -4,7 +4,7 @@
     {% else %}
         <div class="alert alert-warning fade show" role="alert">
     {% endif %}
-    <strong>Aviso.</strong> {{ msg }}
+    <strong>Aviso.</strong> {{ msg|safe }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <i class="tim-icons icon-simple-remove"></i>
     </button>

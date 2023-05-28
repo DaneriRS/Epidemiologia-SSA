@@ -40,39 +40,14 @@ class ExcelUMedicasForm(forms.Form):
         )  
     )
 
-class IndividualForm(forms.Form):
-    Usuario=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Nombre=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Apellidos=forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Correo=forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
-    Contraseña=forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                'class': 'form-control'
-            }
-        )  
-    )
+class IndividualForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'})
+        }
