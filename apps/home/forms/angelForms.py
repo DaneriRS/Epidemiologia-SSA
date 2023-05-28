@@ -44,8 +44,6 @@ class registroPaciente(ModelForm):
                 'class': 'form-control',
             })
 
-
-
 class ContactForm1(forms.Form):
     unidadNot = forms.ModelChoiceField(
         label="Unidad notificante:",
@@ -769,15 +767,13 @@ class ContactoForm11(forms.Form):
 
 class NotificacionBrote1(forms.Form):
     unidadNot = forms.ModelChoiceField(
-        queryset = Unidad.objects.all(),
-        label = 'Unidad notificante:',
-        widget = forms.Select(
+        label="Unidad notificante:",
+        queryset=Unidad.objects.all(),
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'readonly': True
+                'class': 'form-control', 'readonly':True
             }
-        ),
-        required = True
+        )
     )
     fechaNot=forms.CharField(
         label = 'Fecha de Notificacion',
@@ -787,7 +783,7 @@ class NotificacionBrote1(forms.Form):
             }
         )
     )
-    fechaEstudio=forms.CharField(
+    fechaInicio=forms.CharField(
         label = 'Inicio de estudio: ',
         widget = forms.DateInput(
             attrs={
@@ -795,7 +791,15 @@ class NotificacionBrote1(forms.Form):
             }
         )
     )
-    DiaProHep=forms.ChoiceField(
+    fechaTerminacion=forms.CharField(
+        label = 'Terminación de estudio: ',
+        widget = forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    diaProHep=forms.ChoiceField(
         choices = HEPATITIS_CHOICES,
         label = 'Diagnostico probable de hepatitis: ',
         widget = forms.Select(
@@ -804,7 +808,7 @@ class NotificacionBrote1(forms.Form):
                 }
         )
     )
-    DiaFin=forms.ChoiceField(
+    diaFin=forms.ChoiceField(
         choices = HEPATITIS_CHOICES,
         label = 'Diagnostico final: ',
         widget = forms.Select(
@@ -812,6 +816,16 @@ class NotificacionBrote1(forms.Form):
                 'class': 'form-control selectpicker',
                 }
         )
+    )
+    otroDiag = forms.CharField(
+        max_length=20,
+        label="Otro diagnostico:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Especificar nombre de la enfermedad', 'class': 'form-control'
+            }
+        ),
+        required=False
     )
 
 class NotificacionBrote2(forms.Form):
@@ -876,6 +890,15 @@ class NotificacionBrote2(forms.Form):
             }
         )
     )
+    defunciones=forms.CharField(
+        max_length = 4,
+        label = "Defunciones:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
 
 class NotificacionBrote5(forms.Form):
     area=forms.CharField(
@@ -888,9 +911,18 @@ class NotificacionBrote5(forms.Form):
         ),
         required = True
     )
-    numeroCasos=forms.CharField(
+    numeroCasosDistribucionGeografica=forms.CharField(
         max_length = 20,
-        label = "Casos:",
+        label = "Número de Casos:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroCasosPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -899,7 +931,25 @@ class NotificacionBrote5(forms.Form):
     )
     numeroDefunciones=forms.CharField(
         max_length = 20,
-        label = "Defunciones:",
+        label = "Número de defunciones:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroDefuncionesPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    croquis=forms.CharField(
+        max_length = 300,
+        label = "Enlace del croquis",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -965,11 +1015,21 @@ class NotificacionBrote8(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
+        ),
+        required = True
+    )
+    numeroCasosDistribucionGeografica=forms.CharField(
+        max_length = 20,
+        label = "Número de Casos:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
         )
     )
-    numeroCasos=forms.CharField(
+    numeroCasosPorc=forms.CharField(
         max_length = 20,
-        label = "Casos:",
+        label = "%",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -978,13 +1038,32 @@ class NotificacionBrote8(forms.Form):
     )
     numeroDefunciones=forms.CharField(
         max_length = 20,
-        label = "Defunciones:",
+        label = "Número de defunciones:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
+    numeroDefuncionesPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    croquis=forms.CharField(
+        max_length = 300,
+        label = "Enlace del croquis",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
 
 
 class NotificacionBrote3(forms.Form):
@@ -3107,6 +3186,8 @@ class NotificacionBrote3(forms.Form):
         )
     )
 
+
+
 class Anexo8P1(forms.Form):
     nombreFallecido=forms.ModelChoiceField(
         queryset = Paciente.objects.all(),
@@ -3118,15 +3199,39 @@ class Anexo8P1(forms.Form):
         ),
         required = True
     )
-    institucion=forms.ModelChoiceField(
-        queryset = Institucion.objects.all(),
-        label = 'Institución:',
-        widget = forms.Select(
+    edadAnio=forms.CharField(
+        label = 'Edad en Anio',
+        widget = forms.TextInput(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control'
+            }
+        )
+    )
+    edadMes=forms.CharField(
+        label = 'Edad en Mes',
+        widget = forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    edadDia=forms.CharField(
+        label = 'Edad en Dia',
+        widget = forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    afiliacionServicios = forms.ChoiceField(
+        choices=AFILIACION_SERVICIOS_OPCIONES,
+        label='Afiliacion de Servicios Medicos: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control ',
             }
         ),
-        required = True
+        required=True
     )
     fechaDefuncion=forms.CharField(
         label = 'Fecha de Defuncion',
@@ -3152,6 +3257,15 @@ class Anexo8P1(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
+        )
+    )
+    certificadaPor=forms.ChoiceField(
+        choices = CERTIFICADA_POR_OPCIONES,
+        label = 'Certificada por: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
         )
     )
     lugardeResidenciaMuni=forms.ModelChoiceField(
@@ -3205,24 +3319,183 @@ class Anexo8P1(forms.Form):
     )
 
 class Anexo8P2(forms.Form):
-    causasDef=forms.CharField(
+    causasDefI=forms.CharField(
         max_length = 100,
-        label = "I:",
+        label = "Causas de defunción I (1):",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
-    causasDef2=forms.CharField(
+    causaDefInterI=forms.CharField(
         max_length = 100,
-        label = "II:",
+        label = "Causas de defunción I (1) Intervalo:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
+    causaDefCodigoCieI=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaBasicaI=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Causa Basica:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
     causaVigEpi=forms.CharField(
         max_length = 100,
         label = "Causa sujeta a vigilancia epidemiologica:",
@@ -3232,44 +3505,224 @@ class Anexo8P2(forms.Form):
             }
         )
     )
+    causaVigEpiCodigoCie=forms.CharField(
+        max_length = 100,
+        label = "Causa sujeta a vigilancia epidemiologica, Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
 
 class Anexo8P3(forms.Form):
-    ratifica=forms.CharField(
-        max_length = 100,
-        label = "Ratifica",
-        widget = forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
     causaVigEpi2=forms.CharField(
         max_length = 100,
-        label = "Causa sujeta a vigilancia epidemiologica",
+        label = "Causa sujeta a vigilancia epidemiologica:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
-    causasDef3=forms.CharField(
+    ratifica = forms.ChoiceField(
+        choices=RATIFICA_CHOICES,
+        label='Ratifica: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control ',
+            }
+        ),
+        required=False
+    )
+    causasDef2I=forms.CharField(
         max_length = 100,
-        label = "Causas de defunción3",
+        label = "Causas de defunción I (1):",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
-    causasDef4=forms.CharField(
+    causaDefInter2I=forms.CharField(
         max_length = 100,
-        label = "Causas de defunción4",
+        label = "Causas de defunción I (1) Intervalo:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
+    causaDefCodigoCi22I=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaBasica2I=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Causa Basica:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDef2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInter2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCie2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDef2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInter2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCie2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDef2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInter2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCie2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDef2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInter2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCie2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDef2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInter2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCie2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    
+    # causaVigEpiCodigoCie2=forms.CharField(
+    #     max_length = 100,
+    #     label = "Causa sujeta a vigilancia epidemiologica:",
+    #     widget = forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+
     fechaRecoleccion=forms.CharField(
         label = 'Fecha de recolección',
         widget = forms.DateInput(

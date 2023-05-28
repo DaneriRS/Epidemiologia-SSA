@@ -52,7 +52,7 @@ FORMS3 =[
             ("3", FormSET3),
             ("4", NotificacionBrote6),
             ("5", NotificacionBrote7),
-            ("6", NotificacionBrote3)
+            # ("6", NotificacionBrote3)
         ]
 FormSET4=formset_factory(NotificacionBrote8, extra=0)
 FORMS4 =[
@@ -227,6 +227,15 @@ class RegistroNotificacionBroteView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
+        
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        initial = self.initial_dict.get(step, {})
+        if step == '1':
+            # Set initial data for step 2 form here
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad.id
+            
+        return initial
 
     def done(self, form_list, **kwargs):
         registroDataFormSet3=[]
@@ -244,8 +253,11 @@ class RegistroNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet3:
             DistGeo=DistribucionGeografica(
                 area=item['area'],
-                numeroCasos=item['numeroCasos'],
+                numeroCasosDistribucionGeografica=item['numeroCasosDistribucionGeografica'],
+                numeroCasosPorc=item['numeroCasosPorc'],
                 numeroDefunciones=item['numeroDefunciones'],
+                numeroDefuncionesPorc=item['numeroDefuncionesPorc'],
+                croquis=item['croquis'],
                 notificacionBrote=notificacion
             )
             DistGeo.save()
@@ -292,8 +304,11 @@ class UpdateNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet4:
             dist=DistribucionGeografica.objects.get(id=item['id'])
             dist.area=item['area']
-            dist.numeroCasos=item['numeroCasos']
+            dist.numeroCasosDistribucionGeografica=item['numeroCasosDistribucionGeografica']
+            dist.numeroCasosPorc=item['numeroCasosPorc']
             dist.numeroDefunciones=item['numeroDefunciones']
+            dist.numeroDefuncionesPorc=item['numeroDefuncionesPorc']
+            dist.croquis=item['croquis']
                                            
             dist.save()
 

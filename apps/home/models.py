@@ -798,6 +798,7 @@ class Anexo8(models.Model):
     causaVigEpi = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
     causaVigEpiCodigoCie = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica, Codigo CIE", max_length=4)
 
+    causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2", max_length=100, blank=True, null=True)
     ratifica = models.CharField(verbose_name="Ratifica", max_length=20, choices=RATIFICA_CHOICES)
     causasDef2I = models.CharField(verbose_name="Causas de defunción 2 I (1)", max_length=100, blank=True, null=True)
     causaDefInter2I = models.CharField(verbose_name="Causas de defunción 2 I (1) Intervalo", max_length=100, blank=True, null=True)
@@ -818,8 +819,8 @@ class Anexo8(models.Model):
     causasDef2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2)", max_length=100, blank=True, null=True)
     causaDefInter2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2) Intervalo", max_length=100, blank=True, null=True)
     causaDefCodigoCie2II2 = models.CharField(verbose_name="Causas de defunción 2 II (2) Codigo CIE", max_length=4, blank=True, null=True)
-    causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2", max_length=100, blank=True, null=True)
-    causaVigEpiCodigoCie2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2, Codigo CIE", max_length=4, blank=True, null=True)
+    
+    # causaVigEpiCodigoCie2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica 2, Codigo CIE", max_length=4, blank=True, null=True)
     # causaVigEpi2 = models.CharField(verbose_name="Causa sujeta a vigilancia epidemiologica", max_length=100)
     # causasDef3 = models.CharField(verbose_name="Causas de defunción3", max_length=200)
     # causasDef4 = models.CharField(verbose_name="Causas de defunción4", max_length=100)

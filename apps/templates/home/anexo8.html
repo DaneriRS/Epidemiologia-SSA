@@ -44,11 +44,34 @@
                             {{wizard.form.nombreFallecido}}
                         </div>
                         <div class="form-group col-md-6">
-                            {{wizard.form.institucion.label}}
-                            {% if wizard.form.institucion.field.required %}
+                            {{wizard.form.afiliacionServicios.label}}
+                            {% if wizard.form.afiliacionServicios.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.institucion}}
+                            {{wizard.form.afiliacionServicios}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.edadAnio.label}}
+                            {% if wizard.form.edadAnio.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.edadAnio}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.edadMes.label}}
+                            {% if wizard.form.edadMes.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.edadMes}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.edadDia.label}}
+                            {% if wizard.form.edadDia.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.edadDia}}
                         </div>
                     </div>
                     <div class="form-row">
@@ -68,12 +91,19 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             {{wizard.form.ocupacion.label}}
                             {% if wizard.form.ocupacion.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.ocupacion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.certificadaPor.label}}
+                            {% if wizard.form.certificadaPor.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.certificadaPor}}
                         </div>
                     </div>
                     <div class="form-row">
@@ -122,30 +152,164 @@
                         <h2 class="card-title">II - CAUSAS DE DEFUNCIÓN</h2>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                            {{wizard.form.causasDef.label}}
-                            {% if wizard.form.causasDef.field.required %}
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causasDefI.label}}
+                            {% if wizard.form.causasDefI.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.causasDef}}
+                            {{wizard.form.causasDefI}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaDefInterI.label}}
+                            {% if wizard.form.causaDefInterI.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterI}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaDefCodigoCieI.label}}
+                            {% if wizard.form.causaDefCodigoCieI.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieI}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaBasicaI.label}}
+                            {% if wizard.form.causaBasicaI.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaBasicaI}}
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                            {{wizard.form.causasDef2.label}}
-                            {% if wizard.form.causasDef2.field.required %}
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDefI2.label}}
+                            {% if wizard.form.causasDefI2.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.causasDef2}}
+                            {{wizard.form.causasDefI2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInterI2.label}}
+                            {% if wizard.form.causaDefInterI2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterI2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCieI2.label}}
+                            {% if wizard.form.causaDefCodigoCieI2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieI2}}
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDefI3.label}}
+                            {% if wizard.form.causasDefI3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDefI3}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInterI3.label}}
+                            {% if wizard.form.causaDefInterI3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterI3}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCieI3.label}}
+                            {% if wizard.form.causaDefCodigoCieI3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieI3}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDefI4.label}}
+                            {% if wizard.form.causasDefI4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDefI4}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInterI4.label}}
+                            {% if wizard.form.causaDefInterI4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterI4}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCieI4.label}}
+                            {% if wizard.form.causaDefCodigoCieI4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieI4}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDefII1.label}}
+                            {% if wizard.form.causasDefII1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDefII1}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInterII1.label}}
+                            {% if wizard.form.causaDefInterII1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterII1}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCieII1.label}}
+                            {% if wizard.form.causaDefCodigoCieII1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieII1}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDefII2.label}}
+                            {% if wizard.form.causasDefII2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDefII2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInterII2.label}}
+                            {% if wizard.form.causaDefInterII2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInterII2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCieII2.label}}
+                            {% if wizard.form.causaDefCodigoCieII2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCieII2}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
                             {{wizard.form.causaVigEpi.label}}
                             {% if wizard.form.causaVigEpi.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.causaVigEpi}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.causaVigEpiCodigoCie.label}}
+                            {% if wizard.form.causaVigEpiCodigoCie.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaVigEpiCodigoCie}}
                         </div>
                     </div>
                 {% elif wizard.steps.step1 == 3 %}
@@ -154,37 +318,177 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            {{wizard.form.ratifica.label}}
-                            {% if wizard.form.ratifica.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.ratifica}}
-                        </div>
-                        
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
                             {{wizard.form.causaVigEpi2.label}}
                             {% if wizard.form.causaVigEpi2.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.causaVigEpi2}}
                         </div>
-                        <div class="form-group col-md-4">
-                            {{wizard.form.causasDef3.label}}
-                            {% if wizard.form.causasDef3.field.required %}
+                        <div class="form-group col-md-6">
+                            {{wizard.form.ratifica.label}}
+                            {% if wizard.form.ratifica.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.causasDef3}}
-                        </div>
-                        <div class="form-group col-md-4">
-                            {{wizard.form.causasDef4.label}}
-                            {% if wizard.form.causasDef4.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.causasDef4}}
+                            {{wizard.form.ratifica}}
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causasDef2I.label}}
+                            {% if wizard.form.causasDef2I.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2I}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaDefInter2I.label}}
+                            {% if wizard.form.causaDefInter2I.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2I}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaDefCodigoCi22I.label}}
+                            {% if wizard.form.causaDefCodigoCi22I.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCi22I}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.causaBasica2I.label}}
+                            {% if wizard.form.causaBasica2I.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaBasica2I}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef2I2.label}}
+                            {% if wizard.form.causasDef2I2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2I2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInter2I2.label}}
+                            {% if wizard.form.causaDefInter2I2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2I2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCie2I2.label}}
+                            {% if wizard.form.causaDefCodigoCie2I2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCie2I2}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef2I3.label}}
+                            {% if wizard.form.causasDef2I3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2I3}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInter2I3.label}}
+                            {% if wizard.form.causaDefInter2I3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2I3}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCie2I3.label}}
+                            {% if wizard.form.causaDefCodigoCie2I3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCie2I3}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef2I4.label}}
+                            {% if wizard.form.causasDef2I4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2I4}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInter2I4.label}}
+                            {% if wizard.form.causaDefInter2I4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2I4}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCie2I4.label}}
+                            {% if wizard.form.causaDefCodigoCie2I4.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCie2I4}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef2II1.label}}
+                            {% if wizard.form.causasDef2II1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2II1}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInter2II1.label}}
+                            {% if wizard.form.causaDefInter2II1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2II1}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCie2II1.label}}
+                            {% if wizard.form.causaDefCodigoCie2II1.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCie2II1}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causasDef2II2.label}}
+                            {% if wizard.form.causasDef2II2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causasDef2II2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefInter2II2.label}}
+                            {% if wizard.form.causaDefInter2II2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefInter2II2}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.causaDefCodigoCie2II2.label}}
+                            {% if wizard.form.causaDefCodigoCie2II2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaDefCodigoCie2II2}}
+                        </div>
+                    </div>
+                    {% comment %} <div class="form-row">
+                        
+                        <div class="form-group col-md-6">
+                            {{wizard.form.causaVigEpiCodigoCie2.label}}
+                            {% if wizard.form.causaVigEpiCodigoCie2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaVigEpiCodigoCie2}}
+                        </div>
+                    </div> {% endcomment %}
+
+
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             {{wizard.form.fechaRecoleccion.label}}
@@ -249,7 +553,14 @@
                             {{wizard.form.firma}}
                         </div>
                     </div>
-                {% elif wizard.steps.step1 == 4 %}
+                    
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            procedenciaChanged(); // Ejecutar la función cuando el documento esté listo
+                        });
+                    </script>
+
+                    {% elif wizard.steps.step1 == 4 %}
                     <div class="text-left">
                         <h2 class="card-title">IV - DATOS DE CONTROL (EXCLUSIVO INEGI)</h2>
                     </div>
