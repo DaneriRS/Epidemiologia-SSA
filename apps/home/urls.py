@@ -15,6 +15,7 @@ urlpatterns = [
     path('import_excel/', allViews.import_excel, name='import_excel_view'),
     path('listaFormularios/', allViews.listaFormularios , name="listaFormularios"),
     path('listaNotificacionBrote/', allViews.listaNotificacionBrote , name="listaNotificacionBrote"),
+    path('listaAnexo8/', allViews.listaAnexo8 , name="listaAnexo8"),
     path('nuevoPaciente/', allViews.nuevoPaciente, name="nuevoPaciente"),
     path('usuarios/', allViews.lista_usuarios, name="lista_usuarios"),
     path('usuarios/editar/<int:user_id>/', allViews.editar_usuarios, name='editarUsuarios'),
@@ -92,6 +93,7 @@ urlpatterns = [
     path('notificacion/brote', allViews.RegistroNotificacionBroteView.as_view() , name="notificacionBrote"),
     path('notificacion/brote/update/<int:id>', allViews.UpdateNotificacionBroteView.as_view() , name="notificacionBroteUpdate"),
     path('anexo8/', allViews.Anexo8View.as_view() , name="anexo8"),
+    path('anexo8/update/<int:id>', allViews.UpdateAnexo8View.as_view() , name="anexo8Update"),
 
     #Reportes
     path('Reporte/Registro/', allViews.ReporteRegExcel, name = 'reporteRegExcel'),
