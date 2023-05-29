@@ -222,7 +222,7 @@ def ReporteRegExcel(request):
 # @roles_required(['Director'], redirect_url='home')
 def ReporteNotiExcel(request):
     if request.user.is_director:
-        noti = NotificacionBrote.obj
+        noti = NotificacionBrote.objects.all()
     elif request.user.is_encarJuris:
         noti = NotificacionBrote.objects.filter(unidadNot__jurisdiccion__id=request.user.informacionusuario.unidad.jurisdiccion.id)
     elif request.user.is_encarUni:

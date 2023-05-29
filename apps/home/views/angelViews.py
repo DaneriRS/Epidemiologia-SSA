@@ -28,8 +28,8 @@ FORMS = [
             ("6", FormSET12),
             ("7", ContactoForm8),
             ("8", ContactoForm9),
-            ("9", ContactoForm10),
-            ("10", ContactoForm11),
+            ("9", ContactoForm11),
+            ("10", ContactoForm10),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
 FormSET21 = formset_factory(ContactoFormEdit, extra=0)
@@ -139,7 +139,7 @@ class RegistroEstudioView(CookieWizardView):
                 cantidad += 1
         if cantidad >= 2:
             return redirect('notificacionBrote')
-        return redirect('listaFormularios')
+        return redirect('home')
 
 class RegistroEstudioUpdateView(CookieWizardView):
     form_list=FORMS2
@@ -216,7 +216,7 @@ class RegistroEstudioUpdateView(CookieWizardView):
             cont.caso=caso
             cont.save()
 
-        return redirect('listaFormularios')
+        return redirect('home')
 
 class RegistroNotificacionBroteView(CookieWizardView):
     form_list=FORMS3
@@ -264,7 +264,7 @@ class RegistroNotificacionBroteView(CookieWizardView):
             )
             DistGeo.save()
 
-        return redirect('listaNotificacionBrote')    
+        return redirect('home')    
 
 class UpdateNotificacionBroteView(CookieWizardView):
     form_list=FORMS4
@@ -314,7 +314,7 @@ class UpdateNotificacionBroteView(CookieWizardView):
                                            
             dist.save()
 
-        return redirect('listaNotificacionBrote')
+        return redirect('home')
 
 class Anexo8View(CookieWizardView):
     form_list = FORMS5
@@ -336,7 +336,7 @@ class Anexo8View(CookieWizardView):
         anexo8.capturante = self.request.user
         anexo8.save()
 
-        return redirect('listaAnexo8')
+        return redirect('home')
 
 class UpdateAnexo8View(CookieWizardView):
     form_list = FORMS6
@@ -361,7 +361,7 @@ class UpdateAnexo8View(CookieWizardView):
         anexo8=Anexo8.objects.filter(id=id)
         anexo8.update(**registroData)
 
-        return redirect('listaAnexo8')
+        return redirect('home')
 
 @login_required    
 def listaFormularios(request):
