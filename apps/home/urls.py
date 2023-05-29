@@ -12,6 +12,7 @@ urlpatterns = [
 
     # The home page
     path('', allViews.index, name='home'),
+    
     path('import_excel/', allViews.import_excel, name='import_excel_view'),
     # path('listaFormularios/', allViews.listaFormularios , name="listaFormularios"),
     # path('listaNotificacionBrote/', allViews.listaNotificacionBrote , name="listaNotificacionBrote"),
