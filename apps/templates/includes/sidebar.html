@@ -17,14 +17,14 @@
                     <a href="{% url 'home' %}">
                         <i class="tim-icons icon-chart-pie-36"></i>  
                         <p>Estadísticas</p>
-                    </a>
-                </li> {% endcomment %}
-                <li class="">
+                    </a><li class="">
                     <a href="{% url 'graficas' %}">
                         <i class="tim-icons icon-book-bookmark"></i>
                         <p>Indicadores</p>
                     </a>
                 </li>
+                </li> {% endcomment %}
+                
                 {% if request.user.is_director %}
                     <li class="{% if 'CRUD_tablas' in segment %} active {% endif %} ">
                         <a href="{% url 'vista_tablas' 'false' %}">

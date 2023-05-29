@@ -26,16 +26,16 @@
                             <a id="btnTabla" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseTabla" aria-expanded="false" aria-controls="collapseTablaHeading">
                                 Tabla
                             </a>
-                            <a id="btnEpi" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstudio" aria-expanded="false" aria-controls="collapseEstudioHeading">
+                            <a id="btnEstudio" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEstudio" aria-expanded="false" aria-controls="collapseEstudioHeading">
                                 Estudio Epidemiológico
                             </a>
-                            <a id="btnLab" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLaboratorio" aria-expanded="false" aria-controls="collapseLaboratorioHeading">
+                            <a id="btnLaboratorio" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseLaboratorio" aria-expanded="false" aria-controls="collapseLaboratorioHeading">
                                 Estudio Laboratorio
                             </a>
-                            <a id="btnAnex" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseAnexo" aria-expanded="false" aria-controls="collapseAnexoHeading">
+                            <a id="btnAnexo" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseAnexo" aria-expanded="false" aria-controls="collapseAnexoHeading">
                                 Anexo 8
                             </a>
-                            <a id="btnMort" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMortalidad" aria-expanded="false" aria-controls="collapseMortalidadHeading">
+                            <a id="btnMortalidad" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMortalidad" aria-expanded="false" aria-controls="collapseMortalidadHeading">
                                 Mortalidad
                             </a>
                         </div>
@@ -79,6 +79,7 @@
                 </div>
             </div>
 
+            {% comment "" %}
             <div id="collapseMortalidad" class="collapse" role="tabpanel" aria-labelledby="collapseMortalidadHeading" data-parent="#accordion">
                 <div class="row">
                     <div class="col-12">
@@ -97,6 +98,7 @@
                     </div>
                 </div>
             </div>
+            {% endcomment %}
         </div>
     </div>
 
@@ -149,4 +151,4 @@
     {% endif %}
 
 </script>
-{% endblock javascripts %}
+{% endblock javascripts %}}
