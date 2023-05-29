@@ -1,0 +1,253 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Reportes {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        {% include 'includes/logos.html' %}
+        {% include 'includes/mensajes.html' %}
+        <div id="accordion" role="tablist" aria-multiselectable="true" class="accordion">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col text-left">
+                                    <h2 class="card-title">Reportes</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a id="btnEntidad" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseEntidad" aria-expanded="false" aria-controls="collapseEntidadHeading">
+                                Registro
+                            </a>
+                            <a id="btnJurisdiccion" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseJurisdiccion" aria-expanded="false" aria-controls="collapseJurisdiccionHeading">
+                                Notifiacion de Brote
+                            </a>
+                            <a id="btnMunicipio" class="btn btn-info animation-on-hover" data-parent="#accordion" data-toggle="collapse" href="#collapseMunicipio" aria-expanded="false" aria-controls="collapseMunicipioHeading">
+                                Anexo 8
+                            </a>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        
+            <div id="collapseEntidad" class="collapse" role="tabpanel" aria-labelledby="collapseEntidadHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Registro</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Casos de Hepatitis</h2>
+                                    </div>
+                                    <div class="col-sm-2 text-left">
+                                    </div>
+                                    <div class="col-sm-4 text-left">
+                                        <div class="btn-group">
+                                            {% if request.user.is_encarUni %}
+                                            <a class="btn btn-info" href="{% url 'multiForm' %}" role="button">Nuevo Registro</a>
+                                            {% endif %}
+                                            <a class="btn btn-info" href="{% url 'reporteRegExcel' %}" role="button">Exportar Registros</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover" id="tabla_casos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Folio del Caso</th>
+                                                    <th>Nombre</th>
+                                                    <th>Apellidos</th>
+                                                    <th>Numero de Afiliación</th>
+                                                    <th class="text-center">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for formulario in Registro %}
+                                                <tr>
+                                                    <td>{{ formulario.id }}</td>
+                                                    <td>{{ formulario.paciente.nombre }}</td>
+                                                    <td>{{ formulario.paciente.apellidoPa }} {{ formulario.paciente.apellidoMa }}</td>
+                                                    <td>{{ formulario.paciente.numAfiliacion }}</td>
+                                                    <td class="td-actions text-center">
+                                                        <a href="{% url 'editForm' formulario.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                                            <i class="tim-icons icon-settings"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseJurisdiccion" class="collapse" role="tabpanel" aria-labelledby="collapseJurisdiccionHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Jurisdicciones</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Notificacion de Brote</h2>
+                                    </div>
+                                    <div class="col-sm-2 text-left">
+                                    </div>
+                                    <div class="col-sm-4 text-left">
+                                        <div class="btn-group">
+                                            {% if request.user.is_encarUni %}
+                                            <a class="btn btn-info" href="{% url 'notificacionBrote' %}" role="button">Nueva Notificacion Brote</a>
+                                            {% endif %}
+                                            <a class="btn btn-info" href="{% url 'reporteNotiExcel' %}" role="button">Exportar Notificaciones Brotes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover" id="tabla_notBrote">
+                                            <thead>
+                                                <tr>
+                                                    <th>Folio de la Notificacion</th>
+                                                    <th>Unidad Notificante</th>
+                                                    <th>Casos Probables</th>
+                                                    <th>Casos Confirmados</th>
+                                                    <th>Hospitalizados</th>
+                                                    <th class="text-center">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for formulario in NotifBrote %}
+                                                <tr>
+                                                    <td>{{ formulario.id }}</td>
+                                                    <td>{{ formulario.unidadNot }}</td>
+                                                    <td>{{ formulario.casosProbables}}</td>
+                                                    <td>{{ formulario.casosConfirmados}}</td>
+                                                    <td>{{ formulario.hospitalizados}}</td>
+                                                    <td class="td-actions text-center">
+                                                        <a href="{% url 'notificacionBroteUpdate' formulario.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                                            <i class="tim-icons icon-settings"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="collapseMunicipio" class="collapse" role="tabpanel" aria-labelledby="collapseMunicipioHeading" data-parent="#accordion">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <h4 class="card-title">Municipios</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Anexo 8</h2>
+                                    </div>
+                                    <div class="col-sm-2 text-left">
+                                    </div>
+                                    <div class="col-sm-4 text-left">
+                                        <div class="btn-group">
+                                            {% if request.user.is_encarUni %}
+                                            <a class="btn btn-info" href="{% url 'anexo8' %}" role="button">Nuevo Anexo 8</a>
+                                            {% endif %}
+                                            <a class="btn btn-info" href="{% url 'reporteAnexoExcel' %}" role="button">Exportar Anexos 8</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover" id="tabla_notBrote">
+                                            <thead>
+                                                <tr>
+                                                    <th>Folio de Anexo</th>
+                                                    <th>Nombre</th>
+                                                    <th>Institucion</th>
+                                                    <th>Fecha de Defuncion</th>
+                                                    <th>Lugar de defuncion</th>
+                                                    <th class="text-center">Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for formulario in Anexo %}
+                                                <tr>
+                                                    <td>{{ formulario.id }}</td>
+                                                    <td>{{ formulario.nombreFallecido }}</td>
+                                                    <td>{{ formulario.institucion }}</td>
+                                                    <td>{{ formulario.fechaDefuncion}}</td>
+                                                    <td>{{ formulario.lugarDefMuni}}</td>
+                                                    <td class="td-actions text-center">
+                                                        <a href="{% url 'anexo8Update' formulario.id %}" type="button" rel="tooltip" class="btn btn-info btn-link btn-icon btn-sm">
+                                                            <i class="tim-icons icon-settings"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('.table').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'frt',
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+    });
+</script>
+{% endblock javascripts %}

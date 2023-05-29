@@ -42,8 +42,8 @@ FORMS2 = [
             ("6", FormSET21),
             ("7", ContactoForm8),
             ("8", ContactoForm9),
-            ("9", ContactoForm10),
-            ("10", ContactoForm11),
+            ("9", ContactoForm11),
+            ("10", ContactoForm10)
         ]
 FormSET3=formset_factory(NotificacionBrote5, extra=1)
 FORMS3 =[
@@ -110,6 +110,7 @@ class RegistroEstudioView(CookieWizardView):
                     registroDataFormSet12.append(formset.cleaned_data)
             
         rd = RegistroEstudio(**registroData)
+        rd.capturante = self.request.user
         rd.save()
 
         for item in registroDataFormSet1:
@@ -248,6 +249,7 @@ class RegistroNotificacionBroteView(CookieWizardView):
                     registroDataFormSet3.append(formset.cleaned_data)
 
         notificacion=NotificacionBrote(**registroData)
+        notificacion.capturante = self.request.user
         notificacion.save()
 
         for item in registroDataFormSet3:
@@ -331,6 +333,7 @@ class Anexo8View(CookieWizardView):
             registroData.update(form.cleaned_data)
 
         anexo8=Anexo8(**registroData)
+        anexo8.capturante = self.request.user
         anexo8.save()
 
         return redirect('listaAnexo8')

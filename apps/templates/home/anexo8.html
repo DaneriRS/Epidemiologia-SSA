@@ -545,19 +545,131 @@
                             {% endif %}
                             {{wizard.form.cargo}}
                         </div>
-                        <div class="form-group col-md-6">
+                        {% comment %} <div class="form-group col-md-6">
                             {{wizard.form.firma.label}}
                             {% if wizard.form.firma.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.firma}}
-                        </div>
+                        </div> {% endcomment %}
                     </div>
                     
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
-                            procedenciaChanged(); // Ejecutar la función cuando el documento esté listo
+                            ratificaChanged(); // Ejecutar la función cuando el documento esté listo
                         });
+                        function ratificaChanged() {
+                            var opcion = document.getElementById("id_3-ratifica").value;
+
+                            if (opcion === "Rectifica") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_3-causaVigEpi2").required = true;
+                                document.getElementById("id_3-causasDef2I").required = true;
+                                document.getElementById("id_3-causaDefInter2I").required = true;
+                                document.getElementById("id_3-causaDefCodigoCi22I").required = true;
+                                document.getElementById("id_3-causaBasica2I").required = true;
+                                document.getElementById("id_3-causasDef2I2").required = true;
+                                document.getElementById("id_3-causaDefInter2I2").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").required = true;
+                                document.getElementById("id_3-causasDef2I3").required = true;
+                                document.getElementById("id_3-causaDefInter2I3").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").required = true;
+                                document.getElementById("id_3-causasDef2I4").required = true;
+                                document.getElementById("id_3-causaDefInter2I4").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").required = true;
+                                document.getElementById("id_3-causasDef2II1").required = true;
+                                document.getElementById("id_3-causaDefInter2II1").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").required = true;
+                                document.getElementById("id_3-causasDef2II2").required = true;
+                                document.getElementById("id_3-causaDefInter2II2").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").required = true;
+
+                                document.getElementById("id_3-causaVigEpi2").readOnly = false;
+                                document.getElementById("id_3-causasDef2I").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCi22I").readOnly = false;
+                                document.getElementById("id_3-causaBasica2I").readOnly = false;
+                                document.getElementById("id_3-causasDef2I2").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I2").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").readOnly = false;
+                                document.getElementById("id_3-causasDef2I3").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I3").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").readOnly = false;
+                                document.getElementById("id_3-causasDef2I4").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I4").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").readOnly = false;
+                                document.getElementById("id_3-causasDef2II1").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2II1").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").readOnly = false;
+                                document.getElementById("id_3-causasDef2II2").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2II2").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").readOnly = false;
+                            } else if (opcion === "Ratifica") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_3-causaVigEpi2").required = false;
+                                document.getElementById("id_3-causasDef2I").required = false;
+                                document.getElementById("id_3-causaDefInter2I").required = false;
+                                document.getElementById("id_3-causaDefCodigoCi22I").required = false;
+                                document.getElementById("id_3-causaBasica2I").required = false;
+                                document.getElementById("id_3-causasDef2I2").required = false;
+                                document.getElementById("id_3-causaDefInter2I2").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").required = false;
+                                document.getElementById("id_3-causasDef2I3").required = false;
+                                document.getElementById("id_3-causaDefInter2I3").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").required = false;
+                                document.getElementById("id_3-causasDef2I4").required = false;
+                                document.getElementById("id_3-causaDefInter2I4").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").required = false;
+                                document.getElementById("id_3-causasDef2II1").required = false;
+                                document.getElementById("id_3-causaDefInter2II1").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").required = false;
+                                document.getElementById("id_3-causasDef2II2").required = false;
+                                document.getElementById("id_3-causaDefInter2II2").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").required = false;
+
+                                document.getElementById("id_3-causaVigEpi2").readOnly = true;
+                                document.getElementById("id_3-causasDef2I").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCi22I").readOnly = true;
+                                document.getElementById("id_3-causaBasica2I").readOnly = true;
+                                document.getElementById("id_3-causasDef2I2").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I2").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").readOnly = true;
+                                document.getElementById("id_3-causasDef2I3").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I3").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").readOnly = true;
+                                document.getElementById("id_3-causasDef2I4").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I4").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").readOnly = true;
+                                document.getElementById("id_3-causasDef2II1").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2II1").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").readOnly = true;
+                                document.getElementById("id_3-causasDef2II2").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2II2").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").readOnly = true;
+
+                                document.getElementById("id_3-causaVigEpi2").value = "";
+                                document.getElementById("id_3-causasDef2I").value = "";
+                                document.getElementById("id_3-causaDefInter2I").value = "";
+                                document.getElementById("id_3-causaDefCodigoCi22I").value = "";
+                                document.getElementById("id_3-causaBasica2I").value = "";
+                                document.getElementById("id_3-causasDef2I2").value = "";
+                                document.getElementById("id_3-causaDefInter2I2").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I2").value = "";
+                                document.getElementById("id_3-causasDef2I3").value = "";
+                                document.getElementById("id_3-causaDefInter2I3").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I3").value = "";
+                                document.getElementById("id_3-causasDef2I4").value = "";
+                                document.getElementById("id_3-causaDefInter2I4").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I4").value = "";
+                                document.getElementById("id_3-causasDef2II1").value = "";
+                                document.getElementById("id_3-causaDefInter2II1").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2II1").value = "";
+                                document.getElementById("id_3-causasDef2II2").value = "";
+                                document.getElementById("id_3-causaDefInter2II2").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2II2").value = "";
+                            }
+                        }
                     </script>
 
                     {% elif wizard.steps.step1 == 4 %}

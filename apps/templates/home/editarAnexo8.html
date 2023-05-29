@@ -318,6 +318,13 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
+                            {{wizard.form.causaVigEpi2.label}}
+                            {% if wizard.form.causaVigEpi2.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.causaVigEpi2}}
+                        </div>
+                        <div class="form-group col-md-6">
                             {{wizard.form.ratifica.label}}
                             {% if wizard.form.ratifica.field.required %}
                                 <span class="text-danger">*</span>
@@ -325,9 +332,6 @@
                             {{wizard.form.ratifica}}
                         </div>
                     </div>
-
-
-
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             {{wizard.form.causasDef2I.label}}
@@ -473,14 +477,8 @@
                             {{wizard.form.causaDefCodigoCie2II2}}
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{wizard.form.causaVigEpi2.label}}
-                            {% if wizard.form.causaVigEpi2.field.required %}
-                                <span class="text-danger">*</span>
-                            {% endif %}
-                            {{wizard.form.causaVigEpi2}}
-                        </div>
+                    {% comment %} <div class="form-row">
+                        
                         <div class="form-group col-md-6">
                             {{wizard.form.causaVigEpiCodigoCie2.label}}
                             {% if wizard.form.causaVigEpiCodigoCie2.field.required %}
@@ -488,7 +486,7 @@
                             {% endif %}
                             {{wizard.form.causaVigEpiCodigoCie2}}
                         </div>
-                    </div>
+                    </div> {% endcomment %}
 
 
                     <div class="form-row">
@@ -547,15 +545,134 @@
                             {% endif %}
                             {{wizard.form.cargo}}
                         </div>
-                        <div class="form-group col-md-6">
+                        {% comment %} <div class="form-group col-md-6">
                             {{wizard.form.firma.label}}
                             {% if wizard.form.firma.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.firma}}
-                        </div>
+                        </div> {% endcomment %}
                     </div>
-                {% elif wizard.steps.step1 == 4 %}
+                    
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            ratificaChanged(); // Ejecutar la función cuando el documento esté listo
+                        });
+                        function ratificaChanged() {
+                            var opcion = document.getElementById("id_3-ratifica").value;
+
+                            if (opcion === "Rectifica") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_3-causaVigEpi2").required = true;
+                                document.getElementById("id_3-causasDef2I").required = true;
+                                document.getElementById("id_3-causaDefInter2I").required = true;
+                                document.getElementById("id_3-causaDefCodigoCi22I").required = true;
+                                document.getElementById("id_3-causaBasica2I").required = true;
+                                document.getElementById("id_3-causasDef2I2").required = true;
+                                document.getElementById("id_3-causaDefInter2I2").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").required = true;
+                                document.getElementById("id_3-causasDef2I3").required = true;
+                                document.getElementById("id_3-causaDefInter2I3").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").required = true;
+                                document.getElementById("id_3-causasDef2I4").required = true;
+                                document.getElementById("id_3-causaDefInter2I4").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").required = true;
+                                document.getElementById("id_3-causasDef2II1").required = true;
+                                document.getElementById("id_3-causaDefInter2II1").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").required = true;
+                                document.getElementById("id_3-causasDef2II2").required = true;
+                                document.getElementById("id_3-causaDefInter2II2").required = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").required = true;
+
+                                document.getElementById("id_3-causaVigEpi2").readOnly = false;
+                                document.getElementById("id_3-causasDef2I").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCi22I").readOnly = false;
+                                document.getElementById("id_3-causaBasica2I").readOnly = false;
+                                document.getElementById("id_3-causasDef2I2").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I2").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").readOnly = false;
+                                document.getElementById("id_3-causasDef2I3").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I3").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").readOnly = false;
+                                document.getElementById("id_3-causasDef2I4").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2I4").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").readOnly = false;
+                                document.getElementById("id_3-causasDef2II1").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2II1").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").readOnly = false;
+                                document.getElementById("id_3-causasDef2II2").readOnly = false;
+                                document.getElementById("id_3-causaDefInter2II2").readOnly = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").readOnly = false;
+                            } else if (opcion === "Ratifica") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_3-causaVigEpi2").required = false;
+                                document.getElementById("id_3-causasDef2I").required = false;
+                                document.getElementById("id_3-causaDefInter2I").required = false;
+                                document.getElementById("id_3-causaDefCodigoCi22I").required = false;
+                                document.getElementById("id_3-causaBasica2I").required = false;
+                                document.getElementById("id_3-causasDef2I2").required = false;
+                                document.getElementById("id_3-causaDefInter2I2").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").required = false;
+                                document.getElementById("id_3-causasDef2I3").required = false;
+                                document.getElementById("id_3-causaDefInter2I3").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").required = false;
+                                document.getElementById("id_3-causasDef2I4").required = false;
+                                document.getElementById("id_3-causaDefInter2I4").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").required = false;
+                                document.getElementById("id_3-causasDef2II1").required = false;
+                                document.getElementById("id_3-causaDefInter2II1").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").required = false;
+                                document.getElementById("id_3-causasDef2II2").required = false;
+                                document.getElementById("id_3-causaDefInter2II2").required = false;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").required = false;
+
+                                document.getElementById("id_3-causaVigEpi2").readOnly = true;
+                                document.getElementById("id_3-causasDef2I").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCi22I").readOnly = true;
+                                document.getElementById("id_3-causaBasica2I").readOnly = true;
+                                document.getElementById("id_3-causasDef2I2").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I2").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I2").readOnly = true;
+                                document.getElementById("id_3-causasDef2I3").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I3").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I3").readOnly = true;
+                                document.getElementById("id_3-causasDef2I4").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2I4").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2I4").readOnly = true;
+                                document.getElementById("id_3-causasDef2II1").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2II1").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II1").readOnly = true;
+                                document.getElementById("id_3-causasDef2II2").readOnly = true;
+                                document.getElementById("id_3-causaDefInter2II2").readOnly = true;
+                                document.getElementById("id_3-causaDefCodigoCie2II2").readOnly = true;
+
+                                document.getElementById("id_3-causaVigEpi2").value = "";
+                                document.getElementById("id_3-causasDef2I").value = "";
+                                document.getElementById("id_3-causaDefInter2I").value = "";
+                                document.getElementById("id_3-causaDefCodigoCi22I").value = "";
+                                document.getElementById("id_3-causaBasica2I").value = "";
+                                document.getElementById("id_3-causasDef2I2").value = "";
+                                document.getElementById("id_3-causaDefInter2I2").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I2").value = "";
+                                document.getElementById("id_3-causasDef2I3").value = "";
+                                document.getElementById("id_3-causaDefInter2I3").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I3").value = "";
+                                document.getElementById("id_3-causasDef2I4").value = "";
+                                document.getElementById("id_3-causaDefInter2I4").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2I4").value = "";
+                                document.getElementById("id_3-causasDef2II1").value = "";
+                                document.getElementById("id_3-causaDefInter2II1").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2II1").value = "";
+                                document.getElementById("id_3-causasDef2II2").value = "";
+                                document.getElementById("id_3-causaDefInter2II2").value = "";
+                                document.getElementById("id_3-causaDefCodigoCie2II2").value = "";
+                            }
+                        }
+                    </script>
+
+                    {% elif wizard.steps.step1 == 4 %}
                     <div class="text-left">
                         <h2 class="card-title">IV - DATOS DE CONTROL (EXCLUSIVO INEGI)</h2>
                     </div>

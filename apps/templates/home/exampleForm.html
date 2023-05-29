@@ -326,7 +326,7 @@
                             {{wizard.form.otrosMecanismos}}
                         </div>
                     </div>
-                    <script>
+                    {% comment %} <script>
                         document.addEventListener("DOMContentLoaded", function() {
                           procedenciaChanged(); // Ejecutar la función cuando el documento esté listo
                         });
@@ -340,6 +340,11 @@
                             document.getElementById("id_5-localidadProc").value = "";
                             document.getElementById("id_5-llegadaProc").value = "";
                             document.getElementById("id_5-salidaProc").value = "";
+
+                            document.getElementById("id_5-municipioProc").required = false;
+                            document.getElementById("id_5-localidadProc").required = false;
+                            document.getElementById("id_5-llegadaProc").required = false;
+                            document.getElementById("id_5-salidaProc").required = false;
                             
                             document.getElementById("id_5-municipioProc").readOnly = true;
                             document.getElementById("id_5-localidadProc").readOnly = true;
@@ -359,7 +364,7 @@
                             document.getElementById("id_5-salidaProc").required = true;
                           }
                         }
-                    </script>
+                    </script> {% endcomment %}
                 {% elif wizard.steps.step1 == 6 %}
                     <div class="text-left">
                         <h2 class="card-title">VI - ESTUDIO DE CONTACTOS</h2>
@@ -504,7 +509,7 @@
                             {{wizard.form.fechaDefuncion}}
                         </div>
                     </div>
-                    <script>
+                    {% comment %} <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             fallecioChanged(); // Ejecutar la función cuando el documento esté listo
                         });
@@ -524,7 +529,7 @@
                             document.getElementById("id_8-fechaDefuncion").required = false;
                           }
                         }
-                    </script>
+                    </script> {% endcomment %}
                 {% elif wizard.steps.step1 == 9 %}
                     <div class="text-left">
                         <h2 class="card-title">IX - PREVENCIÓN Y CONTROL </h2>
@@ -634,8 +639,48 @@
                             {{wizard.form.otrasActividades}}
                         </div> 
                     </div>
-
                     <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var opcion = document.getElementById("id_9-numPlaticas").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numPlaticas").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numVacunacion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numVacunacion").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numTratamientosInd").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosInd").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numTratamientosFam").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosFam").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numCloracion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numCloracion").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numLetrinizacion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numLetrinizacion").value = 0;
+                            }
+                        });
+                        
+                        {% comment %} document.getElementById("id_9-numVacunacion").value = 0;
+                        document.getElementById("id_9-numTratamientosInd").value = 0;
+                        document.getElementById("id_9-numTratamientosFam").value = 0;
+                        document.getElementById("id_9-numCloracion").value = 0;
+                        document.getElementById("id_9-numLetrinizacion").value = 0; {% endcomment %}
+                    </script>
+
+                    {% comment %} <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             ejecutar(); // Ejecutar la función cuando el documento esté listo
                         });
@@ -652,13 +697,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numPlaticas").readOnly = false;
                                 document.getElementById("id_9-numPlaticas").required = true;
+                                document.getElementById("id_9-numPlaticas").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numPlaticas").value = 0;
+                                document.getElementById("id_9-numPlaticas").max = 0;
                                 
-                                document.getElementById("id_9-numPlaticas").readOnly = true;
                                 document.getElementById("id_9-numPlaticas").required = false;
                             }
                         }
@@ -667,13 +712,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numVacunacion").readOnly = false;
                                 document.getElementById("id_9-numVacunacion").required = true;
+                                document.getElementById("id_9-numVacunacion").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numVacunacion").value = 0;
+                                document.getElementById("id_9-numVacunacion").max = 0;
                                 
-                                document.getElementById("id_9-numVacunacion").readOnly = true;
                                 document.getElementById("id_9-numVacunacion").required = false;
                             }
                         }
@@ -682,13 +727,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosInd").readOnly = false;
                                 document.getElementById("id_9-numTratamientosInd").required = true;
+                                document.getElementById("id_9-numTratamientosInd").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numTratamientosInd").value = 0;
+                                document.getElementById("id_9-numTratamientosInd").max = 0;
                                 
-                                document.getElementById("id_9-numTratamientosInd").readOnly = true;
                                 document.getElementById("id_9-numTratamientosInd").required = false;
                             }
                         }
@@ -697,13 +742,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numTratamientosFam").readOnly = false;
                                 document.getElementById("id_9-numTratamientosFam").required = true;
+                                document.getElementById("id_9-numTratamientosFam").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numTratamientosFam").value = 0;
+                                document.getElementById("id_9-numTratamientosFam").max = 0;
                                 
-                                document.getElementById("id_9-numTratamientosFam").readOnly = true;
                                 document.getElementById("id_9-numTratamientosFam").required = false;
                             }
                         }
@@ -712,13 +757,13 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numCloracion").readOnly = false;
                                 document.getElementById("id_9-numCloracion").required = true;
+                                document.getElementById("id_9-numCloracion").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numCloracion").value = 0;
+                                document.getElementById("id_9-numCloracion").max = 0;
                                 
-                                document.getElementById("id_9-numCloracion").readOnly = true;
                                 document.getElementById("id_9-numCloracion").required = false;
                             }
                         }
@@ -727,17 +772,17 @@
                             
                             if (opcion === "Si") {
                                 // Habilitar los siguientes campos
-                                document.getElementById("id_9-numLetrinizacion").readOnly = false;
                                 document.getElementById("id_9-numLetrinizacion").required = true;
+                                document.getElementById("id_9-numLetrinizacion").max = 100;
                             } else if (opcion === "No") {
                                 // Limpiar y deshabilitar los siguientes campos
                                 document.getElementById("id_9-numLetrinizacion").value = 0;
+                                document.getElementById("id_9-numLetrinizacion").max = 0;
                                 
-                                document.getElementById("id_9-numLetrinizacion").readOnly = true;
                                 document.getElementById("id_9-numLetrinizacion").required = false;
                             }
                         }
-                    </script>
+                    </script> {% endcomment %}
                 
                 {% elif wizard.steps.step1 == 10 %}
                     <div class="text-left">

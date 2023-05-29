@@ -19,80 +19,108 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{form.nombre.label}}
+                        {% if form.nombre.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.nombre}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.apellidoPa.label}}
+                        {% if form.apellidoPa.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.apellidoPa}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.apellidoMa.label}}
+                        {% if form.apellidoMa.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.apellidoMa}}
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{form.numAfiliacion.label}}
+                        {% if form.numAfiliacion.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.numAfiliacion}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.sexo.label}}
+                        {% if form.sexo.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.sexo}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.nacimiento.label}}
+                        {% if form.nacimiento.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.nacimiento}}
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{form.calle.label}}
+                        {% if form.calle.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.calle}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.telefonoPaciente.label}}
+                        {% if form.telefonoPaciente.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.telefonoPaciente}}
                     </div>
                     <div class="form-group col-md-2">
                         {{form.numInt.label}}
+                        {% if form.numInt.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.numInt}}
                     </div>
                     <div class="form-group col-md-2">
                         {{form.numExt.label}}
+                        {% if form.numExt.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.numExt}}
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{form.entidad.label}}
+                        {% if form.entidad.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.entidad}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.municipio.label}}
+                        {% if form.municipio.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.municipio}}
                     </div>
                     <div class="form-group col-md-4">
                         {{form.localidad.label}}
-                        {{form.localidad}}
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        {{form.entidad.label}}
-                        {{form.entidad}}
-                    </div>
-                    <div class="form-group col-md-4">
-                        {{form.municipio.label}}
-                        {{form.municipio}}
-                    </div>
-                    <div class="form-group col-md-4">
-                        {{form.localidad.label}}
+                        {% if form.localidad.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.localidad}}
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         {{form.codigoPostal.label}}
+                        {% if form.codigoPostal.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
                         {{form.codigoPostal}}
                     </div>
                 </div>

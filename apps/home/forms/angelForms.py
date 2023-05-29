@@ -3201,25 +3201,31 @@ class Anexo8P1(forms.Form):
     )
     edadAnio=forms.CharField(
         label = 'Edad en Anio',
-        widget = forms.TextInput(
+        widget = forms.NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'min': 0,
+                'max': 150
             }
         )
     )
     edadMes=forms.CharField(
         label = 'Edad en Mes',
-        widget = forms.TextInput(
+        widget = forms.NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'min': 0,
+                'max': 11
             }
         )
     )
     edadDia=forms.CharField(
         label = 'Edad en Dia',
-        widget = forms.TextInput(
+        widget = forms.NumberInput(
             attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'min': 0,
+                'max': 30
             }
         )
     )
@@ -3523,7 +3529,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     ratifica = forms.ChoiceField(
         choices=RATIFICA_CHOICES,
@@ -3531,6 +3538,7 @@ class Anexo8P3(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control ',
+                'onChange': 'ratificaChanged()'
             }
         ),
         required=False
@@ -3542,7 +3550,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2I=forms.CharField(
         max_length = 100,
@@ -3551,7 +3560,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCi22I=forms.CharField(
         max_length = 100,
@@ -3560,7 +3570,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaBasica2I=forms.CharField(
         max_length = 100,
@@ -3569,7 +3580,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     causasDef2I2=forms.CharField(
@@ -3579,7 +3591,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2I2=forms.CharField(
         max_length = 100,
@@ -3588,7 +3601,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCie2I2=forms.CharField(
         max_length = 100,
@@ -3597,7 +3611,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     causasDef2I3=forms.CharField(
@@ -3607,7 +3622,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2I3=forms.CharField(
         max_length = 100,
@@ -3616,7 +3632,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCie2I3=forms.CharField(
         max_length = 100,
@@ -3625,7 +3642,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     causasDef2I4=forms.CharField(
@@ -3635,7 +3653,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2I4=forms.CharField(
         max_length = 100,
@@ -3644,7 +3663,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCie2I4=forms.CharField(
         max_length = 100,
@@ -3653,7 +3673,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     causasDef2II1=forms.CharField(
@@ -3663,7 +3684,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2II1=forms.CharField(
         max_length = 100,
@@ -3672,7 +3694,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCie2II1=forms.CharField(
         max_length = 100,
@@ -3681,7 +3704,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     causasDef2II2=forms.CharField(
@@ -3691,7 +3715,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefInter2II2=forms.CharField(
         max_length = 100,
@@ -3700,7 +3725,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
     causaDefCodigoCie2II2=forms.CharField(
         max_length = 100,
@@ -3709,7 +3735,8 @@ class Anexo8P3(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
 
     
@@ -3782,15 +3809,15 @@ class Anexo8P3(forms.Form):
             }
         )
     )
-    firma=forms.CharField(
-        max_length = 100,
-        label = "Firma",
-        widget = forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
+    # firma=forms.CharField(
+    #     max_length = 100,
+    #     label = "Firma",
+    #     widget = forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
 
 class Anexo8P4(forms.Form):
     tipoDocumento=forms.CharField(
@@ -3800,7 +3827,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     numPaquete=forms.CharField(
         max_length = 100,
@@ -3809,7 +3837,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     numActa=forms.CharField(
         max_length = 100,
@@ -3818,7 +3847,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     folioCaptura=forms.CharField(
         max_length = 100,
@@ -3827,7 +3857,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     nombreCodificador=forms.CharField(
         max_length = 100,
@@ -3836,7 +3867,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
 
 class addJurisdiccion(ModelForm):

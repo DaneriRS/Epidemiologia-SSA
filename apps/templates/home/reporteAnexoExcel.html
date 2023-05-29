@@ -1,0 +1,233 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Anexo 8 {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    {% include 'includes/logos.html' %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h2 class="card-title">Anexo 8 </h2>
+                        </div>
+                    </div>
+                        <table class="table table-striped table-hover" id="tabla_casos">
+                            <thead>
+                                <tr>
+                                    <th>DATOS TOMADOS DEL CERTIFICADO DE DEFUNCIÓN</th>
+                                    <th>Folio del Caso</th>
+                                    <th>Nombre del Fallecido</th>
+                                    <th>Edad en Años</th>
+                                    <th>Edad en Mes</th>
+                                    <th>Edad en Dia</th>
+                                    <th>Edad en Hora</th>
+                                    <th>Edad en Minuto</th>
+                                    <th>Afiliacion de Servicios Medicos</th>
+                                    <th>Fecha de defunción</th>
+                                    <th>Escolaridad</th>
+                                    <th>Ocupación</th>
+                                    <th>Certificada por</th>
+                                    <th>Lugar de residencia habitual, Municipio</th>
+                                    <th>Lugar de residencia habitual, Entidad</th>
+                                    <th>Lugar donde ocurrio la defuncion, Municipio</th>
+                                    <th>Lugar donde ocurrio la defuncion, Entidad</th>
+                                    <th>Nombre del Certificante</th>
+
+                                    <th>DATOS TOMADOS DEL CERTIFICADO DE DEFUNCIÓN 2</th>
+                                    <th>Causas de defunción I (1)</th>
+                                    <th>Causas de defunción I (1) Intervalo</th>
+                                    <th>Causas de defunción I (1) Codigo CIE</th>
+                                    <th>Causas de defunción I (1) Causa Basica</th>
+                                    <th>Causas de defunción I (2)</th>
+                                    <th>Causas de defunción I (2) Intervalo</th>
+                                    <th>Causas de defunción I (2) Codigo CIE</th>
+                                    <th>Causas de defunción I (3)</th>
+                                    <th>Causas de defunción I (3) Intervalo</th>
+                                    <th>Causas de defunción I (3) Codigo CIE</th>
+                                    <th>Causas de defunción I (4)</th>
+                                    <th>Causas de defunción I (4) Intervalo</th>
+                                    <th>Causas de defunción I (4) Codigo CIE</th>
+                                    <th>Causas de defunción II (1)</th>
+                                    <th>Causas de defunción II (1) Intervalo</th>
+                                    <th>Causas de defunción II (1) Codigo CIE</th>
+                                    <th>Causas de defunción II (2)</th>
+                                    <th>Causas de defunción II (2) Intervalo</th>
+                                    <th>Causas de defunción II (2) Codigo CIE</th>
+                                    <th>Causa sujeta a vigilancia epidemiologica</th>
+                                    <th>Causa sujeta a vigilancia epidemiologica, Codigo CIE</th>
+
+                                    <th>DATOS RESULTANTES DE LA INVESTIGACION EPIDEMIOLÓGICA</th>
+                                    <th>Causa sujeta a vigilancia epidemiologica 2</th>
+                                    <th>Ratifica</th>
+                                    <th>Causas de defunción 2 I (1)</th>
+                                    <th>Causas de defunción 2 I (1) Intervalo</th>
+                                    <th>Causas de defunción 2 I (1) Codigo CIE</th>
+                                    <th>Causas de defunción 2 I (1) Causa Basica</th>
+                                    <th>Causas de defunción 2 I (2)</th>
+                                    <th>Causas de defunción 2 I (2) Intervalo</th>
+                                    <th>Causas de defunción 2 I (2) Codigo CIE</th>
+                                    <th>Causas de defunción 2 I (3)</th>
+                                    <th>Causas de defunción 2 I (3) Intervalo</th>
+                                    <th>Causas de defunción 2 I (3) Codigo CIE</th>
+                                    <th>Causas de defunción 2 I (4)</th>
+                                    <th>Causas de defunción 2 I (4) Intervalo</th>
+                                    <th>Causas de defunción 2 I (4) Codigo CIE</th>
+                                    <th>Causas de defunción 2 II (1)</th>
+                                    <th>Causas de defunción 2 II (1) Intervalo</th>
+                                    <th>Causas de defunción 2 II (1) Codigo CIE</th>
+                                    <th>Causas de defunción 2 II (2)</th>
+                                    <th>Causas de defunción 2 II (2) Intervalo</th>
+                                    <th>Causas de defunción 2 II (2) Codigo CIE</th>
+                                    <th>Fecha de recolección</th>
+                                    <th>Fecha de inicio</th>
+                                    <th>Fecha de conclusión</th>
+                                    <th>Fecha de reporte a INEGI</th>
+                                    <th>Observaciones</th>
+                                    <th>Nombre del responsable de la investigación</th>
+                                    <th>Cargo</th>
+                                    <th>Firma</th>
+                                    
+                                    <th>DATOS DEL INEGI</th>
+                                    <th>Tipo de documento</th>
+                                    <th>Número de paquete</th>
+                                    <th>Número de acta</th>
+                                    <th>Folio de captura</th>
+                                    <th>Nombre del codificador</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for formulario in query %}
+                                <tr>
+                                    <td>DATOS TOMADOS DEL CERTIFICADO DE DEFUNCIÓN</td>
+                                    <td>{{ formulario.id }}</td>
+                                    <td>{{ formulario.nombreFallecido }}</td>
+                                    <td>{{ formulario.edadAnio }}</td>
+                                    <td>{{ formulario.edadMes }}</td>
+                                    <td>{{ formulario.edadDia }}</td>
+                                    <td>{{ formulario.edadHora }}</td>
+                                    <td>{{ formulario.edadMin }}</td>
+                                    <td>{{ formulario.afiliacionServicios }}</td>
+                                    <td>{{ formulario.fechaDefuncion }}</td>
+                                    <td>{{ formulario.escolaridad }}</td>
+                                    <td>{{ formulario.ocupacion }}</td>
+                                    <td>{{ formulario.certificadaPor }}</td>
+                                    <td>{{ formulario.lugardeResidenciaMuni }}</td>
+                                    <td>{{ formulario.lugardeResidenciaEnti }}</td>
+                                    <td>{{ formulario.lugarDefMuni }}</td>
+                                    <td>{{ formulario.lugarDefEnti }}</td>
+                                    <td>{{ formulario.nombreCertificante }}</td>
+
+                                    <td>DATOS TOMADOS DEL CERTIFICADO DE DEFUNCIÓN 2</td>
+                                    <td>{{ formulario.causasDefI }}</td>
+                                    <td>{{ formulario.causaDefInterI }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieI }}</td>
+                                    <td>{{ formulario.causaBasicaI }}</td>
+                                    <td>{{ formulario.causasDefI2 }}</td>
+                                    <td>{{ formulario.causaDefInterI2 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieI2 }}</td>
+                                    <td>{{ formulario.causasDefI3 }}</td>
+                                    <td>{{ formulario.causaDefInterI3 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieI3 }}</td>
+                                    <td>{{ formulario.causasDefI4 }}</td>
+                                    <td>{{ formulario.causaDefInterI4 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieI4 }}</td>
+                                    <td>{{ formulario.causasDefII1 }}</td>
+                                    <td>{{ formulario.causaDefInterII1 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieII1 }}</td>
+                                    <td>{{ formulario.causasDefII2 }}</td>
+                                    <td>{{ formulario.causaDefInterII2 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCieII2 }}</td>
+                                    <td>{{ formulario.causaVigEpi }}</td>
+                                    <td>{{ formulario.causaVigEpiCodigoCie }}</td>
+
+                                    <td>DATOS RESULTANTES DE LA INVESTIGACION EPIDEMIOLÓGICA</td>
+                                    <td>{{ formulario.causaVigEpi }}</td>
+                                    <td>{{ formulario.ratifica }}</td>
+                                    <td>{{ formulario.causasDef2I }}</td>
+                                    <td>{{ formulario.causaDefInter2I }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2I }}</td>
+                                    <td>{{ formulario.causaBasica2I }}</td>
+                                    <td>{{ formulario.causasDef2I2 }}</td>
+                                    <td>{{ formulario.causaDefInter2I2 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2I2 }}</td>
+                                    <td>{{ formulario.causasDef2I3 }}</td>
+                                    <td>{{ formulario.causaDefInter2I3 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2I3 }}</td>
+                                    <td>{{ formulario.causasDef2I4 }}</td>
+                                    <td>{{ formulario.causaDefInter2I4 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2I4 }}</td>
+                                    <td>{{ formulario.causasDef2II1 }}</td>
+                                    <td>{{ formulario.causaDefInter2II1 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2II1 }}</td>
+                                    <td>{{ formulario.causasDef2II2 }}</td>
+                                    <td>{{ formulario.causaDefInter2II2 }}</td>
+                                    <td>{{ formulario.causaDefCodigoCie2II2 }}</td>
+                                    <td>{{ formulario.fechaRecoleccion }}</td>
+                                    <td>{{ formulario.fechaInicio }}</td>
+                                    <td>{{ formulario.fechaConclusion }}</td>
+                                    <td>{{ formulario.reporteInegi }}</td>
+                                    <td>{{ formulario.observaciones }}</td>
+                                    <td>{{ formulario.nombreResponsableInv }}</td>
+                                    <td>{{ formulario.cargo }}</td>
+                                    <td>{{ formulario.firma }}</td>
+
+                                    <td>DATOS DEL INEGI</td>
+                                    <td>{{ formulario.tipoDocumento}}</td>
+                                    <td>{{ formulario.numPaquete}}</td>
+                                    <td>{{ formulario.numActa}}</td>
+                                    <td>{{ formulario.folioCaptura}}</td>
+                                    <td>{{ formulario.nombreCodificador}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <div class="card-body px-3">
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        var table = $('#tabla_casos').DataTable({
+           "responsive": true, 
+           "lengthChange": false, 
+           "autoWidth": false,
+           "dom": 'Bfrtip',
+           {% comment %} "buttons": ["copy", "csv", "excel", "pdf", "print"], {% endcomment %}
+           "buttons": [
+          {
+            "extend": "csv",
+            "className": "btn-info animation-on-hover"
+          },
+          {
+            "extend": "excel",
+            "className": "btn-info animation-on-hover"
+          },],
+          {% comment %} {
+            "extend": 'pageLength',
+            "text": 'Filas por página',
+            "className": "btn-info animation-on-hover"
+          }], {% endcomment %}
+           "language": {
+               url: '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
+           },
+           "ordering": true
+       });
+     });
+</script>
+{% endblock javascripts %}

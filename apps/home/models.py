@@ -350,6 +350,31 @@ class RegistroEstudio(models.Model):
     capturante = models.ForeignKey(User, verbose_name="Capturante", on_delete=models.SET_NULL, null=True, blank=True)
     estado = models.CharField(verbose_name="Estado del formulario", max_length=30, choices=ESTADOS_FORMULARIOS)
     
+    def save(self, *args, **kwargs):
+        if self.edadAnio is None or self.edadMes is None or self.edadDia is None:
+            # Calcula la edad en base a la fecha de nacimiento y la fecha actual
+            if self.paciente and self.paciente.nacimiento:
+                fecha_actual = date.today()
+                fecha_nacimiento = self.paciente.nacimiento
+
+                edad = fecha_actual - fecha_nacimiento
+
+                # Calcula la edad en años, meses y días
+                edad_anio = edad.days // 365
+                edad_mes = (edad.days % 365) // 30
+                edad_dia = (edad.days % 365) % 30
+
+                # Actualiza los campos de edad si están vacíos o son None
+                if self.edadAnio is None or self.edadAnio == '':
+                    self.edadAnio = edad_anio
+
+                if self.edadMes is None or self.edadMes == '':
+                    self.edadMes = edad_mes
+
+                if self.edadDia is None or self.edadDia == '':
+                    self.edadDia = edad_dia
+
+        super(RegistroEstudio, self).save(*args, **kwargs)
     
 class Estudio(models.Model):
     nombre = models.CharField(verbose_name = "Nombre de estudio", max_length=100)
@@ -840,4 +865,6 @@ class Anexo8(models.Model):
     numActa = models.CharField(verbose_name="Número de acta", max_length=50, null=True, blank=True)
     folioCaptura = models.CharField(verbose_name="Folio de captura", max_length=50, null=True, blank=True)
     nombreCodificador = models.CharField(verbose_name="Nombre del codificador", max_length=50, null=True, blank=True)
+    
+    capturante = models.ForeignKey(User, verbose_name="Capturante", on_delete=models.SET_NULL, null=True, blank=True)
     
