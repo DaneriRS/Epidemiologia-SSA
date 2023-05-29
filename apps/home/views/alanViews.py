@@ -468,3 +468,25 @@ def delUnidad(request, pk):
         return redirect(reverse('vista_tablas', kwargs={'msg':'exitoDeletedUnidad'}))
     except Exception as e:
         return redirect(reverse('vista_tablas', kwargs={'msg':'errorDeletedUnidad'}))
+    
+@login_required(login_url="/login/")
+def TodosLosReportes(request, msg):
+    if request.user.is_director:
+        Registro = RegistroEstudio.objects.all()
+        NotifBrote = NotificacionBrote.objects.all()
+        Anexo = Anexo8.objects.all()
+    elif request.user.is_encarJuris:
+        registros = RegistroEstudio.objects.filter(unidadNot__jurisdiccion__id=request.user.informacionusuario.unidad.jurisdiccion.id)
+        NotifBrote = NotificacionBrote.objects.filter(unidadNot__jurisdiccion__id=request.user.informacionusuario.unidad.jurisdiccion.id)
+        anexos = Anexo8.objects.filter(capturante__informacionusuario__jurisdiccion__id=request.user.informacionusuario.jurisdiccion.id)
+    elif request.user.is_encarUni:
+        Registro = RegistroEstudio.objects.filter(unidadNot__id=request.user.informacionusuario.unidad.id)
+        NotifBrote = NotificacionBrote.objects.filter(unidadNot__id=request.user.informacionusuario.unidad.id)
+        Anexo = Anexo8.objects.filter(capturante__informacionusuario__unidad__id=request.user.informacionusuario.unidad.id)
+     
+    return render(request, 'home/TodosLosReportes.html', {
+        'segment': 'Reportes',
+        'Registro': Registro,
+        'NotifBrote': NotifBrote,
+        'Anexo': Anexo,
+    })

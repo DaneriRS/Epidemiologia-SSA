@@ -30,89 +30,123 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="" method="post">{% csrf_token %}
+            <form action="" method="post" autocomplete="off">{% csrf_token %}
                 {{ wizard.management_form }}
                 {% if wizard.steps.step1 == 1 %}
                     <div class="text-left">
                         <h2 class="card-title">I - IDENTIFICACION DE LA UNIDAD</h2>
                     </div>
-                <div class="form-row">
-                    <!-- {{ wizard.form}} -->
-                    <div class="form-group col-md-6">
-                        {{wizard.form.unidadNot.label}}
-                        {{wizard.form.unidadNot}}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.unidadNot.label}}
+                            {% if wizard.form.unidadNot.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.unidadNot}}
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        {{wizard.form.fechaNot.label}}
-                        {{wizard.form.fechaNot}}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.fechaNot.label}}
+                            {% if wizard.form.fechaNot.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaNot}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.fechaIni.label}}
+                            {% if wizard.form.fechaIni.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaIni}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.fechaFin.label}}
+                            {% if wizard.form.fechaFin.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaFin}}
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        {{wizard.form.fechaIni.label}}
-                        {{wizard.form.fechaIni}}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.DiaProHep.label}}
+                            {% if wizard.form.DiaProHep.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaProHep}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.DiaFin.label}}
+                            {% if wizard.form.DiaFin.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.DiaFin}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.otroDia.label}}
+                            {% if wizard.form.otroDia.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otroDia}}
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        {{wizard.form.fechaFin.label}}
-                        {{wizard.form.fechaFin}}
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        {{wizard.form.DiaProHep.label}}
-                        {{wizard.form.DiaProHep}}
-                    </div>
-                    <div class="form-group col-md-4">
-                        {{wizard.form.DiaFin.label}}
-                        {{wizard.form.DiaFin}}
-                    </div>
-                    <div class="form-group col-md-4">
-                        {{wizard.form.otroDia.label}}
-                        {{wizard.form.otroDia}}
-                    </div>
-                </div>
                 {% elif wizard.steps.step1 == 2 %}
-                <div class="text-left">
-                    <h2 class="card-title">II - IDENTIFICACION DEL CASO</h2>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        {{wizard.form.paciente.label}}
-                        {{wizard.form.paciente}}
+                    <div class="text-left">
+                        <h2 class="card-title">II - IDENTIFICACION DEL CASO</h2>
                     </div>
-                </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{wizard.form.paciente.label}}
+                            {% if wizard.form.paciente.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.paciente}}
+                        </div>
+                    </div>
+                
                 {% elif wizard.steps.step1 == 3 %}
-                <div class="text-left">
-                    <h2 class="card-title">III.a - DATOS CLINICOS</h2>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        {{wizard.form.fechaIn3.label}}{{wizard.form.fechaIn3}}
+                    <div class="text-left">
+                        <h2 class="card-title">III.a - DATOS CLINICOS</h2>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        {{wizard.form.signoSint3.label}}
-                        {{wizard.form.signoSint3}}
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            {{wizard.form.fechaIn3.label}}
+                            {% if wizard.form.fechaIn3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaIn3}}
+                        </div>
                     </div>
-                </div>
-                <div class="text-left mt-5">
-                    <h2 class="card-title">III.b - TRATAMIENTO</h2>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        {{wizard.form.tratamiento3.label}}
-                        {{wizard.form.tratamiento3}}
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.signoSint3.label}}
+                            {% if wizard.form.signoSint3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.signoSint3}}
+                        </div>
                     </div>
-                </div>
+                    <div class="text-left mt-5">
+                        <h2 class="card-title">III.b - TRATAMIENTO</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.tratamiento3.label}}
+                            {% if wizard.form.tratamiento3.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.tratamiento3}}
+                        </div>
+                    </div>
                 {% elif wizard.steps.step1 == 4 %}  
                     <div class="text-left">
                         <h2 class="card-title">IV. LABORATORIO Y GABINETE</h2>
                     </div>
                     {{ wizard.form.management_form}} 
                     {% for form in wizard.form.forms %}
-                        {{form.id}}
                         <div class="form-row">
+                            {{form.id}}
                             <div class="form-group col-md-3">
                                 {{form.nombre.label}}
                                 {% if form.nombre.field.required %}
@@ -143,7 +177,632 @@
                             </div>
                         </div>
                     {% endfor %}
+                {% elif wizard.steps.step1 == 5 %}
+                    <div class="text-left">
+                        <h2 class="card-title">V - DATOS EPIDEMIOLÓGICOS </h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.procedencia.label}}
+                            {% if wizard.form.procedencia.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.procedencia}}
+                        </div>
+                    </div>  
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.municipioProc.label}}
+                            {% if wizard.form.municipioProc.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.municipioProc}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.localidadProc.label}}
+                            {% if wizard.form.localidadProc.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.localidadProc}}
+                        </div>
+                    </div>
+                    <div class="text-left mt-4">
+                        <h4 class="card-title">Periodo de estancia en esa localidad </h4>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.llegadaProc.label}}
+                            {% if wizard.form.llegadaProc.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.llegadaProc}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.salidaProc.label}}
+                            {% if wizard.form.salidaProc.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.salidaProc}}
+                        </div>
+                    </div>
+                    <div class="text-left mt-4">
+                        <h4 class="card-title">Fuente de Infección </h4>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.otraPersona.label}}
+                            {% if wizard.form.otraPersona.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otraPersona}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.alimentos.label}}
+                            {% if wizard.form.alimentos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.alimentos}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.agua.label}}
+                            {% if wizard.form.agua.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.agua}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fomites.label}}
+                            {% if wizard.form.fomites.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fomites}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.animales.label}}
+                            {% if wizard.form.animales.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.animales}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.otrosFuentes.label}}
+                            {% if wizard.form.otrosFuentes.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otrosFuentes}}
+                        </div>
+                    </div>
+                    <div class="text-left mt-4">
+                        <h4 class="card-title">Mecanismos de Transmisión </h4>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.personaPersona.label}}
+                            {% if wizard.form.personaPersona.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.personaPersona}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.aerea.label}}
+                            {% if wizard.form.aerea.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.aerea}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.digestiva.label}}
+                            {% if wizard.form.digestiva.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.digestiva}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fomitesMec.label}}
+                            {% if wizard.form.fomitesMec.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fomitesMec}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.vectores.label}}
+                            {% if wizard.form.vectores.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.vectores}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.otrosMecanismos.label}}
+                            {% if wizard.form.otrosMecanismos.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otrosMecanismos}}
+                        </div>
+                    </div>
+                    {% comment %} <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                          procedenciaChanged(); // Ejecutar la función cuando el documento esté listo
+                        });
                         
+                        function procedenciaChanged() {
+                          var procedencia = document.getElementById("id_5-procedencia").value;
+                          
+                          if (procedencia === "Local") {
+                            // Limpiar y deshabilitar los siguientes campos
+                            document.getElementById("id_5-municipioProc").value = "";
+                            document.getElementById("id_5-localidadProc").value = "";
+                            document.getElementById("id_5-llegadaProc").value = "";
+                            document.getElementById("id_5-salidaProc").value = "";
+
+                            document.getElementById("id_5-municipioProc").required = false;
+                            document.getElementById("id_5-localidadProc").required = false;
+                            document.getElementById("id_5-llegadaProc").required = false;
+                            document.getElementById("id_5-salidaProc").required = false;
+                            
+                            document.getElementById("id_5-municipioProc").readOnly = true;
+                            document.getElementById("id_5-localidadProc").readOnly = true;
+                            document.getElementById("id_5-llegadaProc").readOnly = true;
+                            document.getElementById("id_5-salidaProc").readOnly = true;
+                          } else if (procedencia === "Importado") {
+                            // Habilitar los siguientes campos
+                            document.getElementById("id_5-municipioProc").readOnly = false;
+                            document.getElementById("id_5-localidadProc").readOnly = false;
+                            document.getElementById("id_5-llegadaProc").readOnly = false;
+                            document.getElementById("id_5-salidaProc").readOnly = false;
+
+                            // Requerimos los siguientes campos
+                            document.getElementById("id_5-municipioProc").required = true;
+                            document.getElementById("id_5-localidadProc").required = true;
+                            document.getElementById("id_5-llegadaProc").required = true;
+                            document.getElementById("id_5-salidaProc").required = true;
+                          }
+                        }
+                    </script> {% endcomment %}
+                {% elif wizard.steps.step1 == 6 %}
+                    <div class="text-left">
+                        <h2 class="card-title">VI - ESTUDIO DE CONTACTOS</h2>
+                    </div>
+                    {{ wizard.form.management_form}} 
+                    {% for form in wizard.form.forms %}
+                        <div class="form-row">
+                            {{form.id}}
+                            <div class="form-group col-md-3">
+                                {{form.nombre.label}}
+                                {% if form.nombre.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.nombre}}
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{form.domicilio.label}}
+                                {% if form.domicilio.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.domicilio}}
+                            </div>
+                            <div class="form-group col-md-1">
+                                {{form.edad.label}}
+                                {% if form.edad.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.edad}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.sexo.label}}
+                                {% if form.sexo.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.sexo}}
+                            </div>
+                            <div class="form-group col-md-2">
+                                {{form.contacto.label}}
+                                {% if form.contacto.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.contacto}}
+                            </div>
+                            <div class="form-group col-md-1">
+                                {{form.caso.label}}
+                                {% if form.caso.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.caso}}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <p class="text-danger" id="leyenda">Deberás llenar al final la notificación de brote.</p>
+                    <script>
+                        var numeros = 0;
+                        {% for form in wizard.form.forms %}
+                            numeros ++;
+                        {% endfor %}
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // var selects = document.getElementsByTagName("id_6-");
+                            // for (var i = 0; i < selects.length; i++) {
+                            //     selects[i].addEventListener("change", conteoChanged);
+                            // }
+                            conteoChanged(); // Ejecutar la función cuando el documento esté listo
+                        });
+                        function conteoChanged(){
+                            var caso_count = 0;
+                            for (var i = 0; i < numeros; i++) {
+                                if (document.getElementById('id_6-' + i + '-caso').value == 'Si') {
+                                    caso_count++;
+                                }
+                            }
+                            if (caso_count >= 2){
+                                document.querySelector("#leyenda").style.display = "block";
+                            }else{
+                                document.querySelector("#leyenda").style.display = "none";
+                            }
+                        }
+                    </script>
+
+                {% elif wizard.steps.step1 == 7 %}
+                    <div class="text-left">
+                        <h2 class="card-title">VII - ACCIONES Y MEDIDAS DE CONTROL</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.accionesMedidas.label}}
+                            {% if wizard.form.accionesMedidas.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.accionesMedidas}}
+                        </div>
+                    </div>
+                {% elif wizard.steps.step1 == 8 %}
+                    <div class="text-left">
+                        <h2 class="card-title">VIII - EVOLUCIÓN </h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.reestablecer.label}}
+                            {% if wizard.form.reestablecer.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.reestablecer}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.secuelas.label}}
+                            {% if wizard.form.secuelas.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.secuelas}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.portador.label}}
+                            {% if wizard.form.portador.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.portador}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.perdioCaso.label}}
+                            {% if wizard.form.perdioCaso.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.perdioCaso}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fallecio.label}}
+                            {% if wizard.form.fallecio.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fallecio}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.fechaDefuncion.label}}
+                            {% if wizard.form.fechaDefuncion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaDefuncion}}
+                        </div>
+                    </div>
+                    {% comment %} <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            fallecioChanged(); // Ejecutar la función cuando el documento esté listo
+                        });
+                        
+                        function fallecioChanged() {
+                          var fallece = document.getElementById("id_8-fallecio").value;
+                          
+                          if (fallece === "Si") {
+                            // Habilitar los siguientes campos
+                            document.getElementById("id_8-fechaDefuncion").readOnly = false;
+                            document.getElementById("id_8-fechaDefuncion").required = true;
+                          } else  {
+                            // Limpiar y deshabilitar los siguientes campos
+                            document.getElementById("id_8-fechaDefuncion").value = "";
+                            
+                            document.getElementById("id_8-fechaDefuncion").readOnly = true;
+                            document.getElementById("id_8-fechaDefuncion").required = false;
+                          }
+                        }
+                    </script> {% endcomment %}
+
+                    
+                
+                {% elif wizard.steps.step1 == 9 %}
+                    <div class="text-left">
+                        <h2 class="card-title">IX - COMENTARIOS Y CONCLUSIONES </h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.comentariosConclusiones.label}}
+                            {% if wizard.form.comentariosConclusiones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.comentariosConclusiones}}
+                        </div>                        
+                    </div>
+                {% elif wizard.steps.step1 == 10 %}
+                    <div class="text-left">
+                        <h2 class="card-title">X - PREVENCIÓN Y CONTROL </h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.platicas.label}}
+                            {% if wizard.form.platicas.field.required %}
+                                <span class="text-danger">*</span>  
+                            {% endif %}
+                            {{wizard.form.platicas}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numPlaticas.label}}
+                            {% if wizard.form.numPlaticas.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numPlaticas}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.vacunacion.label}}
+                            {% if wizard.form.vacunacion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.vacunacion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numVacunacion.label}}
+                            {% if wizard.form.numVacunacion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numVacunacion}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.tratamientosInd.label}}
+                            {% if wizard.form.tratamientosInd.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.tratamientosInd}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numTratamientosInd.label}}
+                            {% if wizard.form.numTratamientosInd.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numTratamientosInd}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.tratamientosFam.label}}
+                            {% if wizard.form.tratamientosFam.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.tratamientosFam}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numTratamientosFam.label}}
+                            {% if wizard.form.numTratamientosFam.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numTratamientosFam}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.cloracion.label}}
+                            {% if wizard.form.cloracion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.cloracion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numCloracion.label}}
+                            {% if wizard.form.numCloracion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numCloracion}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{wizard.form.letrinizacion.label}}
+                            {% if wizard.form.letrinizacion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.letrinizacion}}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{wizard.form.numLetrinizacion.label}}
+                            {% if wizard.form.numLetrinizacion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.numLetrinizacion}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{wizard.form.otrasActividades.label}}
+                            {% if wizard.form.otrasActividades.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otrasActividades}}
+                        </div> 
+                    </div>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var opcion = document.getElementById("id_9-numPlaticas").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numPlaticas").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numVacunacion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numVacunacion").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numTratamientosInd").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosInd").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numTratamientosFam").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosFam").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numCloracion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numCloracion").value = 0;
+                            }
+                            var opcion = document.getElementById("id_9-numLetrinizacion").value;
+                            if (opcion == '' || opcion == 0) {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numLetrinizacion").value = 0;
+                            }
+                        });
+                        
+                        {% comment %} document.getElementById("id_9-numVacunacion").value = 0;
+                        document.getElementById("id_9-numTratamientosInd").value = 0;
+                        document.getElementById("id_9-numTratamientosFam").value = 0;
+                        document.getElementById("id_9-numCloracion").value = 0;
+                        document.getElementById("id_9-numLetrinizacion").value = 0; {% endcomment %}
+                    </script>
+
+                    {% comment %} <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            ejecutar(); // Ejecutar la función cuando el documento esté listo
+                        });
+                        function ejecutar(){
+                            platicaChanged(); 
+                            vacunacionChanged();
+                            individualChanged();
+                            familiarChanged();
+                            cloracionChanged();
+                            letriChanged();
+                        }
+                        function platicaChanged() {
+                            var opcion = document.getElementById("id_9-platicas").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numPlaticas").required = true;
+                                document.getElementById("id_9-numPlaticas").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numPlaticas").value = 0;
+                                document.getElementById("id_9-numPlaticas").max = 0;
+                                
+                                document.getElementById("id_9-numPlaticas").required = false;
+                            }
+                        }
+                        function vacunacionChanged() {
+                            var opcion = document.getElementById("id_9-vacunacion").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numVacunacion").required = true;
+                                document.getElementById("id_9-numVacunacion").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numVacunacion").value = 0;
+                                document.getElementById("id_9-numVacunacion").max = 0;
+                                
+                                document.getElementById("id_9-numVacunacion").required = false;
+                            }
+                        }
+                        function individualChanged() {
+                            var opcion = document.getElementById("id_9-tratamientosInd").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosInd").required = true;
+                                document.getElementById("id_9-numTratamientosInd").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosInd").value = 0;
+                                document.getElementById("id_9-numTratamientosInd").max = 0;
+                                
+                                document.getElementById("id_9-numTratamientosInd").required = false;
+                            }
+                        }
+                        function familiarChanged() {
+                            var opcion = document.getElementById("id_9-tratamientosFam").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosFam").required = true;
+                                document.getElementById("id_9-numTratamientosFam").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numTratamientosFam").value = 0;
+                                document.getElementById("id_9-numTratamientosFam").max = 0;
+                                
+                                document.getElementById("id_9-numTratamientosFam").required = false;
+                            }
+                        }
+                        function cloracionChanged() {
+                            var opcion = document.getElementById("id_9-cloracion").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numCloracion").required = true;
+                                document.getElementById("id_9-numCloracion").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numCloracion").value = 0;
+                                document.getElementById("id_9-numCloracion").max = 0;
+                                
+                                document.getElementById("id_9-numCloracion").required = false;
+                            }
+                        }
+                        function letriChanged() {
+                            var opcion = document.getElementById("id_9-letrinizacion").value;
+                            
+                            if (opcion === "Si") {
+                                // Habilitar los siguientes campos
+                                document.getElementById("id_9-numLetrinizacion").required = true;
+                                document.getElementById("id_9-numLetrinizacion").max = 100;
+                            } else if (opcion === "No") {
+                                // Limpiar y deshabilitar los siguientes campos
+                                document.getElementById("id_9-numLetrinizacion").value = 0;
+                                document.getElementById("id_9-numLetrinizacion").max = 0;
+                                
+                                document.getElementById("id_9-numLetrinizacion").required = false;
+                            }
+                        }
+                    </script> {% endcomment %}
+
                 {% endif %}
                 <div class="" style="text-align: center">
                     {% if wizard.steps.prev %}

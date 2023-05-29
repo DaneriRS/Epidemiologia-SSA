@@ -53,7 +53,15 @@
                         <p>Registrar Paciente</p>
                     </a>
                 </li>
-                <li class="{% if 'ReporteRegistro' in segment %} active {% endif %}">
+                {% if request.user.is_director or request.user.is_encarJuris or request.user.is_encarUni %}
+                    <li class="{% if 'Reportes' in segment %} active {% endif %} ">
+                        <a href="{% url 'TodosLosReportes' 'false' %}">
+                            <i class="tim-icons icon-book-bookmark"></i>
+                            <p>Reportes</p>
+                        </a>
+                    </li>
+                {% endif %}
+                {% comment %} <li class="{% if 'ReporteRegistro' in segment %} active {% endif %}">
                     <a href="{% url 'multiForm' %}">
                         <i class="tim-icons icon-paper"></i>
                         <p>Registro de reporte</p>

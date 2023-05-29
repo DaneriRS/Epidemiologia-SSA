@@ -22,43 +22,213 @@
                         <table class="table table-striped table-hover" id="tabla_casos">
                             <thead>
                                 <tr>
+                                    <th>0. GENERAL</th>
+                                    <th>Elaborado</th>
+                                    <th>Cargo</th>
+                                    <th>Fecha de Captura</th>
+                                    <th>I. IDENTIFICACIÓN DE LA UNIDAD</th>
                                     <th>Folio del Caso</th>
-                                    <th>Unidad notificante</th>
-                                    <th>Fecha Notificacion</th>
+                                    <th>Unidad Notificante</th>
+                                    <th>Clave CLUES</th>
+                                    <th>Localidad</th>
+                                    <th>Municipio</th>
+                                    <th>Jurisdicción o Equivalente</th>
+                                    <th>Entidad o Delegación</th>
+                                    <th>Institución</th>
+                                    <th>Fecha Notificación</th>
                                     <th>Fecha Inicio Estudio</th>
-                                    <th>Fecha Fin Estudio</th>
+                                    <th>Fecha Terminacion Estudio</th>
                                     <th>Diagnóstico Probable</th>
                                     <th>Diagnóstico Final</th>
                                     <th>Otro Diagnóstico</th>
+
+                                    <th>II. IDENTIFICACIÓN DEL CASO</th>
                                     <th>Paciente</th>
                                     <th>N° Afiliado</th>
                                     <th>Sexo</th>
-                                    <th>CP</th>
                                     <th>Fecha Nacimiento</th>
-                                    <th>Fecha inicio de signos</th>
-                                    <th>Signos y sintomas</th>
+                                    <th>Edad Años</th>
+                                    <th>Edad Meses</th>
+                                    <th>Edad Dias</th>
+                                    <th>Lugar de Residencia Calle</th>
+                                    <th>Lugar de Residencia Número Interior - Exterior</th>
+                                    <th>Lugar de Residencia Colonia o Localidad</th>
+                                    <th>Clave Municipio</th>
+                                    <th>Municipio</th>
+                                    <th>Clave Entidad</th>
+                                    <th>Entidad</th>
+                                    <th>Codigo Postal</th>
+                                    <th>Teléfono</th>
+
+                                    <th>III.a DATOS CLÍNICOS</th>
+                                    <th>Fecha Inicio de Signos</th>
+                                    <th>Signos y Síntomas</th>
+
+                                    <th>III.b TRATAMIENTO</th>
                                     <th>Tratamiento</th>
+
+                                    <th>IV. LABORATORIO Y GABINETE</th>
+                                    <th>Estudios</th>
+
+                                    <th>V. DATOS EPIDEMIOLÓGICOS</th>
+                                    <th>Procedencia</th>
+                                    <th>Localidad de Procedencia</th>
+                                    <th>Municipio de Procedencia</th>
+                                    <th>Estado de Procedencia</th>
+                                    <th>Fecha Llegada a la Localidad</th>
+                                    <th>Fecha Salida de la Localidad</th>
+                                    <th>Fuente de Infección Otra Persona</th>
+                                    <th>Fuente de Infección Alimentos</th>
+                                    <th>Fuente de Infección Agua</th>
+                                    <th>Fuente de Infección Fomites</th>
+                                    <th>Fuente de Infección Animales</th>
+                                    <th>Fuente de Infección Otras</th>
+                                    <th>Mecanismos de Transmisión Persona a Persona</th>
+                                    <th>Mecanismos de Transmisión Aérea</th>
+                                    <th>Mecanismos de Transmisión Digestiva</th>
+                                    <th>Mecanismos de Transmisión Fomites</th>
+                                    <th>Mecanismos de Transmisión Vectores</th>
+                                    <th>Mecanismos de Transmisión Otros</th>
+
+                                    <th>VI. ESTUDIO DE CONTACTOS</th>
+                                    <th>Contactos</th>
+
+                                    <th>VII. ACCIONES Y MEDIDAS DE CONTROL</th>
+                                    <th>Acciones</th>
+
+                                    <th>VIII. EVOLUCIÓN</th>
+                                    <th>¿Se restableció integramente?</th>
+                                    <th>¿Quedó con secuelas?</th>
+                                    <th>¿Quedó como portador?</th>
+                                    <th>¿Se perdió el caso?</th>
+                                    <th>¿Falleció?</th>
+                                    <th>Fecha de la Defunción</th>
+
+                                    <th>IX. PREVENCIÓN Y CONTROL</th>
+                                    <th>Platicas de Fomento para la Salud</th>
+                                    <th>Número de Platicas de Fomento para la Salud</th>
+                                    <th>Vacunación</th>
+                                    <th>Número de Vacunas</th>
+                                    <th>Tratamientos Individuales</th>
+                                    <th>Número de Tratamientos Individuales</th>
+                                    <th>Tratamientos Familiares</th>
+                                    <th>Número de Tratamientos Familiares</th>
+                                    <th>Cloración</th>
+                                    <th>Número de Cloraciones</th>
+                                    <th>Letrinización</th>
+                                    <th>Número de Letrinizaciones</th>
+                                    <th>Otras Actividades</th>
+
+                                    <th>X. COMENTARIOS Y CONCLUSIONES</th>
+                                    <th>Comentarios y Conclusiones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for formulario in query %}
                                 <tr>
+                                    <td>---</td>
+                                    <td>{{ formulario.capturante.id }} - {{ formulario.capturante.first_name }} {{ formulario.capturante.last_name }}</td>
+                                    <td>{{ formulario.capturante.InformacionUsuario.cargo }}</td>
+                                    <td>{{ formulario.fechaCap }}</td>
+                                    <td>---</td>
                                     <td>{{ formulario.id }}</td>
-                                    <td>{{ formulario.unidadNot }}</td>
+                                    <td>{{ formulario.unidadNot.id }}</td>
+                                    <td>{{ formulario.unidadNot.claveclues }}</td>
+                                    <td>{{ formulario.unidadNot.localidad.nombre }}</td>
+                                    <td>{{ formulario.unidadNot.municipio.nombre }}</td>
+                                    <td>{{ formulario.unidadNot.jurisdiccion.nombre }}</td>
+                                    <td>{{ formulario.unidadNot.jurisdiccion.entidad.nombre }}</td>
+                                    <td>{{ formulario.unidadNot.institucion.nombre }}</td>
                                     <td>{{ formulario.fechaNot }}</td>
                                     <td>{{ formulario.fechaIni }}</td>
                                     <td>{{ formulario.fechaFin}}</td>
                                     <td>{{ formulario.DiaProHep }}</td>
                                     <td>{{ formulario.DiaFin }}</td>
                                     <td>{{ formulario.otroDia }}</td>
+                                    <td>---</td>
                                     <td>{{ formulario.paciente.nombre }} {{ formulario.paciente.apellidoPa }} {{ formulario.paciente.apellidoMa }} </td>
                                     <td>{{ formulario.paciente.numAfiliacion}}</td>
                                     <td>{{ formulario.paciente.sexo }}</td>
-                                    <td>{{ formulario.paciente.codigoPostal }}</td>
                                     <td>{{ formulario.paciente.nacimiento }}</td>
+                                    <td>{{ formulario.edadAnio }}</td>
+                                    <td>{{ formulario.edadMes }}</td>
+                                    <td>{{ formulario.edadDia }}</td>
+                                    <td>{{ formulario.paciente.calle }}</td>
+                                    <td>{{ formulario.paciente.numInt }}{% if formulario.paciente.numExt is none or formulario.paciente.numExt == '' %} {% else %} - {{ formulario.paciente.numExt }}{% endif %}</td>
+                                    <td>{{ formulario.paciente.localidad }}</td>
+                                    <td>{{ formulario.paciente.municipio.clave }}</td>
+                                    <td>{{ formulario.paciente.municipio.nombre }}</td>
+                                    <td>{{ formulario.paciente.entidad.clave }}</td>
+                                    <td>{{ formulario.paciente.entidad.nombre }}</td>
+                                    <td>{{ formulario.paciente.codigoPostal }}</td>
+                                    <td>{{ formulario.paciente.telefonoPaciente }}</td>
+                                    <td>---</td>
                                     <td>{{ formulario.fechaIn3 }}</td>
                                     <td>{{ formulario.signoSint3}}</td>
+                                    <td>---</td>
                                     <td>{{ formulario.tratamiento3 }}</td>
+                                    <td>---</td>
+                                    <td>{% for est in estudios %}{% if est.registroEstudio.id == formulario.id %}[nombre: {{est.nombre}}, tipo: {{est.tipo}}, fecha: {{est.fecha}}, resultado: {{est.resultado}}] {% endif %}{% endfor %}</td>
+                                    <td>---</td>
+                                    <td>{{ formulario.procedencia }}</td>
+                                    {% if formulario.procedencia == 'Local' %}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    {% else %}
+                                    <td>{{ formulario.localidadProc.nombre }}</td>
+                                    <td>{{ formulario.municipioProc.nombre }}</td>
+                                    <td>{{ formulario.municipioProc.entidad.nombre }}</td>
+                                    <td>{{ formulario.llegadaProc }}</td>
+                                    <td>{{ formulario.salidaProc }}</td>
+                                    {% endif %}
+                                    <td>{{ formulario.otraPersona }}</td>
+                                    <td>{{ formulario.alimentos }}</td>
+                                    <td>{{ formulario.agua }}</td>
+                                    <td>{{ formulario.fomites }}</td>
+                                    <td>{{ formulario.animales }}</td>
+                                    <td>{{ formulario.otrosFuentes }}</td>
+                                    <td>{{ formulario.personaPersona }}</td>
+                                    <td>{{ formulario.aerea }}</td>
+                                    <td>{{ formulario.digestiva }}</td>
+                                    <td>{{ formulario.fomitesMec }}</td>
+                                    <td>{{ formulario.vectores }}</td>
+                                    <td>{{ formulario.otrosMecanismos }}</td>
+                                    <td>---</td>
+                                    <td>
+                                        {% for est in contactos %}
+                                            {% if est.registroEstudio.id == formulario.id %}
+                                            [nombre: {{est.nombre}}, domicilio: {{est.domicilio}}, edad: {{est.edad}}, sexo: {{est.sexo}}, contacto: {{est.contacto}}, caso: {{est.caso}}] 
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>---</td>
+                                    <td>{{ formulario.accionesMedidas }}</td>
+                                    <td>---</td>
+                                    <td>{{ formulario.reestablecer }}</td>
+                                    <td>{{ formulario.secuelas }}</td>
+                                    <td>{{ formulario.portador }}</td>
+                                    <td>{{ formulario.perdioCaso }}</td>
+                                    <td>{{ formulario.fallecio }}</td>
+                                    <td>{{ formulario.fechaDefuncion }}</td>
+                                    <td>---</td>
+                                    <td>{{ formulario.platicas }}</td>
+                                    <td>{{ formulario.numPlaticas }}</td>
+                                    <td>{{ formulario.vacunacion }}</td>
+                                    <td>{{ formulario.numVacunacion }}</td>
+                                    <td>{{ formulario.tratamientosInd }}</td>
+                                    <td>{{ formulario.numTratamientosInd }}</td>
+                                    <td>{{ formulario.tratamientosFam }}</td>
+                                    <td>{{ formulario.numTratamientosFam }}</td>
+                                    <td>{{ formulario.cloracion }}</td>
+                                    <td>{{ formulario.numCloracion }}</td>
+                                    <td>{{ formulario.letrinizacion }}</td>
+                                    <td>{{ formulario.numLetrinizacion }}</td>
+                                    <td>{{ formulario.otrasActividades }}</td>
+                                    <td>---</td>
+                                    <td>{{ formulario.comentariosConclusiones }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

@@ -203,8 +203,12 @@ def UMedicaExcel(request):
 @roles_required(['Director'], redirect_url='home')
 def ReporteRegExcel(request):
     registros=RegistroEstudio.objects.all()
+    estudios=Estudio.objects.all()
+    contactos=Contacto.objects.all()
     return render(request, 'home/reporteRegExcel.html',{
-        'query': registros
+        'query': registros,
+        'estudios': estudios,
+        'contactos': contactos,
     })
 
 @login_required

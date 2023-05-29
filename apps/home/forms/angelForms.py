@@ -42,10 +42,7 @@ class registroPaciente(ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': 'form-control',
-                'required': 'required'
             })
-
-
 
 class ContactForm1(forms.Form):
     unidadNot = forms.ModelChoiceField(
@@ -81,7 +78,8 @@ class ContactForm1(forms.Form):
             attrs={
                 'class': 'form-control', 'type': 'date',
             }
-        )
+        ),
+        required=False
     )
     DiaProHep = forms.ChoiceField(
         choices=HEPATITIS_CHOICES,
@@ -94,13 +92,14 @@ class ContactForm1(forms.Form):
         required=True
     )
     DiaFin = forms.ChoiceField(
-        choices=HEPATITIS_CHOICES,
+        choices=HEPATITIS_CHOICES2,
         label='Diagnostico final: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
                 }
-        )
+        ),
+        required=False
     )
     otroDia = forms.CharField(
         max_length=20,
@@ -109,7 +108,8 @@ class ContactForm1(forms.Form):
             attrs={
                 'placeholder': 'Especificar nombre de la enfermedad', 'class': 'form-control'
             }
-        )
+        ),
+        required=False
     )
 
 class ContactForm2(forms.Form):
@@ -190,8 +190,7 @@ class ContactoForm4(forms.Form):
     )
 
 class ContactoForm5(forms.Form):
-    id = forms.CharField(
-        max_length=30,
+    id = forms.IntegerField(
         label="Id",
         widget=forms.TextInput(
             attrs={
@@ -245,6 +244,7 @@ class ContactoForm6(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onchange': 'procedenciaChanged()'
                 }
         ),
         required=True
@@ -257,7 +257,7 @@ class ContactoForm6(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=True
+        required=False
     )
     localidadProc = forms.ModelChoiceField(
         queryset=Localidad.objects.all(),
@@ -267,7 +267,7 @@ class ContactoForm6(forms.Form):
                 'class': 'form-control',
             }
         ),
-        required=True
+        required=False
     )
     llegadaProc = forms.DateField(
         label='Llegada:',
@@ -276,7 +276,7 @@ class ContactoForm6(forms.Form):
                 'class': 'form-control', 'type': 'date',
             }
         ),
-        required=True
+        required=False
     )
     salidaProc = forms.DateField(
         label='Salida:',
@@ -285,7 +285,7 @@ class ContactoForm6(forms.Form):
                 'class': 'form-control', 'type': 'date',
             }
         ),
-        required=True
+        required=False
     )
     otraPersona = forms.ChoiceField(
         choices=OTRA_PERSONA_OPCIONES,
@@ -463,11 +463,82 @@ class ContactoForm7(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'conteoChanged()'
             }
         ),
         required=True
     )
-
+    
+class ContactoFormEdit(forms.Form):
+    id = forms.CharField(
+        label="id",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control',
+                'hidden': 'True'
+            }
+        ),
+        required=False,
+    )
+    nombre = forms.CharField(
+        max_length=50,
+        label="Nombre Completo:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    domicilio = forms.CharField(
+        max_length=50,
+        label="Domicilio:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    edad = forms.CharField(
+        max_length=20,
+        label="Edad:",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+    sexo = forms.ChoiceField(
+        choices=GENEROS,
+        label='Sexo: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    contacto = forms.ChoiceField(
+        choices=CONTACTO_CHOICES,
+        label='Contacto: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+            }
+        ),
+        required=True
+    )
+    caso = forms.ChoiceField(
+        choices=SI_NO_OPCIONES,
+        label='Caso: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                'onChange': 'conteoChanged()'
+            }
+        ),
+        required=True
+    )
+    
 class ContactoForm8(forms.Form):
     accionesMedidas = forms.CharField(
         max_length=300,
@@ -482,54 +553,55 @@ class ContactoForm8(forms.Form):
 
 class ContactoForm9(forms.Form):
     reestablecer = forms.ChoiceField(
-        choices=SI_NO_OPCIONES,
+        choices=SI_NO_OPCIONES2,
         label='¿Se restableció integramente?: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control ',
             }
         ),
-        required=True
+        required=False
     )
     secuelas = forms.ChoiceField(
-        choices=SI_NO_OPCIONES,
+        choices=SI_NO_OPCIONES2,
         label='¿Quedó con secuelas?: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
             }
         ),
-        required=True
+        required=False
     )
     portador = forms.ChoiceField(
-        choices=SI_NO_OPCIONES,
+        choices=SI_NO_OPCIONES2,
         label='¿Quedó como portador?: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
             }
         ),
-        required=True
+        required=False
     )
     perdioCaso = forms.ChoiceField(
-        choices=SI_NO_OPCIONES,
+        choices=SI_NO_OPCIONES2,
         label='¿Se perdió el caso?: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
             }
         ),
-        required=True
+        required=False
     )
     fallecio = forms.ChoiceField(
-        choices=SI_NO_OPCIONES,
+        choices=SI_NO_OPCIONES2,
         label='¿Falleció?: ',
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onchange': 'fallecioChanged()'
             }
         ),
-        required=True
+        required=False
     )
     fechaDefuncion = forms.DateField(
         label='Fecha de la defunción:',
@@ -548,19 +620,20 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numPlaticas = forms.CharField(
-        max_length=300,
         label='Numero de platicas: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     vacunacion = forms.ChoiceField(
         choices=SI_NO_OPCIONES,
@@ -568,19 +641,20 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numVacunacion = forms.CharField(
-        max_length=300,
         label='Numero de vacunacion: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     tratamientosInd = forms.ChoiceField(
         choices=SI_NO_OPCIONES,
@@ -588,19 +662,20 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numTratamientosInd = forms.CharField(
-        max_length=300,
         label='Numero de tratamientos individuales: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     tratamientosFam = forms.ChoiceField(
         choices=SI_NO_OPCIONES,
@@ -608,19 +683,20 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numTratamientosFam = forms.CharField(
-        max_length=300,
         label='Numero de tratamientos familiares: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     cloracion = forms.ChoiceField(
         choices=SI_NO_OPCIONES,
@@ -628,19 +704,20 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numCloracion = forms.CharField(
-        max_length=300,
         label='Numero cloracion: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     letrinizacion = forms.ChoiceField(
         choices=SI_NO_OPCIONES,
@@ -648,29 +725,29 @@ class ContactoForm10(forms.Form):
         widget=forms.Select(
             attrs={
                 'class': 'form-control selectpicker',
+                'onChange': 'ejecutar()',
             }
         ),
         required=True
     )
     numLetrinizacion = forms.CharField(
-        max_length=300,
         label='Numero letrinizacion: ',
-        widget=forms.TextInput(
+        widget=forms.NumberInput(
             attrs={
                 'class': 'form-control ',
+                'min': 0,
             }
         ),
-        required=True
+        required=False
     )
     otrasActividades = forms.CharField(
-        max_length=300,
         label='Otras actividades: ',
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control ',
             }
         ),
-        required=True
+        required=False
     )
 
 class ContactoForm11(forms.Form):
@@ -690,15 +767,13 @@ class ContactoForm11(forms.Form):
 
 class NotificacionBrote1(forms.Form):
     unidadNot = forms.ModelChoiceField(
-        queryset = Unidad.objects.all(),
-        label = 'Unidad notificante:',
-        widget = forms.Select(
+        label="Unidad notificante:",
+        queryset=Unidad.objects.all(),
+        widget=forms.TextInput(
             attrs={
-                'class': 'form-control',
-                'readonly': True
+                'class': 'form-control', 'readonly':True
             }
-        ),
-        required = True
+        )
     )
     fechaNot=forms.CharField(
         label = 'Fecha de Notificacion',
@@ -708,7 +783,7 @@ class NotificacionBrote1(forms.Form):
             }
         )
     )
-    fechaEstudio=forms.CharField(
+    fechaInicio=forms.CharField(
         label = 'Inicio de estudio: ',
         widget = forms.DateInput(
             attrs={
@@ -716,7 +791,15 @@ class NotificacionBrote1(forms.Form):
             }
         )
     )
-    DiaProHep=forms.ChoiceField(
+    fechaTerminacion=forms.CharField(
+        label = 'Terminación de estudio: ',
+        widget = forms.DateInput(
+            attrs={
+                'class': 'form-control', 'type': 'date',
+            }
+        )
+    )
+    diaProHep=forms.ChoiceField(
         choices = HEPATITIS_CHOICES,
         label = 'Diagnostico probable de hepatitis: ',
         widget = forms.Select(
@@ -725,7 +808,7 @@ class NotificacionBrote1(forms.Form):
                 }
         )
     )
-    DiaFin=forms.ChoiceField(
+    diaFin=forms.ChoiceField(
         choices = HEPATITIS_CHOICES,
         label = 'Diagnostico final: ',
         widget = forms.Select(
@@ -733,6 +816,16 @@ class NotificacionBrote1(forms.Form):
                 'class': 'form-control selectpicker',
                 }
         )
+    )
+    otroDiag = forms.CharField(
+        max_length=20,
+        label="Otro diagnostico:",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Especificar nombre de la enfermedad', 'class': 'form-control'
+            }
+        ),
+        required=False
     )
 
 class NotificacionBrote2(forms.Form):
@@ -797,6 +890,15 @@ class NotificacionBrote2(forms.Form):
             }
         )
     )
+    defunciones=forms.CharField(
+        max_length = 4,
+        label = "Defunciones:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
 
 class NotificacionBrote5(forms.Form):
     area=forms.CharField(
@@ -809,9 +911,18 @@ class NotificacionBrote5(forms.Form):
         ),
         required = True
     )
-    numeroCasos=forms.CharField(
+    numeroCasosDistribucionGeografica=forms.CharField(
         max_length = 20,
-        label = "Casos:",
+        label = "Número de Casos:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroCasosPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -820,7 +931,25 @@ class NotificacionBrote5(forms.Form):
     )
     numeroDefunciones=forms.CharField(
         max_length = 20,
-        label = "Defunciones:",
+        label = "Número de defunciones:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroDefuncionesPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    croquis=forms.CharField(
+        max_length = 300,
+        label = "Enlace del croquis",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -886,11 +1015,21 @@ class NotificacionBrote8(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
+        ),
+        required = True
+    )
+    numeroCasosDistribucionGeografica=forms.CharField(
+        max_length = 20,
+        label = "Número de Casos:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
         )
     )
-    numeroCasos=forms.CharField(
+    numeroCasosPorc=forms.CharField(
         max_length = 20,
-        label = "Casos:",
+        label = "%",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -899,7 +1038,2147 @@ class NotificacionBrote8(forms.Form):
     )
     numeroDefunciones=forms.CharField(
         max_length = 20,
-        label = "Defunciones:",
+        label = "Número de defunciones:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    numeroDefuncionesPorc=forms.CharField(
+        max_length = 20,
+        label = "%",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    croquis=forms.CharField(
+        max_length = 300,
+        label = "Enlace del croquis",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+
+
+class NotificacionBrote3(forms.Form):
+    #### Numero de Casos
+    menor1MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65MascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65FemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65TotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraMascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraFemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraTotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalMascNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalFemNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalTotNumerosCasos=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    
+    #### Numero de Defunciones
+    menor1MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65MascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65FemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65TotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraMascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraFemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraTotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalMascNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalFemNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalTotNumerosDefunciones=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    #### Poblacion Ex
+
+    menor1MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65MascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65FemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65TotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraMascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraFemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraTotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalMascPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalFemPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalTotPoblacionExpuesta=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    #### Tasa Ataque
+    menor1MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65MascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65FemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65TotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraMascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraFemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraTotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalMascTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalFemTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalTotTasaAtaque=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    #### Tasa Letalidad
+    menor1MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65MascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65FemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65TotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraMascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraFemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraTotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalMascTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalFemTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalTotTasaLetalidad=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    #### Signos y Sintomas
+    menor1SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    menor1PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de14PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de59PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1014PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de1519PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2024PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de2544PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de4549PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de5059PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    de6064PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65SignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65NumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    mas65PorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraSignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraNumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    seIgnoraPorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalSignosSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalNumSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    totalPorcSignosSintomas=forms.CharField(
+        max_length = 3,
+        label = "Area:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
@@ -920,15 +3199,45 @@ class Anexo8P1(forms.Form):
         ),
         required = True
     )
-    institucion=forms.ModelChoiceField(
-        queryset = Institucion.objects.all(),
-        label = 'Institución:',
-        widget = forms.Select(
+    edadAnio=forms.CharField(
+        label = 'Edad en Anio',
+        widget = forms.NumberInput(
             attrs={
                 'class': 'form-control',
+                'min': 0,
+                'max': 150
+            }
+        )
+    )
+    edadMes=forms.CharField(
+        label = 'Edad en Mes',
+        widget = forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+                'min': 0,
+                'max': 11
+            }
+        )
+    )
+    edadDia=forms.CharField(
+        label = 'Edad en Dia',
+        widget = forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+                'min': 0,
+                'max': 30
+            }
+        )
+    )
+    afiliacionServicios = forms.ChoiceField(
+        choices=AFILIACION_SERVICIOS_OPCIONES,
+        label='Afiliacion de Servicios Medicos: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control ',
             }
         ),
-        required = True
+        required=True
     )
     fechaDefuncion=forms.CharField(
         label = 'Fecha de Defuncion',
@@ -954,6 +3263,15 @@ class Anexo8P1(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
+        )
+    )
+    certificadaPor=forms.ChoiceField(
+        choices = CERTIFICADA_POR_OPCIONES,
+        label = 'Certificada por: ',
+        widget = forms.Select(
+            attrs={
+                'class': 'form-control selectpicker',
+                }
         )
     )
     lugardeResidenciaMuni=forms.ModelChoiceField(
@@ -1007,24 +3325,183 @@ class Anexo8P1(forms.Form):
     )
 
 class Anexo8P2(forms.Form):
-    causasDef=forms.CharField(
+    causasDefI=forms.CharField(
         max_length = 100,
-        label = "I:",
+        label = "Causas de defunción I (1):",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
-    causasDef2=forms.CharField(
+    causaDefInterI=forms.CharField(
         max_length = 100,
-        label = "II:",
+        label = "Causas de defunción I (1) Intervalo:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
         )
     )
+    causaDefCodigoCieI=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaBasicaI=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Causa Basica:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieI4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieII1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
+    causasDefII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefInterII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+    causaDefCodigoCieII2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
+
     causaVigEpi=forms.CharField(
         max_length = 100,
         label = "Causa sujeta a vigilancia epidemiologica:",
@@ -1034,44 +3511,245 @@ class Anexo8P2(forms.Form):
             }
         )
     )
+    causaVigEpiCodigoCie=forms.CharField(
+        max_length = 100,
+        label = "Causa sujeta a vigilancia epidemiologica, Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        )
+    )
 
 class Anexo8P3(forms.Form):
-    ratifica=forms.CharField(
-        max_length = 100,
-        label = "Ratifica",
-        widget = forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
     causaVigEpi2=forms.CharField(
         max_length = 100,
-        label = "Causa sujeta a vigilancia epidemiologica",
+        label = "Causa sujeta a vigilancia epidemiologica:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
-    causasDef3=forms.CharField(
+    ratifica = forms.ChoiceField(
+        choices=RATIFICA_CHOICES,
+        label='Ratifica: ',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control ',
+                'onChange': 'ratificaChanged()'
+            }
+        ),
+        required=False
+    )
+    causasDef2I=forms.CharField(
         max_length = 100,
-        label = "Causas de defunción3",
+        label = "Causas de defunción I (1):",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
-    causasDef4=forms.CharField(
+    causaDefInter2I=forms.CharField(
         max_length = 100,
-        label = "Causas de defunción4",
+        label = "Causas de defunción I (1) Intervalo:",
         widget = forms.TextInput(
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required=False,
     )
+    causaDefCodigoCi22I=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaBasica2I=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (1) Causa Basica:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    causasDef2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefInter2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefCodigoCie2I2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    causasDef2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefInter2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefCodigoCie2I3=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (3) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    causasDef2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefInter2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefCodigoCie2I4=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción I (4) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    causasDef2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefInter2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefCodigoCie2II1=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (1) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    causasDef2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2):",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefInter2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Intervalo:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+    causaDefCodigoCie2II2=forms.CharField(
+        max_length = 100,
+        label = "Causas de defunción II (2) Codigo CIE:",
+        widget = forms.TextInput(
+            attrs={
+                'placeholder': '', 'class': 'form-control'
+            }
+        ),
+        required=False,
+    )
+
+    
+    # causaVigEpiCodigoCie2=forms.CharField(
+    #     max_length = 100,
+    #     label = "Causa sujeta a vigilancia epidemiologica:",
+    #     widget = forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
+
     fechaRecoleccion=forms.CharField(
         label = 'Fecha de recolección',
         widget = forms.DateInput(
@@ -1131,15 +3809,15 @@ class Anexo8P3(forms.Form):
             }
         )
     )
-    firma=forms.CharField(
-        max_length = 100,
-        label = "Firma",
-        widget = forms.TextInput(
-            attrs={
-                'placeholder': '', 'class': 'form-control'
-            }
-        )
-    )
+    # firma=forms.CharField(
+    #     max_length = 100,
+    #     label = "Firma",
+    #     widget = forms.TextInput(
+    #         attrs={
+    #             'placeholder': '', 'class': 'form-control'
+    #         }
+    #     )
+    # )
 
 class Anexo8P4(forms.Form):
     tipoDocumento=forms.CharField(
@@ -1149,7 +3827,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     numPaquete=forms.CharField(
         max_length = 100,
@@ -1158,7 +3837,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     numActa=forms.CharField(
         max_length = 100,
@@ -1167,7 +3847,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     folioCaptura=forms.CharField(
         max_length = 100,
@@ -1176,7 +3857,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
     nombreCodificador=forms.CharField(
         max_length = 100,
@@ -1185,7 +3867,8 @@ class Anexo8P4(forms.Form):
             attrs={
                 'placeholder': '', 'class': 'form-control'
             }
-        )
+        ),
+        required = False,
     )
 
 class addJurisdiccion(ModelForm):

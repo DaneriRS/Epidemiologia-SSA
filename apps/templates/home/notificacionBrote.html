@@ -45,35 +45,49 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {{wizard.form.fechaNot.label}}
                             {% if wizard.form.fechaNot.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.fechaNot}}
                         </div>
-                        <div class="form-group col-md-6">
-                            {{wizard.form.fechaEstudio.label}}
-                            {% if wizard.form.fechaEstudio.field.required %}
+                        <div class="form-group col-md-4">
+                            {{wizard.form.fechaInicio.label}}
+                            {% if wizard.form.fechaInicio.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.fechaEstudio}}
+                            {{wizard.form.fechaInicio}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.fechaTerminacion.label}}
+                            {% if wizard.form.fechaTerminacion.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.fechaTerminacion}}
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {{wizard.form.DiaProHep.label}}
-                            {% if wizard.form.DiaProHep.field.required %}
+                        <div class="form-group col-md-4">
+                            {{wizard.form.diaProHep.label}}
+                            {% if wizard.form.diaProHep.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.DiaProHep}}
+                            {{wizard.form.diaProHep}}
                         </div>
-                        <div class="form-group col-md-6">
-                            {{wizard.form.DiaFin.label}}
-                            {% if wizard.form.DiaFin.field.required %}
+                        <div class="form-group col-md-4">
+                            {{wizard.form.diaFin.label}}
+                            {% if wizard.form.diaFin.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
-                            {{wizard.form.DiaFin}}
+                            {{wizard.form.diaFin}}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{wizard.form.otroDiag.label}}
+                            {% if wizard.form.otroDiag.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.otroDiag}}
                         </div>
                     </div>
                 {% elif wizard.steps.step1 == 2 %}
@@ -113,26 +127,33 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             {{wizard.form.casosProbables.label}}
                             {% if wizard.form.casosProbables.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.casosProbables}}
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             {{wizard.form.casosConfirmados.label}}
                             {% if wizard.form.casosConfirmados.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.casosConfirmados}}
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             {{wizard.form.hospitalizados.label}}
                             {% if wizard.form.hospitalizados.field.required %}
                                 <span class="text-danger">*</span>
                             {% endif %}
                             {{wizard.form.hospitalizados}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{wizard.form.defunciones.label}}
+                            {% if wizard.form.defunciones.field.required %}
+                                <span class="text-danger">*</span>
+                            {% endif %}
+                            {{wizard.form.defunciones}}
                         </div>
                     </div>
                 {% elif wizard.steps.step1 == 3 %}
@@ -142,28 +163,52 @@
                     {{ wizard.form.management_form}} 
                     {%for form in wizard.form.forms %}
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-4">
                                 {{form.area.label}}
                                 {% if form.area.field.required %}
                                     <span class="text-danger">*</span>
                                 {% endif %}
                                 {{form.area}}
                             </div>
-                            <div class="form-group col-md-3">
-                                {{form.numeroCasos.label}}
-                                {% if form.numeroCasos.field.required %}
+                            <div class="form-group col-md-2">
+                                {{form.numeroCasosDistribucionGeografica.label}}
+                                {% if form.numeroCasosDistribucionGeografica.field.required %}
                                     <span class="text-danger">*</span>
                                 {% endif %}
-                                {{form.numeroCasos}}
+                                {{form.numeroCasosDistribucionGeografica}}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
+                                {{form.numeroCasosPorc.label}}
+                                {% if form.numeroCasosPorc.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.numeroCasosPorc}}
+                            </div>
+                            <div class="form-group col-md-2">
                                 {{form.numeroDefunciones.label}}
                                 {% if form.numeroDefunciones.field.required %}
                                     <span class="text-danger">*</span>
                                 {% endif %}
                                 {{form.numeroDefunciones}}
                             </div>
+                            <div class="form-group col-md-2">
+                                {{form.numeroDefuncionesPorc.label}}
+                                {% if form.numeroDefuncionesPorc.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.numeroDefuncionesPorc}}
+                            </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                {{form.croquis.label}}
+                                {% if form.croquis.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                                {{form.croquis}}
+                            </div>
+                        </div>
+                        <br>
                         <br>
                     {% endfor %}
                 {% elif wizard.steps.step1 == 4 %}

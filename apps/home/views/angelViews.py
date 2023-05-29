@@ -6,6 +6,8 @@ from apps.home.forms.allForms import *
 from formtools.wizard.views import *
 from django.contrib.auth.decorators import user_passes_test
 from django.forms.models import model_to_dict
+from django.core.serializers import serialize
+from django.db.models import F
 
 def roles_required(roles, redirect_url=None):
     def decorator(view_func):
@@ -30,11 +32,18 @@ FORMS = [
             ("10", ContactoForm11),
         ]
 FormSET2=formset_factory(ContactoForm5, extra=0)
+FormSET21 = formset_factory(ContactoFormEdit, extra=0)
 FORMS2 = [
             ("1", ContactForm1),
             ("2", ContactForm2),
             ("3", ContactForm3),
-            ("4", FormSET2)
+            ("4", FormSET2),
+            ("5", ContactoForm6),
+            ("6", FormSET21),
+            ("7", ContactoForm8),
+            ("8", ContactoForm9),
+            ("9", ContactoForm11),
+            ("10", ContactoForm10)
         ]
 FormSET3=formset_factory(NotificacionBrote5, extra=1)
 FORMS3 =[
@@ -42,7 +51,8 @@ FORMS3 =[
             ("2", NotificacionBrote2),
             ("3", FormSET3),
             ("4", NotificacionBrote6),
-            ("5", NotificacionBrote7)
+            ("5", NotificacionBrote7),
+            # ("6", NotificacionBrote3)
         ]
 FormSET4=formset_factory(NotificacionBrote8, extra=0)
 FORMS4 =[
@@ -53,6 +63,12 @@ FORMS4 =[
             ("5", NotificacionBrote7)
         ]
 FORMS5 =[
+    ('1', Anexo8P1),
+    ('2', Anexo8P2),
+    ('3', Anexo8P3),
+    ('4', Anexo8P4)
+]
+FORMS6 =[
     ('1', Anexo8P1),
     ('2', Anexo8P2),
     ('3', Anexo8P3),
@@ -75,7 +91,7 @@ class RegistroEstudioView(CookieWizardView):
         initial = self.initial_dict.get(step, {})
         if step == '1':
             # Set initial data for step 2 form here
-            initial['unidadNot'] = self.request.user.informacionusuario.unidad
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad.id
             
         return initial
 
@@ -94,6 +110,7 @@ class RegistroEstudioView(CookieWizardView):
                     registroDataFormSet12.append(formset.cleaned_data)
             
         rd = RegistroEstudio(**registroData)
+        rd.capturante = self.request.user
         rd.save()
 
         for item in registroDataFormSet1:
@@ -106,6 +123,7 @@ class RegistroEstudioView(CookieWizardView):
             )
             est.save()
 
+        cantidad = 0
         for item in registroDataFormSet12:
             cont=Contacto(
                 nombre=item['nombre'],
@@ -113,9 +131,14 @@ class RegistroEstudioView(CookieWizardView):
                 edad=item['edad'],
                 sexo=item['sexo'],
                 contacto=item['contacto'],
-                caso=item['caso']
+                caso=item['caso'],
+                registroEstudio=rd
             )
             cont.save()
+            if cont.caso == 'Si':
+                cantidad += 1
+        if cantidad >= 2:
+            return redirect('notificacionBrote')
         return redirect('listaFormularios')
 
 class RegistroEstudioUpdateView(CookieWizardView):
@@ -134,6 +157,15 @@ class RegistroEstudioUpdateView(CookieWizardView):
                 estudios=Estudio.objects.filter(registroEstudio_id=project.id)
                 for estudio in estudios:
                     project_d = model_to_dict(estudio)
+                    project_d['id'] = estudio.id
+                    project_dict.append(project_d)
+                return project_dict
+            elif step == "6":
+                project_dict=[]
+                contactos = Contacto.objects.filter(registroEstudio_id=project.id)
+                for contacto in contactos:
+                    project_d = model_to_dict(contacto)
+                    project_d['id'] = contacto.id
                     project_dict.append(project_d)
                 return project_dict
             else:
@@ -144,14 +176,18 @@ class RegistroEstudioUpdateView(CookieWizardView):
         id = self.kwargs['id']
 
         registroDataFormSet1=[]
+        registroDataFormSet2=[]
         registroData={}
 
         for i,form in enumerate(form_list):
-            if i != 3:
+            if i != 3 and i != 5:
                 registroData.update(form.cleaned_data)
-            else:
+            elif i == 3:
                 for formset in form:
                     registroDataFormSet1.append(formset.cleaned_data)
+            elif i == 5:
+                for formset in form:
+                    registroDataFormSet2.append(formset.cleaned_data)
 
         re=RegistroEstudio.objects.filter(id=id)
         re.update(**registroData)
@@ -163,6 +199,22 @@ class RegistroEstudioUpdateView(CookieWizardView):
             est.fecha=item['fecha']
             est.resultado=item['resultado']
             est.save()
+        
+        for item in registroDataFormSet2:
+            nombre=item['nombre']
+            domicilio=item['domicilio']
+            edad=item['edad']
+            sexo=item['sexo']
+            contacto=item['contacto']
+            caso=item['caso']
+            cont=Contacto.objects.get(id=item['id'])
+            cont.nombre=nombre
+            cont.domicilio=domicilio
+            cont.edad=edad
+            cont.sexo=sexo
+            cont.contacto=contacto
+            cont.caso=caso
+            cont.save()
 
         return redirect('listaFormularios')
 
@@ -176,6 +228,15 @@ class RegistroNotificacionBroteView(CookieWizardView):
             return self.render(self.get_form())
         except KeyError:
             return super().get(request, *args, **kwargs)
+        
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        initial = self.initial_dict.get(step, {})
+        if step == '1':
+            # Set initial data for step 2 form here
+            initial['unidadNot'] = self.request.user.informacionusuario.unidad.id
+            
+        return initial
 
     def done(self, form_list, **kwargs):
         registroDataFormSet3=[]
@@ -188,13 +249,17 @@ class RegistroNotificacionBroteView(CookieWizardView):
                     registroDataFormSet3.append(formset.cleaned_data)
 
         notificacion=NotificacionBrote(**registroData)
+        notificacion.capturante = self.request.user
         notificacion.save()
 
         for item in registroDataFormSet3:
             DistGeo=DistribucionGeografica(
                 area=item['area'],
-                numeroCasos=item['numeroCasos'],
+                numeroCasosDistribucionGeografica=item['numeroCasosDistribucionGeografica'],
+                numeroCasosPorc=item['numeroCasosPorc'],
                 numeroDefunciones=item['numeroDefunciones'],
+                numeroDefuncionesPorc=item['numeroDefuncionesPorc'],
+                croquis=item['croquis'],
                 notificacionBrote=notificacion
             )
             DistGeo.save()
@@ -241,8 +306,11 @@ class UpdateNotificacionBroteView(CookieWizardView):
         for item in registroDataFormSet4:
             dist=DistribucionGeografica.objects.get(id=item['id'])
             dist.area=item['area']
-            dist.numeroCasos=item['numeroCasos']
+            dist.numeroCasosDistribucionGeografica=item['numeroCasosDistribucionGeografica']
+            dist.numeroCasosPorc=item['numeroCasosPorc']
             dist.numeroDefunciones=item['numeroDefunciones']
+            dist.numeroDefuncionesPorc=item['numeroDefuncionesPorc']
+            dist.croquis=item['croquis']
                                            
             dist.save()
 
@@ -265,10 +333,35 @@ class Anexo8View(CookieWizardView):
             registroData.update(form.cleaned_data)
 
         anexo8=Anexo8(**registroData)
+        anexo8.capturante = self.request.user
         anexo8.save()
 
-        return redirect('lista_usuarios')    
+        return redirect('listaAnexo8')
 
+class UpdateAnexo8View(CookieWizardView):
+    form_list = FORMS6
+    form_dict = dict(form_list)
+    template_name = 'home/editarAnexo8.html'
+
+    def get_form_initial(self, step):
+        step = step or self.steps.current
+        if 'id' in self.kwargs:
+            project_id = self.kwargs['id']
+            project = Anexo8.objects.get(id=project_id)
+            project_dict = model_to_dict(project)
+            return project_dict
+        
+    def done(self, form_list, **kwargs):
+        id = self.kwargs['id']
+
+        registroData={}
+        for i,form in enumerate(form_list):
+            registroData.update(form.cleaned_data)
+
+        anexo8=Anexo8.objects.filter(id=id)
+        anexo8.update(**registroData)
+
+        return redirect('listaAnexo8')
 
 @login_required    
 def listaFormularios(request):
@@ -283,6 +376,14 @@ def listaNotificacionBrote(request):
     if request.method == 'GET':
         formularios = NotificacionBrote.objects.all()
         return render(request, 'home/ListaNotificacionBrotes.html', {'formularios': formularios})
+    else:
+        return redirect ('home')
+
+@login_required
+def listaAnexo8(request):
+    if request.method == 'GET':
+        formularios = Anexo8.objects.all()
+        return render(request, 'home/ListaAnexo8.html', {'formularios': formularios})
     else:
         return redirect ('home')
 
