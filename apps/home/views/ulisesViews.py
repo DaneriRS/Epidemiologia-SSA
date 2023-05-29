@@ -200,9 +200,16 @@ def UMedicaExcel(request):
    
 
 @login_required
-@roles_required(['Director'], redirect_url='home')
+# @roles_required(['Director'], redirect_url='home')
 def ReporteRegExcel(request):
-    registros=RegistroEstudio.objects.all()
+    if request.user.is_director:
+        registros = RegistroEstudio.objects.all()
+    elif request.user.is_encarJuris:
+        registros = RegistroEstudio.objects.filter(unidadNot__jurisdiccion__id=request.user.informacionusuario.unidad.jurisdiccion.id)
+    elif request.user.is_encarUni:
+        registros = RegistroEstudio.objects.filter(unidadNot__id=request.user.informacionusuario.unidad.id)
+    else:
+        registros = None
     estudios=Estudio.objects.all()
     contactos=Contacto.objects.all()
     return render(request, 'home/reporteRegExcel.html',{
@@ -212,17 +219,31 @@ def ReporteRegExcel(request):
     })
 
 @login_required
-@roles_required(['Director'], redirect_url='home')
+# @roles_required(['Director'], redirect_url='home')
 def ReporteNotiExcel(request):
-    noti=NotificacionBrote.objects.all()
+    if request.user.is_director:
+        noti = NotificacionBrote.obj
+    elif request.user.is_encarJuris:
+        noti = NotificacionBrote.objects.filter(unidadNot__jurisdiccion__id=request.user.informacionusuario.unidad.jurisdiccion.id)
+    elif request.user.is_encarUni:
+        noti = NotificacionBrote.objects.filter(unidadNot__id=request.user.informacionusuario.unidad.id)
+    else:
+        noti = None
     return render(request, 'home/reporteNotiExcel.html',{
         'query': noti
     })
 
 @login_required
-@roles_required(['Director'], redirect_url='home')
+# @roles_required(['Director'], redirect_url='home')
 def ReporteAnexoExcel(request):
-    anexo=Anexo8.objects.all()
+    if request.user.is_director:
+        anexo = Anexo8.objects.all()
+    elif request.user.is_encarJuris:
+        anexo = Anexo8.objects.filter(capturante__informacionusuario__jurisdiccion__id=request.user.informacionusuario.jurisdiccion.id)
+    elif request.user.is_encarUni:
+        anexo = Anexo8.objects.filter(capturante__informacionusuario__unidad__id=request.user.informacionusuario.unidad.id)
+    else:
+        anexo = None
     return render(request, 'home/reporteAnexoExcel.html',{
         'query': anexo
     })
