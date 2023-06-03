@@ -34,13 +34,13 @@
                             <p>Lista de Usuarios</p>
                         </a>
                     </li>
+                    <li class="{% if 'icons' in segment %} active {% endif %}">
+                        <a href="{% url 'import_excel_view' %}">
+                            <i class="tim-icons icon-atom"></i>
+                            <p>Registrar Usuarios</p>
+                        </a>
+                    </li>
                 {% endif %}
-                <li class="{% if 'icons' in segment %} active {% endif %}">
-                    <a href="{% url 'import_excel_view' %}">
-                        <i class="tim-icons icon-atom"></i>
-                        <p>Registrar Usuarios</p>
-                    </a>
-                </li>
                 <li class="{% if 'icons' in segment %} active {% endif %}">
                     <a href="{% url 'nuevoPaciente' %}">
                         <i class="tim-icons icon-atom"></i>

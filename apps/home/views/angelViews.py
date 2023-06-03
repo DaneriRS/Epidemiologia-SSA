@@ -139,7 +139,7 @@ class RegistroEstudioView(CookieWizardView):
                 cantidad += 1
         if cantidad >= 2:
             return redirect('notificacionBrote')
-        return redirect('home')
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))
 
 class RegistroEstudioUpdateView(CookieWizardView):
     form_list=FORMS2
@@ -216,8 +216,8 @@ class RegistroEstudioUpdateView(CookieWizardView):
             cont.caso=caso
             cont.save()
 
-        return redirect('home')
-
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))
+    
 class RegistroNotificacionBroteView(CookieWizardView):
     form_list=FORMS3
     form_dict=dict(form_list)
@@ -264,7 +264,7 @@ class RegistroNotificacionBroteView(CookieWizardView):
             )
             DistGeo.save()
 
-        return redirect('home')    
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))   
 
 class UpdateNotificacionBroteView(CookieWizardView):
     form_list=FORMS4
@@ -314,7 +314,7 @@ class UpdateNotificacionBroteView(CookieWizardView):
                                            
             dist.save()
 
-        return redirect('home')
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))
 
 class Anexo8View(CookieWizardView):
     form_list = FORMS5
@@ -336,7 +336,7 @@ class Anexo8View(CookieWizardView):
         anexo8.capturante = self.request.user
         anexo8.save()
 
-        return redirect('home')
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))
 
 class UpdateAnexo8View(CookieWizardView):
     form_list = FORMS6
@@ -361,7 +361,7 @@ class UpdateAnexo8View(CookieWizardView):
         anexo8=Anexo8.objects.filter(id=id)
         anexo8.update(**registroData)
 
-        return redirect('home')
+        return redirect(reverse('TodosLosReportes', kwargs={'msg':'False'}))
 
 @login_required    
 def listaFormularios(request):
